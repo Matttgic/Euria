@@ -53,6 +53,10 @@ def send_telegram_alert(message):
 # --- ROUTINE PRINCIPALE ---
 
 def main():
+
+# 1. Force la création du fichier avec le bon alignement if not os.path.exists(CSV_FILE):
+    pd.DataFrame(columns=['Match', 'Pari', 'Cote', 'Date']).to_csv(CSV_FILE, index=False)
+
     if not API_KEY or not TELEGRAM_TOKEN:
         print("❌ Clés manquantes.")
         return
