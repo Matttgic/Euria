@@ -1,38 +1,38 @@
-Match,Pari,Cote,Value,Date
-Crystal Palace vs Fulham,Home,2.15,1.29,2025-12-31 21:23:13.135250
-Liverpool vs Leeds,Home,1.53,1.16,2025-12-31 21:23:13.395823
-Brentford vs Tottenham,Away,3.2,1.51,2025-12-31 21:23:13.654711
-Aston Villa vs Nottingham Forest,Away,4.2,1.53,2025-12-31 21:23:13.923384
-Brighton vs Burnley,Away,6.25,2.0,2025-12-31 21:23:14.182066
-Bournemouth vs Arsenal,Draw,4.3,1.41,2025-12-31 21:23:14.685759
-Bournemouth vs Arsenal,Home,6.25,1.17,2025-12-31 21:23:14.687097
-Everton vs Brentford,Draw,3.15,1.14,2025-12-31 21:23:15.187952
-Everton vs Brentford,Away,3.1,1.24,2025-12-31 21:23:15.189608
-Rayo Vallecano vs Getafe,Away,4.0,1.3,2025-12-31 21:23:15.671380
-Celta Vigo vs Valencia,Draw,3.35,1.15,2025-12-31 21:23:15.925259
-Osasuna vs Athletic Club,Home,3.05,1.43,2025-12-31 21:23:16.175789
-Elche vs Villarreal,Home,3.25,1.54,2025-12-31 21:23:16.428391
-Espanyol vs Barcelona,Draw,4.65,1.13,2025-12-31 21:23:16.677769
-Espanyol vs Barcelona,Home,5.5,1.14,2025-12-31 21:23:16.679023
-Mallorca vs Girona,Away,3.15,1.88,2025-12-31 21:23:17.203582
-Real Sociedad vs Atletico Madrid,Home,3.55,1.23,2025-12-31 21:23:17.456716
-Juventus vs Lecce,Draw,5.4,1.25,2025-12-31 21:23:18.122771
-Juventus vs Lecce,Away,11.0,2.9,2025-12-31 21:23:18.124074
-Atalanta vs AS Roma,Home,2.18,1.14,2025-12-31 21:23:18.376139
-Lazio vs Napoli,Home,3.25,1.36,2025-12-31 21:23:18.627721
-Fiorentina vs Cremonese,Home,1.73,1.37,2025-12-31 21:23:18.878401
-Verona vs Torino,Home,2.64,1.34,2025-12-31 21:23:19.130560
-Eintracht Frankfurt vs Borussia Dortmund,Away,2.0,1.1,2025-12-31 21:23:19.753185
-SC Freiburg vs Hamburger SV,Away,4.2,1.23,2025-12-31 21:23:19.998452
-1. FC Heidenheim vs 1. FC Köln,Home,2.9,1.22,2025-12-31 21:23:20.168218
-Union Berlin vs FSV Mainz 05,Draw,3.1,1.1,2025-12-31 21:23:20.333452
-Union Berlin vs FSV Mainz 05,Away,3.2,1.17,2025-12-31 21:23:20.334647
-Werder Bremen vs 1899 Hoffenheim,Draw,3.5,1.28,2025-12-31 21:23:20.504023
-Bayer Leverkusen vs VfB Stuttgart,Away,3.2,1.23,2025-12-31 21:23:20.670188
-Bayern München vs VfL Wolfsburg,Draw,7.5,1.49,2025-12-31 21:23:21.006399
-Bayern München vs VfL Wolfsburg,Away,12.0,2.85,2025-12-31 21:23:21.007688
-Nice vs Strasbourg,Home,2.74,1.41,2025-12-31 21:23:22.125591
-Lille vs Rennes,Away,3.8,1.14,2025-12-31 21:23:22.374250
-Marseille vs Nantes,Draw,6.0,1.37,2025-12-31 21:23:22.621134
-Marseille vs Nantes,Away,10.25,1.54,2025-12-31 21:23:22.622185
-Stade Brestois 29 vs Auxerre,Home,1.92,1.15,2025-12-31 21:23:22.870535
+Match,Pari,Cote,Value,Date,Result
+Crystal Palace vs Fulham,Home,2.15,1.29,2025-12-31 21:23:13.135250,
+Liverpool vs Leeds,Home,1.53,1.16,2025-12-31 21:23:13.395823,
+Brentford vs Tottenham,Away,3.2,1.51,2025-12-31 21:23:13.654711,
+Aston Villa vs Nottingham Forest,Away,4.2,1.53,2025-12-31 21:23:13.923384,
+Brighton vs Burnley,Away,6.25,2.0,2025-12-31 21:23:14.182066,
+Bournemouth vs Arsenal,Draw,4.3,1.41,2025-12-31 21:23:14.685759,
+Bournemouth vs Arsenal,Home,6.25,1.17,2025-12-31 21:23:14.687097,
+Everton vs Brentford,Draw,3.15,1.14,2025-12-31 21:23:15.187952,
+Everton vs Brentford,Away,3.1,1.24,2025-12-31 21:23:15.189608,
+Rayo Vallecano vs Getafe,Away,4.0,1.3,2025-12-31 21:23:15.671380,
+Celta Vigo vs Valencia,Draw,3.35,1.15,2025-12-31 21:23:15.925259,
+Osasuna vs Athletic Club,Home,3.05,1.43,2025-12-31 21:23:16.175789,
+Elche vs Villarreal,Home,3.25,1.54,2025-12-31 21:23:16.428391,
+Espanyol vs Barcelona,Draw,4.65,1.13,2025-12-31 21:23:16.677769,
+Espanyol vs Barcelona,Home,5.5,1.14,2025-12-31 21:23:16.679023,
+Mallorca vs Girona,Away,3.15,1.88,2025-12-31 21:23:17.203582,
+Real Sociedad vs Atletico Madrid,Home,3.55,1.23,2025-12-31 21:23:17.456716,
+Juventus vs Lecce,Draw,5.4,1.25,2025-12-31 21:23:18.122771,
+Juventus vs Lecce,Away,11.0,2.9,2025-12-31 21:23:18.124074,
+Atalanta vs AS Roma,Home,2.18,1.14,2025-12-31 21:23:18.376139,
+Lazio vs Napoli,Home,3.25,1.36,2025-12-31 21:23:18.627721,
+Fiorentina vs Cremonese,Home,1.73,1.37,2025-12-31 21:23:18.878401,
+Verona vs Torino,Home,2.64,1.34,2025-12-31 21:23:19.130560,
+Eintracht Frankfurt vs Borussia Dortmund,Away,2.0,1.1,2025-12-31 21:23:19.753185,
+SC Freiburg vs Hamburger SV,Away,4.2,1.23,2025-12-31 21:23:19.998452,
+1. FC Heidenheim vs 1. FC Köln,Home,2.9,1.22,2025-12-31 21:23:20.168218,
+Union Berlin vs FSV Mainz 05,Draw,3.1,1.1,2025-12-31 21:23:20.333452,
+Union Berlin vs FSV Mainz 05,Away,3.2,1.17,2025-12-31 21:23:20.334647,
+Werder Bremen vs 1899 Hoffenheim,Draw,3.5,1.28,2025-12-31 21:23:20.504023,
+Bayer Leverkusen vs VfB Stuttgart,Away,3.2,1.23,2025-12-31 21:23:20.670188,
+Bayern München vs VfL Wolfsburg,Draw,7.5,1.49,2025-12-31 21:23:21.006399,
+Bayern München vs VfL Wolfsburg,Away,12.0,2.85,2025-12-31 21:23:21.007688,
+Nice vs Strasbourg,Home,2.74,1.41,2025-12-31 21:23:22.125591,
+Lille vs Rennes,Away,3.8,1.14,2025-12-31 21:23:22.374250,
+Marseille vs Nantes,Draw,6.0,1.37,2025-12-31 21:23:22.621134,
+Marseille vs Nantes,Away,10.25,1.54,2025-12-31 21:23:22.622185,
+Stade Brestois 29 vs Auxerre,Home,1.92,1.15,2025-12-31 21:23:22.870535,
