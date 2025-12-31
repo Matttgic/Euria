@@ -2,4 +2,4 @@ fastapi
 uvicorn
 xgboost
 numpy
-scikit-learn
+pydantic
