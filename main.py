@@ -1,71 +1,65 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-import xgboost as xgb
+import os
+import requests
 import numpy as np
 import joblib
-import requests
+from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
 # Charger le modèle sklearn XGBoost
+MODEL_PATH = "model_sklearn.pkl"
 try:
-    model = joblib.load("model_sklearn.pkl")  # Assure-toi que ce fichier est dans le repo
+    model = joblib.load(MODEL_PATH)
 except Exception as e:
     print("Erreur lors du chargement du modèle:", e)
+    model = None
 
-# --- Config API-Football ---
-API_FOOTBALL_KEY = "TA_CLE_API_FOOTBALL_ICI"  # Remplace par ta clé
-LEAGUE_ID = 39  # Premier League
-SEASON = 2025
+# Charger la clé API-football depuis les secrets Render / Lovable
+API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY")
+API_BASE_URL = "https://v3.football.api-sports.io"  # mettre le vrai endpoint
 
-# --- Classes pour les requêtes ---
 class PredictRequest(BaseModel):
-    features: list[list[float]]
+    match_id: int  # ID du match ou identifiant API-football
 
-# --- Endpoints ---
+def fetch_match_data(match_id: int):
+    """
+    Récupère les données nécessaires pour construire les features pour un match donné.
+    """
+    headers = {"x-apisports-key": API_FOOTBALL_KEY}
+    url = f"{API_BASE_URL}/fixtures?id={match_id}"
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        raise Exception(f"Erreur API-Football: {response.status_code}")
+    data = response.json()
+    
+    # TODO: reconstruire exactement les features du modèle ici
+    # Exemple :
+    # features = [
+    #     data["home_team"]["form"],
+    #     data["away_team"]["form"],
+    #     data["home_team"]["goals_avg"],
+    #     data["away_team"]["goals_avg"],
+    #     data["odds"]["bet365"]["home_win"],
+    #     data["odds"]["bet365"]["draw"],
+    #     data["odds"]["bet365"]["away_win"],
+    #     ... # remplir toutes les features que ton modèle attend
+    # ]
+    
+    features = []  # <- remplacer par le vrai calcul des 12+ features du modèle
+    return np.array([features])  # retourne 2D array pour sklearn
+
 @app.get("/")
 def health():
     return {"status": "ok"}
 
 @app.post("/predict")
 def predict(req: PredictRequest):
+    if model is None:
+        return {"error": "Modèle non chargé"}
     try:
-        X = np.array(req.features)
+        X = fetch_match_data(req.match_id)
         preds = model.predict(X)
         return {"predictions": preds.tolist()}
     except Exception as e:
         return {"error": str(e)}
-
-@app.get("/predict-fixtures")
-def predict_fixtures():
-    headers = {"x-apisports-key": API_FOOTBALL_KEY}
-    url = f"https://v3.football.api-sports.io/fixtures?league={LEAGUE_ID}&season={SEASON}&next=5"
-    resp = requests.get(url, headers=headers)
-    data = resp.json()
-    matches = []
-
-    for fixture in data.get("response", []):
-        home_team = fixture["teams"]["home"]["name"]
-        away_team = fixture["teams"]["away"]["name"]
-        # Odds Bet365
-        odds = fixture.get("odds", {}).get("Bet365", {})
-        home_odd = odds.get("home", None)
-        draw_odd = odds.get("draw", None)
-        away_odd = odds.get("away", None)
-        # Construire les features dans l’ordre attendu par ton modèle
-        features = [home_odd, draw_odd, away_odd]  # + autres stats si nécessaire
-
-        # Prédiction
-        try:
-            X = np.array([features])
-            pred = model.predict(X)[0]
-        except Exception as e:
-            pred = None
-
-        matches.append({
-            "home": home_team,
-            "away": away_team,
-            "prediction": int(pred) if pred is not None else None
-        })
-
-    return {"fixtures": matches}
