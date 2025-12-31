@@ -41,12 +41,12 @@ def get_team_stats(team_id, season):
     return stats
 
 def get_match_odds(match_id):
-    url = f"{API_BASE_URL}/odds?fixture={match_id}&bookmaker=8"  # 8 = Bet365
+    url = f"{API_BASE_URL}/odds?fixture={match_id}&bookmaker=8&bet=1"
     r = requests.get(url, headers={"x-apisports-key": API_KEY}).json()["response"]
-    if not r or "bookmakers" not in r[0] or len(r[0]["bookmakers"]) == 0:
-        return [1.0, 1.0, 1.0]  # fallback si pas de cote
+    if not r or len(r) == 0:
+        return [1.0, 1.0, 1.0]  # fallback
     odds_data = r[0]["bookmakers"][0]["bets"][0]["values"]
-    return [odds_data[0]["odd"], odds_data[1]["odd"], odds_data[2]["odd"]]
+    return [float(odds_data[0]["odd"]), float(odds_data[1]["odd"]), float(odds_data[2]["odd"])]
 
 def fetch_match_features(match_id):
     url = f"{API_BASE_URL}/fixtures?id={match_id}"
@@ -58,6 +58,7 @@ def fetch_match_features(match_id):
     h = get_team_stats(home_id, season)
     a = get_team_stats(away_id, season)
 
+    # 12 features exactes comme dans le Colab
     features = [
         h["gf"], h["ga"], h["cs"], h["fw"], h["fd"], h["fl"],
         a["gf"], a["ga"], a["cs"], a["fw"], a["fd"], a["fl"]
