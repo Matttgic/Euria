@@ -32,10 +32,14 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python bot.py
 
-      - name: Commit and push changes
+        - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add global_history.json suivi_paris.csv
-          git commit -m "MAJ historique et suivi" || echo "Pas de changements à commit"
-          git push
+          
+          # Ajoute les fichiers seulement s'ils existent
+          [ -f global_history.json ] && git add global_history.json
+          [ -f suivi_paris.csv ] && git add suivi_paris.csv
+          
+          # Commit seulement s'il y a des changements
+          git diff --quiet && git diff --staged --quiet || (git commit -m "MAJ historique et suivi" && git push)
