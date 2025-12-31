@@ -21,9 +21,9 @@ MODEL_FILE = "model.json"
 model = XGBClassifier()
 if os.path.exists(MODEL_FILE):
     model.load_model(MODEL_FILE)
-    print("✅ Modèle IA model.json chargé.")
+    print("✅ Modèle IA chargé.")
 else:
-    print("⚠️ Attention: model.json introuvable.")
+    print("⚠️ model.json introuvable.")
 
 # --- FONCTIONS TECHNIQUES ---
 
@@ -59,28 +59,70 @@ def send_telegram_alert(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage?chat_id={TELEGRAM_CHAT_ID}&text={message}&parse_mode=Markdown"
     requests.get(url)
 
+# --- NOUVEAU : MISE À JOUR DES RÉSULTATS ET ROI ---
+
+def update_results_and_get_stats():
+    if not os.path.exists(CSV_FILE):
+        return "Aucun historique de pari."
+    
+    df = pd.read_csv(CSV_FILE)
+    if 'Result' not in df.columns:
+        df['Result'] = ""
+
+    # 1. Vérifier les matchs terminés (hier et avant)
+    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    url = f"https://v3.football.api-sports.io/fixtures?date={yesterday}&status=FT"
+    res = requests.get(url, headers=HEADERS).json().get("response", [])
+    
+    results_map = {}
+    for m in res:
+        name = f"{m['teams']['home']['name']} vs {m['teams']['away']['name']}"
+        h, a = m['goals']['home'], m['goals']['away']
+        winner = "Home" if h > a else ("Away" if a > h else "Draw")
+        results_map[name] = winner
+
+    # 2. Marquer Win/Loss dans le CSV
+    for index, row in df.iterrows():
+        if (pd.isna(row['Result']) or row['Result'] == "") and row['Match'] in results_map:
+            winner_reel = results_map[row['Match']]
+            df.at[index, 'Result'] = "Win" if row['Pari'] == winner_reel else "Loss"
+    
+    df.to_csv(CSV_FILE, index=False)
+
+    # 3. Calculer les statistiques (Mise de 10€ par pari)
+    df_finit = df[df['Result'].isin(['Win', 'Loss'])]
+    if df_finit.empty:
+        return "En attente des premiers résultats terminés..."
+
+    total = len(df_finit)
+    gagnes = len(df_finit[df_finit['Result'] == 'Win'])
+    winrate = (gagnes / total) * 100
+    profit = 0
+    for _, r in df_finit.iterrows():
+        profit += (r['Cote'] - 1) * 10 if r['Result'] == 'Win' else -10
+    
+    return f"📊 *BILAN AUTOMATIQUE*\n✅ Winrate: {round(winrate, 1)}%\n💰 Profit: {round(profit, 2)}€\nTotal: {total} paris clôturés"
+
 # --- ROUTINE PRINCIPALE ---
 
 def main():
-    # 1. Initialisation et chargement des paris déjà envoyés (Mémoire)
+    # 1. Initialisation
     if not os.path.exists(CSV_FILE):
-        pd.DataFrame(columns=['Match', 'Pari', 'Cote', 'Value', 'Date']).to_csv(CSV_FILE, index=False)
+        pd.DataFrame(columns=['Match', 'Pari', 'Cote', 'Value', 'Date', 'Result']).to_csv(CSV_FILE, index=False)
         paris_deja_faits = []
     else:
         df_suivi = pd.read_csv(CSV_FILE)
-        # On crée une liste des noms de matchs déjà présents dans le fichier
         paris_deja_faits = df_suivi['Match'].tolist()
 
-    if not API_KEY or not TELEGRAM_TOKEN:
-        print("❌ Clés manquantes.")
-        return
+    # 2. Mise à jour des résultats et envoi du bilan
+    bilan_msg = update_results_and_get_stats()
+    send_telegram_alert(bilan_msg)
 
+    # 3. Mise à jour de l'historique (Stats d'hier)
     history = load_history()
-
-    # 2. Mise à jour historique avec les matchs d'hier
-    yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
+    yesterday_str = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     for league_id in LEAGUES:
-        url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&date={yesterday}&status=FT"
+        url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&date={yesterday_str}&status=FT"
         matches = requests.get(url, headers=HEADERS).json().get("response", [])
         for m in matches:
             f_id = m['fixture']['id']
@@ -91,10 +133,9 @@ def main():
                 if a_id not in history: history[a_id] = []
                 history[h_id].append([m['goals']['home'], m['goals']['away'], stats[h_id]['shots'], stats[h_id]['corners'], stats[h_id]['possession']])
                 history[a_id].append([m['goals']['away'], m['goals']['home'], stats[a_id]['shots'], stats[a_id]['corners'], stats[a_id]['possession']])
-    
     save_history(history)
 
-    # 3. Prédictions et filtrage des doublons
+    # 4. Nouvelles Prédictions
     new_alerts = []
     for league_id in LEAGUES:
         url_next = f"https://v3.football.api-sports.io/fixtures?league={league_id}&next=10"
@@ -104,7 +145,6 @@ def main():
             h_id, a_id = str(f['teams']['home']['id']), str(f['teams']['away']['id'])
             match_name = f"{f['teams']['home']['name']} vs {f['teams']['away']['name']}"
 
-            # SI LE MATCH EST DÉJÀ DANS LE CSV, ON LE SAUTE
             if match_name in paris_deja_faits:
                 continue
 
@@ -128,27 +168,24 @@ def main():
                             if name in current_odds:
                                 odd = current_odds[name]
                                 proba = proba_array[idx]
-                                
                                 if proba * odd > 1.10:
                                     val = round(proba * odd, 2)
-                                    # Alerte Telegram
                                     new_alerts.append(f"⚽️ *{match_name}*\n🎯 {name} @ {odd} (IA: {round(proba*100)}%) | Value: {val}")
                                     
-                                    # Sauvegarde dans le CSV pour ne plus le renvoyer demain
-                                    new_row = pd.DataFrame([[match_name, name, odd, val, datetime.now()]], columns=['Match', 'Pari', 'Cote', 'Value', 'Date'])
+                                    # Sauvegarde avec colonne Result vide
+                                    new_row = pd.DataFrame([[match_name, name, odd, val, datetime.now().strftime('%Y-%m-%d %H:%M'), ""]], 
+                                                         columns=['Match', 'Pari', 'Cote', 'Value', 'Date', 'Result'])
                                     new_row.to_csv(CSV_FILE, mode='a', header=False, index=False)
-                                    # On l'ajoute aussi à notre liste temporaire pour éviter les doublons dans la même session
                                     paris_deja_faits.append(match_name)
                 except: continue
 
-    # 4. Envoi uniquement des nouveaux matchs
+    # 5. Envoi Telegram
     if new_alerts:
         for i in range(0, len(new_alerts), 5):
-            msg = "🚀 *NOUVEAUX MATCHS DÉTECTÉS* 🚀\n\n" + "\n\n".join(new_alerts[i:i+5])
+            msg = "🚀 *NOUVELLES OPPORTUNITÉS IA* 🚀\n\n" + "\n\n".join(new_alerts[i:i+5])
             send_telegram_alert(msg)
-        print(f"✅ {len(new_alerts)} nouvelles alertes envoyées.")
-    else:
-        print("✅ Aucun nouveau match par rapport à hier.")
+    
+    print("✅ Terminé.")
 
 if __name__ == "__main__":
     main()
