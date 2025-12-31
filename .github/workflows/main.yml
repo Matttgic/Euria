@@ -3,27 +3,27 @@ name: Football Bot Daily
 on:
   schedule:
     - cron: '0 8 * * *' # S'exécute chaque jour à 8h00 UTC
-  workflow_dispatch: # Permet de le lancer manuellement dans l'onglet Actions
+  workflow_dispatch: # Permet de le lancer manuellement
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Autorise le bot à modifier les fichiers du dépôt
+      contents: write 
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: houses/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests pandas numpy xgboost
+          pip install requests pandas numpy xgboost scikit-learn
 
       - name: Run bot
         env:
@@ -37,9 +37,9 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
-          # Ajoute les fichiers uniquement s'ils existent pour éviter les erreurs fatales
+          # Ajout sécurisé des fichiers générés
           [ -f global_history.json ] && git add global_history.json
           [ -f suivi_paris.csv ] && git add suivi_paris.csv
           
-          # Commit seulement s'il y a des changements détectés
+          # Commit seulement s'il y a du nouveau
           git diff --quiet && git diff --staged --quiet || (git commit -m "MAJ automatique historique et suivi" && git push)
