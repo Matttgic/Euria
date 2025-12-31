@@ -23,7 +23,7 @@ if os.path.exists(MODEL_FILE):
     model.load_model(MODEL_FILE)
     print("✅ Modèle IA model.json chargé.")
 else:
-    print("⚠️ Attention: model.json introuvable. Utilisation du mode secours.")
+    print("⚠️ Attention: model.json introuvable.")
 
 # --- FONCTIONS TECHNIQUES ---
 
@@ -62,9 +62,14 @@ def send_telegram_alert(message):
 # --- ROUTINE PRINCIPALE ---
 
 def main():
-    # 1. Initialisation correcte des fichiers
+    # 1. Initialisation et chargement des paris déjà envoyés (Mémoire)
     if not os.path.exists(CSV_FILE):
         pd.DataFrame(columns=['Match', 'Pari', 'Cote', 'Value', 'Date']).to_csv(CSV_FILE, index=False)
+        paris_deja_faits = []
+    else:
+        df_suivi = pd.read_csv(CSV_FILE)
+        # On crée une liste des noms de matchs déjà présents dans le fichier
+        paris_deja_faits = df_suivi['Match'].tolist()
 
     if not API_KEY or not TELEGRAM_TOKEN:
         print("❌ Clés manquantes.")
@@ -72,7 +77,7 @@ def main():
 
     history = load_history()
 
-    # 2. Mise à jour avec les matchs d'hier
+    # 2. Mise à jour historique avec les matchs d'hier
     yesterday = (datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')
     for league_id in LEAGUES:
         url = f"https://v3.football.api-sports.io/fixtures?league={league_id}&date={yesterday}&status=FT"
@@ -89,57 +94,61 @@ def main():
     
     save_history(history)
 
-    # 3. Prédictions avec le modèle IA
-    predictions = []
+    # 3. Prédictions et filtrage des doublons
+    new_alerts = []
     for league_id in LEAGUES:
         url_next = f"https://v3.football.api-sports.io/fixtures?league={league_id}&next=10"
         fixtures = requests.get(url_next, headers=HEADERS).json().get("response", [])
         
         for f in fixtures:
             h_id, a_id = str(f['teams']['home']['id']), str(f['teams']['away']['id'])
+            match_name = f"{f['teams']['home']['name']} vs {f['teams']['away']['name']}"
+
+            # SI LE MATCH EST DÉJÀ DANS LE CSV, ON LE SAUTE
+            if match_name in paris_deja_faits:
+                continue
+
             if h_id in history and a_id in history and len(history[h_id]) >= 5:
                 h_avg = np.mean(history[h_id][-5:], axis=0)
                 a_avg = np.mean(history[a_id][-5:], axis=0)
-                
-                # Formatage des features pour l'IA
                 features = np.array([np.hstack([h_avg, a_avg])])
                 
-                # Prédiction
                 try:
                     proba_array = model.predict_proba(features)[0]
-                    
                     url_o = f"https://v3.football.api-sports.io/odds?fixture={f['fixture']['id']}"
                     odds_res = requests.get(url_o, headers=HEADERS).json().get("response", [])
                     
                     if odds_res:
                         book = odds_res[0]['bookmakers'][0]['bets'][0]['values']
                         current_odds = {v['value']: float(v['odd']) for v in book}
-                        
-                        # Mapping : model.classes_ (souvent 0:Draw, 1:Home, 2:Away)
                         outcomes = {1: 'Home', 0: 'Draw', 2: 'Away'}
+                        
                         for idx, label in enumerate(model.classes_):
                             name = outcomes[label]
                             if name in current_odds:
                                 odd = current_odds[name]
                                 proba = proba_array[idx]
                                 
-                                # SEUIL DE VALUE (1.10 = 10%)
                                 if proba * odd > 1.10:
                                     val = round(proba * odd, 2)
-                                    predictions.append(f"⚽️ *{f['teams']['home']['name']} vs {f['teams']['away']['name']}*\n🎯 {name} @ {odd} (IA: {round(proba*100)}%) | Value: {val}")
+                                    # Alerte Telegram
+                                    new_alerts.append(f"⚽️ *{match_name}*\n🎯 {name} @ {odd} (IA: {round(proba*100)}%) | Value: {val}")
                                     
-                                    # Log dans le CSV
-                                    new_row = pd.DataFrame([[f['teams']['home']['name'] + " vs " + f['teams']['away']['name'], name, odd, val, datetime.now()]], columns=['Match', 'Pari', 'Cote', 'Value', 'Date'])
+                                    # Sauvegarde dans le CSV pour ne plus le renvoyer demain
+                                    new_row = pd.DataFrame([[match_name, name, odd, val, datetime.now()]], columns=['Match', 'Pari', 'Cote', 'Value', 'Date'])
                                     new_row.to_csv(CSV_FILE, mode='a', header=False, index=False)
+                                    # On l'ajoute aussi à notre liste temporaire pour éviter les doublons dans la même session
+                                    paris_deja_faits.append(match_name)
                 except: continue
 
-    # 4. Envoi
-    if predictions:
-        for i in range(0, len(predictions), 5):
-            msg = "🚀 *NOUVEAUX VALUE BETS (IA)* 🚀\n\n" + "\n\n".join(predictions[i:i+5])
+    # 4. Envoi uniquement des nouveaux matchs
+    if new_alerts:
+        for i in range(0, len(new_alerts), 5):
+            msg = "🚀 *NOUVEAUX MATCHS DÉTECTÉS* 🚀\n\n" + "\n\n".join(new_alerts[i:i+5])
             send_telegram_alert(msg)
-    
-    print(f"✅ Terminé. {len(predictions)} alertes.")
+        print(f"✅ {len(new_alerts)} nouvelles alertes envoyées.")
+    else:
+        print("✅ Aucun nouveau match par rapport à hier.")
 
 if __name__ == "__main__":
     main()
