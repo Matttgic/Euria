@@ -1,19 +1,20 @@
 from fastapi import FastAPI
-import pandas as pd
 import xgboost as xgb
+import numpy as np
 
 app = FastAPI()
 
-model = xgb.XGBClassifier()
+# Load model
+model = xgb.Booster()
 model.load_model("model.json")
 
-@app.post("/predict")
-def predict(match: dict):
-    df = pd.DataFrame([match])
-    p = model.predict_proba(df)[0]
+@app.get("/")
+def health():
+    return {"status": "ok"}
 
-    return {
-        "home": float(p[1]),
-        "draw": float(p[0]),
-        "away": float(p[2])
-    }
+@app.post("/predict")
+def predict(features: list):
+    X = np.array(features)
+    dmatrix = xgb.DMatrix(X)
+    preds = model.predict(dmatrix)
+    return {"predictions": preds.tolist()}
