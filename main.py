@@ -2,12 +2,15 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import xgboost as xgb
 import numpy as np
+import joblib  # pour sauvegarder/charger le modèle sklearn
 
 app = FastAPI()
 
-# Load model (XGBoost natif, PAS sklearn)
-model = xgb.Booster()
-model.load_model("model.json")
+# Charger le modèle sklearn XGBoost
+try:
+    model = joblib.load("model_sklearn.pkl")  # ton modèle doit être sauvegardé via joblib.dump(model, "model_sklearn.pkl")
+except Exception as e:
+    print("Erreur lors du chargement du modèle:", e)
 
 class PredictRequest(BaseModel):
     features: list[list[float]]
@@ -18,7 +21,9 @@ def health():
 
 @app.post("/predict")
 def predict(req: PredictRequest):
-    X = np.array(req.features)
-    dmatrix = xgb.DMatrix(X)
-    preds = model.predict(dmatrix)
-    return {"predictions": preds.tolist()}
+    try:
+        X = np.array(req.features)
+        preds = model.predict(X)
+        return {"predictions": preds.tolist()}
+    except Exception as e:
+        return {"error": str(e)}
