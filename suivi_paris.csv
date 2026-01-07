@@ -41,7 +41,7 @@ Fulham vs Liverpool,Draw,3.65,1.12,2026-01-02 08:34,Win
 Newcastle vs Crystal Palace,Away,5.0,1.23,2026-01-02 08:34,Loss
 Leeds vs Manchester United,Away,2.72,1.14,2026-01-03 08:32,Loss
 VfB Stuttgart vs Eintracht Frankfurt,Home,1.81,1.45,2026-01-03 08:32,
-West Ham vs Nottingham Forest,Draw,3.4,1.2,2026-01-04 08:33,
+West Ham vs Nottingham Forest,Draw,3.4,1.2,2026-01-04 08:33,Loss
 Bournemouth vs Tottenham,Draw,3.55,1.14,2026-01-04 08:33,
 Bournemouth vs Tottenham,Away,3.4,1.76,2026-01-04 08:33,
 Crystal Palace vs Aston Villa,Home,2.74,1.73,2026-01-04 08:33,
@@ -49,8 +49,8 @@ Villarreal vs Alaves,Draw,3.85,1.21,2026-01-04 08:33,
 Villarreal vs Alaves,Away,5.8,1.45,2026-01-04 08:33,
 Girona vs Osasuna,Home,2.52,1.84,2026-01-04 08:33,
 Valencia vs Elche,Away,3.5,1.63,2026-01-04 08:33,
-Lecce vs AS Roma,Home,5.1,1.58,2026-01-04 08:33,
-Sassuolo vs Juventus,Home,4.65,1.24,2026-01-04 08:33,
+Lecce vs AS Roma,Home,5.1,1.58,2026-01-04 08:33,Loss
+Sassuolo vs Juventus,Home,4.65,1.24,2026-01-04 08:33,Loss
 Napoli vs Verona,Away,8.1,1.82,2026-01-04 08:33,
 Lazio vs Fiorentina,Away,3.5,1.63,2026-01-04 08:33,
 Lens vs Auxerre,Away,6.5,1.37,2026-01-04 08:33,
@@ -71,3 +71,5 @@ Rennes vs Le Havre,Home,1.65,1.22,2026-01-05 08:39,
 Lyon vs Stade Brestois 29,Away,5.4,2.31,2026-01-05 08:39,
 Auxerre vs Paris Saint Germain,Draw,5.0,1.66,2026-01-05 08:39,
 Auxerre vs Paris Saint Germain,Home,8.5,1.34,2026-01-05 08:39,
+Manchester City vs Brighton,Home,1.42,1.13,2026-01-07 08:36,
+Borussia Mönchengladbach vs FC Augsburg,Away,3.95,1.1,2026-01-07 08:36,
