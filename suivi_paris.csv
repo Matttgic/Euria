@@ -53,10 +53,10 @@ Lecce vs AS Roma,Home,5.1,1.58,2026-01-04 08:33,Loss
 Sassuolo vs Juventus,Home,4.65,1.24,2026-01-04 08:33,Loss
 Napoli vs Verona,Away,8.1,1.82,2026-01-04 08:33,Loss
 Lazio vs Fiorentina,Away,3.5,1.63,2026-01-04 08:33,Loss
-Lens vs Auxerre,Away,6.5,1.37,2026-01-04 08:33,
-Toulouse vs Nice,Away,3.9,1.46,2026-01-04 08:33,
-Angers vs Marseille,Draw,3.75,1.11,2026-01-04 08:33,
-Angers vs Marseille,Home,5.0,1.14,2026-01-04 08:33,
+Lens vs Auxerre,Away,6.5,1.37,2026-01-04 08:33,Loss
+Toulouse vs Nice,Away,3.9,1.46,2026-01-04 08:33,Loss
+Angers vs Marseille,Draw,3.75,1.11,2026-01-04 08:33,Loss
+Angers vs Marseille,Home,5.0,1.14,2026-01-04 08:33,Loss
 Everton vs Wolves,Away,4.4,1.15,2026-01-05 08:39,Loss
 Fulham vs Chelsea,Away,2.1,1.44,2026-01-05 08:39,Loss
 Burnley vs Manchester United,Home,4.4,1.85,2026-01-05 08:39,Loss
@@ -73,14 +73,14 @@ Auxerre vs Paris Saint Germain,Draw,5.0,1.66,2026-01-05 08:39,
 Auxerre vs Paris Saint Germain,Home,8.5,1.34,2026-01-05 08:39,
 Manchester City vs Brighton,Home,1.42,1.13,2026-01-07 08:36,Loss
 Borussia Mönchengladbach vs FC Augsburg,Away,3.95,1.1,2026-01-07 08:36,Loss
-Manchester United vs Manchester City,Away,1.86,1.15,2026-01-08 08:36,
-Chelsea vs Brentford,Home,1.63,1.15,2026-01-08 08:36,
-Leeds vs Fulham,Draw,3.15,1.15,2026-01-08 08:36,
-Leeds vs Fulham,Away,3.3,1.11,2026-01-08 08:36,
-Liverpool vs Burnley,Away,13.0,1.35,2026-01-08 08:36,
-Tottenham vs West Ham,Home,1.69,1.24,2026-01-08 08:36,
-Nottingham Forest vs Arsenal,Draw,4.1,1.46,2026-01-08 08:36,
-Nottingham Forest vs Arsenal,Home,5.5,1.13,2026-01-08 08:36,
+Manchester United vs Manchester City,Away,1.86,1.15,2026-01-08 08:36,Loss
+Chelsea vs Brentford,Home,1.63,1.15,2026-01-08 08:36,Win
+Leeds vs Fulham,Draw,3.15,1.15,2026-01-08 08:36,Loss
+Leeds vs Fulham,Away,3.3,1.11,2026-01-08 08:36,Loss
+Liverpool vs Burnley,Away,13.0,1.35,2026-01-08 08:36,Loss
+Tottenham vs West Ham,Home,1.69,1.24,2026-01-08 08:36,Loss
+Nottingham Forest vs Arsenal,Draw,4.1,1.46,2026-01-08 08:36,Win
+Nottingham Forest vs Arsenal,Home,5.5,1.13,2026-01-08 08:36,Loss
 Wolves vs Newcastle,Draw,3.8,1.33,2026-01-08 08:36,
 Aston Villa vs Everton,Away,5.6,2.01,2026-01-08 08:36,
 Atalanta vs Torino,Home,1.63,1.15,2026-01-08 08:36,
@@ -91,7 +91,7 @@ Genoa vs Cagliari,Home,2.05,1.11,2026-01-09 08:36,Win
 Juventus vs Cremonese,Draw,5.2,1.4,2026-01-09 08:36,Loss
 Juventus vs Cremonese,Away,13.0,2.13,2026-01-09 08:36,Loss
 Paris Saint Germain vs Lille,Draw,4.75,1.1,2026-01-09 08:36,Loss
-Mallorca vs Athletic Club,Home,3.6,1.3,2026-01-10 08:31,
+Mallorca vs Athletic Club,Home,3.6,1.3,2026-01-10 08:31,Win
 Borussia Dortmund vs Werder Bremen,Draw,5.1,1.24,2026-01-10 08:31,Loss
 Borussia Dortmund vs Werder Bremen,Away,8.6,1.58,2026-01-10 08:31,Loss
 Atletico Madrid vs Alaves,Draw,4.55,1.34,2026-01-12 08:38,
@@ -99,11 +99,11 @@ Atletico Madrid vs Alaves,Away,10.25,2.2,2026-01-12 08:38,
 Celta Vigo vs Rayo Vallecano,Draw,3.1,1.17,2026-01-12 08:38,
 Inter vs Lecce,Draw,7.4,1.28,2026-01-12 08:38,Loss
 Inter vs Lecce,Away,19.5,1.97,2026-01-12 08:38,Loss
-Udinese vs Inter,Draw,4.45,1.38,2026-01-12 08:38,
-Udinese vs Inter,Home,6.75,1.18,2026-01-12 08:38,
-Napoli vs Sassuolo,Away,7.9,1.4,2026-01-12 08:38,
-Cagliari vs Juventus,Draw,3.8,1.15,2026-01-12 08:38,
-Cagliari vs Juventus,Home,6.6,1.73,2026-01-12 08:38,
+Udinese vs Inter,Draw,4.45,1.38,2026-01-12 08:38,Loss
+Udinese vs Inter,Home,6.75,1.18,2026-01-12 08:38,Loss
+Napoli vs Sassuolo,Away,7.9,1.4,2026-01-12 08:38,Loss
+Cagliari vs Juventus,Draw,3.8,1.15,2026-01-12 08:38,Loss
+Cagliari vs Juventus,Home,6.6,1.73,2026-01-12 08:38,Win
 FSV Mainz 05 vs 1. FC Heidenheim,Away,5.7,1.32,2026-01-12 08:38,Loss
 1. FC Köln vs Bayern München,Draw,6.2,1.82,2026-01-12 08:38,Loss
 1. FC Köln vs Bayern München,Home,9.7,3.86,2026-01-12 08:38,Loss
@@ -112,15 +112,35 @@ Werder Bremen vs Eintracht Frankfurt,Home,2.54,1.38,2026-01-12 08:38,Loss
 Elche vs Sevilla,Home,2.22,1.24,2026-01-13 08:36,
 Bologna vs Fiorentina,Away,3.5,1.61,2026-01-13 08:36,
 AC Milan vs Lecce,Away,11.0,1.24,2026-01-15 08:36,
-VfL Wolfsburg vs 1. FC Heidenheim,Draw,3.95,1.18,2026-01-15 08:36,
-VfL Wolfsburg vs 1. FC Heidenheim,Away,4.45,1.18,2026-01-15 08:36,
-RB Leipzig vs Bayern München,Draw,4.6,1.34,2026-01-15 08:36,
-RB Leipzig vs Bayern München,Home,4.8,1.47,2026-01-15 08:36,
+VfL Wolfsburg vs 1. FC Heidenheim,Draw,3.95,1.18,2026-01-15 08:36,Win
+VfL Wolfsburg vs 1. FC Heidenheim,Away,4.45,1.18,2026-01-15 08:36,Loss
+RB Leipzig vs Bayern München,Draw,4.6,1.34,2026-01-15 08:36,Loss
+RB Leipzig vs Bayern München,Home,4.8,1.47,2026-01-15 08:36,Loss
 VfB Stuttgart vs Union Berlin,Home,1.62,1.2,2026-01-15 08:36,
 FC Augsburg vs SC Freiburg,Draw,3.25,1.21,2026-01-15 08:36,
-1. FC Köln vs FSV Mainz 05,Away,3.3,1.13,2026-01-16 08:36,
-Real Betis vs Villarreal,Home,2.6,1.11,2026-01-17 08:31,
+1. FC Köln vs FSV Mainz 05,Away,3.3,1.13,2026-01-16 08:36,Loss
+Real Betis vs Villarreal,Home,2.6,1.11,2026-01-17 08:31,Win
 Torino vs AS Roma,Home,3.7,1.1,2026-01-17 08:31,
 Bayer Leverkusen vs Werder Bremen,Away,5.3,1.31,2026-01-17 08:31,
 Rennes vs Lorient,Home,1.77,1.27,2026-01-17 08:31,
 Le Havre vs Monaco,Draw,3.7,1.24,2026-01-17 08:31,
+Burnley vs Tottenham,Home,3.85,1.32,2026-01-18 08:32,
+Fulham vs Brighton,Draw,3.3,1.17,2026-01-18 08:32,
+Manchester City vs Wolves,Away,14.5,1.22,2026-01-18 08:32,
+Bournemouth vs Liverpool,Draw,3.8,1.14,2026-01-18 08:32,
+Brentford vs Nottingham Forest,Home,2.1,1.16,2026-01-18 08:32,
+Rayo Vallecano vs Osasuna,Away,3.9,1.23,2026-01-18 08:32,
+Valencia vs Espanyol,Away,3.35,1.39,2026-01-18 08:32,
+Villarreal vs Real Madrid,Away,1.97,1.28,2026-01-18 08:32,
+Fiorentina vs Cagliari,Home,1.68,1.31,2026-01-18 08:32,
+Lecce vs Lazio,Home,4.55,1.23,2026-01-18 08:32,
+Bayern München vs FC Augsburg,Draw,9.0,1.71,2026-01-18 08:32,
+Bayern München vs FC Augsburg,Away,20.0,3.36,2026-01-18 08:32,
+Eintracht Frankfurt vs 1899 Hoffenheim,Draw,3.65,1.28,2026-01-18 08:32,
+Eintracht Frankfurt vs 1899 Hoffenheim,Away,2.6,1.11,2026-01-18 08:32,
+1. FC Heidenheim vs RB Leipzig,Home,4.9,2.24,2026-01-18 08:32,
+FSV Mainz 05 vs VfL Wolfsburg,Home,2.3,1.13,2026-01-18 08:32,
+Union Berlin vs Borussia Dortmund,Away,1.9,1.22,2026-01-18 08:32,
+Borussia Mönchengladbach vs VfB Stuttgart,Away,2.22,1.51,2026-01-18 08:32,
+Nantes vs Nice,Draw,3.4,1.11,2026-01-18 08:32,
+Stade Brestois 29 vs Toulouse,Home,2.64,1.59,2026-01-18 08:32,
