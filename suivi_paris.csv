@@ -121,26 +121,26 @@ FC Augsburg vs SC Freiburg,Draw,3.25,1.21,2026-01-15 08:36,Win
 1. FC Köln vs FSV Mainz 05,Away,3.3,1.13,2026-01-16 08:36,Loss
 Real Betis vs Villarreal,Home,2.6,1.11,2026-01-17 08:31,Win
 Torino vs AS Roma,Home,3.7,1.1,2026-01-17 08:31,Loss
-Bayer Leverkusen vs Werder Bremen,Away,5.3,1.31,2026-01-17 08:31,
-Rennes vs Lorient,Home,1.77,1.27,2026-01-17 08:31,
-Le Havre vs Monaco,Draw,3.7,1.24,2026-01-17 08:31,
-Burnley vs Tottenham,Home,3.85,1.32,2026-01-18 08:32,
-Fulham vs Brighton,Draw,3.3,1.17,2026-01-18 08:32,
-Manchester City vs Wolves,Away,14.5,1.22,2026-01-18 08:32,
-Bournemouth vs Liverpool,Draw,3.8,1.14,2026-01-18 08:32,
+Bayer Leverkusen vs Werder Bremen,Away,5.3,1.31,2026-01-17 08:31,Loss
+Rennes vs Lorient,Home,1.77,1.27,2026-01-17 08:31,Loss
+Le Havre vs Monaco,Draw,3.7,1.24,2026-01-17 08:31,Win
+Burnley vs Tottenham,Home,3.85,1.32,2026-01-18 08:32,Loss
+Fulham vs Brighton,Draw,3.3,1.17,2026-01-18 08:32,Loss
+Manchester City vs Wolves,Away,14.5,1.22,2026-01-18 08:32,Loss
+Bournemouth vs Liverpool,Draw,3.8,1.14,2026-01-18 08:32,Loss
 Brentford vs Nottingham Forest,Home,2.1,1.16,2026-01-18 08:32,
-Rayo Vallecano vs Osasuna,Away,3.9,1.23,2026-01-18 08:32,
-Valencia vs Espanyol,Away,3.35,1.39,2026-01-18 08:32,
-Villarreal vs Real Madrid,Away,1.97,1.28,2026-01-18 08:32,
-Fiorentina vs Cagliari,Home,1.68,1.31,2026-01-18 08:32,
-Lecce vs Lazio,Home,4.55,1.23,2026-01-18 08:32,
-Bayern München vs FC Augsburg,Draw,9.0,1.71,2026-01-18 08:32,
-Bayern München vs FC Augsburg,Away,20.0,3.36,2026-01-18 08:32,
-Eintracht Frankfurt vs 1899 Hoffenheim,Draw,3.65,1.28,2026-01-18 08:32,
-Eintracht Frankfurt vs 1899 Hoffenheim,Away,2.6,1.11,2026-01-18 08:32,
-1. FC Heidenheim vs RB Leipzig,Home,4.9,2.24,2026-01-18 08:32,
-FSV Mainz 05 vs VfL Wolfsburg,Home,2.3,1.13,2026-01-18 08:32,
-Union Berlin vs Borussia Dortmund,Away,1.9,1.22,2026-01-18 08:32,
+Rayo Vallecano vs Osasuna,Away,3.9,1.23,2026-01-18 08:32,Win
+Valencia vs Espanyol,Away,3.35,1.39,2026-01-18 08:32,Loss
+Villarreal vs Real Madrid,Away,1.97,1.28,2026-01-18 08:32,Win
+Fiorentina vs Cagliari,Home,1.68,1.31,2026-01-18 08:32,Loss
+Lecce vs Lazio,Home,4.55,1.23,2026-01-18 08:32,Loss
+Bayern München vs FC Augsburg,Draw,9.0,1.71,2026-01-18 08:32,Loss
+Bayern München vs FC Augsburg,Away,20.0,3.36,2026-01-18 08:32,Win
+Eintracht Frankfurt vs 1899 Hoffenheim,Draw,3.65,1.28,2026-01-18 08:32,Loss
+Eintracht Frankfurt vs 1899 Hoffenheim,Away,2.6,1.11,2026-01-18 08:32,Win
+1. FC Heidenheim vs RB Leipzig,Home,4.9,2.24,2026-01-18 08:32,Loss
+FSV Mainz 05 vs VfL Wolfsburg,Home,2.3,1.13,2026-01-18 08:32,Win
+Union Berlin vs Borussia Dortmund,Away,1.9,1.22,2026-01-18 08:32,Win
 Borussia Mönchengladbach vs VfB Stuttgart,Away,2.22,1.51,2026-01-18 08:32,
 Nantes vs Nice,Draw,3.4,1.11,2026-01-18 08:32,
 Stade Brestois 29 vs Toulouse,Home,2.64,1.59,2026-01-18 08:32,
@@ -163,3 +163,20 @@ AS Roma vs AC Milan,Away,2.8,1.14,2026-01-20 08:38,
 Lille vs Strasbourg,Home,1.9,1.11,2026-01-20 08:38,
 Espanyol vs Alaves,Away,4.1,1.18,2026-01-24 08:32,
 Lazio vs Genoa,Home,1.9,1.13,2026-01-24 08:32,
+Brighton vs Everton,Away,4.1,1.51,2026-01-25 08:33,
+Leeds vs Arsenal,Draw,3.85,1.27,2026-01-25 08:33,
+Leeds vs Arsenal,Home,6.6,1.23,2026-01-25 08:33,
+Chelsea vs West Ham,Home,1.49,1.22,2026-01-25 08:33,
+Liverpool vs Newcastle,Draw,3.8,1.43,2026-01-25 08:33,
+Osasuna vs Villarreal,Home,3.0,1.32,2026-01-25 08:33,
+Elche vs Barcelona,Draw,5.0,1.6,2026-01-25 08:33,
+Elche vs Barcelona,Home,7.6,2.23,2026-01-25 08:33,
+Napoli vs Fiorentina,Away,5.2,2.31,2026-01-25 08:33,
+Cagliari vs Verona,Away,3.2,1.27,2026-01-25 08:33,
+1. FC Köln vs VfL Wolfsburg,Home,2.24,1.25,2026-01-25 08:33,
+Eintracht Frankfurt vs Bayer Leverkusen,Away,2.3,1.14,2026-01-25 08:33,
+1899 Hoffenheim vs Union Berlin,Home,1.81,1.18,2026-01-25 08:33,
+RB Leipzig vs FSV Mainz 05,Away,5.6,1.46,2026-01-25 08:33,
+Werder Bremen vs Borussia Mönchengladbach,Home,2.3,1.31,2026-01-25 08:33,
+Monaco vs Rennes,Draw,3.75,1.26,2026-01-25 08:33,
+Lyon vs Lille,Away,3.25,1.27,2026-01-25 08:33,
