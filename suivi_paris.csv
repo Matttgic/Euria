@@ -27,7 +27,7 @@ SC Freiburg vs Hamburger SV,Away,4.2,1.23,2025-12-31 21:23:19.998452,
 1. FC Heidenheim vs 1. FC Köln,Home,2.9,1.22,2025-12-31 21:23:20.168218,
 Union Berlin vs FSV Mainz 05,Draw,3.1,1.1,2025-12-31 21:23:20.333452,
 Union Berlin vs FSV Mainz 05,Away,3.2,1.17,2025-12-31 21:23:20.334647,
-Werder Bremen vs 1899 Hoffenheim,Draw,3.5,1.28,2025-12-31 21:23:20.504023,
+Werder Bremen vs 1899 Hoffenheim,Draw,3.5,1.28,2025-12-31 21:23:20.504023,Loss
 Bayer Leverkusen vs VfB Stuttgart,Away,3.2,1.23,2025-12-31 21:23:20.670188,
 Bayern München vs VfL Wolfsburg,Draw,7.5,1.49,2025-12-31 21:23:21.006399,Loss
 Bayern München vs VfL Wolfsburg,Away,12.0,2.85,2025-12-31 21:23:21.007688,Loss
@@ -196,3 +196,6 @@ Strasbourg vs Paris Saint Germain,Draw,4.1,1.39,2026-01-26 08:39,
 Metz vs Lille,Draw,4.0,1.16,2026-01-26 08:39,
 Mallorca vs Sevilla,Home,2.54,1.11,2026-01-27 08:38,
 Bologna vs AC Milan,Home,3.5,1.39,2026-01-27 08:38,
+Borussia Dortmund vs 1. FC Heidenheim,Draw,5.9,1.21,2026-01-28 08:38,
+Borussia Dortmund vs 1. FC Heidenheim,Away,11.5,1.49,2026-01-28 08:38,
+Union Berlin vs Eintracht Frankfurt,Away,3.3,1.39,2026-01-28 08:38,
