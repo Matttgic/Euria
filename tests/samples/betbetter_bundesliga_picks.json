@@ -1,0 +1,66 @@
+{
+ "site": "Bet Better",
+ "page": "https://betbetter.world/soccer/bundesliga/picks",
+ "sport": "Bundesliga",
+ "type": "picks",
+ "updatedUtc": "2026-09-30T19:53:58.2689481Z",
+ "licence": "CC BY 4.0 — free to use with attribution to Bet Better (https://betbetter.world)",
+ "attribution": "Bet Better — https://betbetter.world",
+ "docs": "https://betbetter.world/api/",
+ "disclaimer": "Model estimates for research. Not a guarantee. 18+. Please gamble responsibly.",
+ "count": 4,
+ "picks": [
+  {
+   "game": "TSG Hoffenheim @ Borussia Monchengladbach",
+   "gameTimeUtc": "2026-10-18T15:30:00.0000000Z",
+   "market": "Head to Head",
+   "selection": "Borussia Monchengladbach",
+   "line": null,
+   "winProbabilityPct": 30.4,
+   "probabilityLabel": "our prediction",
+   "modelProbabilityPct": 30.4,
+   "fairOdds": 3.7,
+   "confidence": "LONG-SHOT",
+   "verdict": "As of Sep 30, 2026, Bet Better's model rates Borussia Monchengladbach a 30.4% chance to land, which is fair value at odds of 3.70. Confidence: LONG-SHOT."
+  },
+  {
+   "game": "1. FC Köln @ Eintracht Frankfurt",
+   "gameTimeUtc": "2026-10-16T18:30:00.0000000Z",
+   "market": "Head to Head",
+   "selection": "Eintracht Frankfurt",
+   "line": null,
+   "winProbabilityPct": 52.5,
+   "probabilityLabel": "our prediction",
+   "modelProbabilityPct": 52.5,
+   "fairOdds": 2.04,
+   "confidence": "LEAN",
+   "verdict": "As of Sep 30, 2026, Bet Better's model rates Eintracht Frankfurt a 52.5% chance to land, which is fair value at odds of 2.04. Confidence: LEAN."
+  },
+  {
+   "game": "FC Schalke 04 @ SC Freiburg",
+   "gameTimeUtc": "2026-10-11T15:30:00.0000000Z",
+   "market": "Head to Head",
+   "selection": "Draw",
+   "line": null,
+   "winProbabilityPct": 25.4,
+   "probabilityLabel": "our prediction",
+   "modelProbabilityPct": 25.4,
+   "fairOdds": 4.42,
+   "confidence": "LONG-SHOT",
+   "verdict": "As of Sep 30, 2026, Bet Better's model rates Draw a 25.4% chance to land, which is fair value at odds of 4.42. Confidence: LONG-SHOT."
+  },
+  {
+   "game": "FSV Mainz 05 @ FC Schalke 04",
+   "gameTimeUtc": "2026-10-17T13:30:00.0000000Z",
+   "market": "Total Goals",
+   "selection": "Under",
+   "line": 4.5,
+   "winProbabilityPct": 96.5,
+   "probabilityLabel": "our prediction",
+   "modelProbabilityPct": 96.5,
+   "fairOdds": 1.04,
+   "confidence": "HIGH",
+   "verdict": "As of Sep 30, 2026, Bet Better's model rates Under a 96.5% chance to land, which is fair value at odds of 1.04. Confidence: HIGH."
+  }
+ ]
+}

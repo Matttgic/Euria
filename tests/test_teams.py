@@ -36,6 +36,10 @@ PAIRS = [
     ("Borussia Mönchengladbach", "M'gladbach"),
     ("Paris SG", "PSG"),
     ("Nott'm Forest", "Nottingham"),
+    # Football Charts et Bet Better
+    ("Atl. Madrid", "Ath Madrid"),
+    ("Dep. A Coruna", "La Coruna"),
+    ("CA Osasuna", "Osasuna"),
 ]
 
 
@@ -52,6 +56,7 @@ def test_known_variants_match(a, b):
     ("Barcelona", "RCD Espanyol de Barcelona"),
     ("Oviedo", "Real Madrid"),
     ("Frankfurt", "Union Berlin"),
+    ("Atl. Madrid", "Real Madrid"),
 ])
 def test_different_clubs_do_not_match(a, b):
     assert not same_team(a, b)

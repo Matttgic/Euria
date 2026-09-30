@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 import requests
@@ -39,8 +40,27 @@ def get(source: str, url: str, *, params: dict | None = None, headers: dict | No
         raise SourceError(source, f"erreur réseau ({exc.__class__.__name__})") from None
     if response.status_code >= 400:
         reason = _STATUS_MESSAGES.get(response.status_code, "erreur du serveur")
-        raise SourceError(source, f"HTTP {response.status_code}, {reason}")
+        detail = _error_detail(response)
+        raise SourceError(source, f"HTTP {response.status_code}, {reason}" + (f" — {detail}" if detail else ""))
     return response
+
+
+def _error_detail(response: requests.Response, limit: int = 160) -> str:
+    """Extrait court de la réponse d'erreur : message JSON de l'API ou titre de la page HTML
+    (ex. « Just a moment... » = protection anti-robots qui bloque l'adresse du serveur)."""
+    text = response.text or ""
+    try:
+        payload = response.json()
+        if isinstance(payload, dict):
+            for key in ("message", "error", "detail", "errors"):
+                if payload.get(key):
+                    return str(payload[key])[:limit]
+    except ValueError:
+        pass
+    title = re.search(r"<title[^>]*>(.*?)</title>", text, flags=re.I | re.S)
+    if title:
+        return " ".join(title.group(1).split())[:limit]
+    return " ".join(text.split())[:limit]
 
 
 def get_json(source: str, url: str, **kwargs: Any) -> Any:

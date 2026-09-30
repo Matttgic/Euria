@@ -81,6 +81,10 @@ def fetch(key: str, ttl_s: float, providers: Sequence[Provider]) -> Result:
         return Result(data, provider.name, entry.saved_at_iso, attribution=provider.attribution, errors=errors)
 
     if empty_success is not None:
+        # Une réponse vide valide (aucune actu, pas de match à venir) est mise en cache elle aussi :
+        # sinon la source serait rappelée à chaque requête et son quota vite épuisé.
+        entry = cache.write(key, empty_success.data, empty_success.source)
+        empty_success.updated_at = entry.saved_at_iso
         empty_success.errors = errors
         return empty_success
 

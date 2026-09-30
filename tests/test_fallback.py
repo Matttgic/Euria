@@ -60,8 +60,35 @@ def test_empty_answer_tries_next_source():
     assert only_empty.data == [] and only_empty.stale is False
 
 
+def test_empty_answer_is_cached():
+    calls = []
+
+    def empty():
+        calls.append(1)
+        return []
+
+    fetch("k", 3600, [Provider("A", empty)])
+    again = fetch("k", 3600, [Provider("A", empty)])
+    assert again.data == [] and len(calls) == 1
+
+
 def test_prune_removes_old_entries(monkeypatch):
     cache.write("odds:PL", [1], "A")
     cache.write("matches:PL", [1], "A")
     assert cache.prune("odds:", -1) == 1
     assert cache.read("odds:PL") is None and cache.read("matches:PL") is not None
+
+
+def test_http_error_detail_from_json_and_html():
+    import requests
+
+    from euria.http import _error_detail
+
+    def response(body, content_type):
+        r = requests.Response()
+        r._content = body.encode()
+        r.headers["Content-Type"] = content_type
+        return r
+
+    assert _error_detail(response('{"detail": "missing bearer token"}', "application/json")) == "missing bearer token"
+    assert _error_detail(response("<html><title>Just a moment...</title></html>", "text/html")) == "Just a moment..."

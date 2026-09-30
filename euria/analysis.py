@@ -1,4 +1,5 @@
-"""Analyse d'un match, partagée par le bot et l'API : variables, probabilités, cotes, value, météo."""
+"""Analyse d'un match, partagée par le bot et l'API : variables, probabilités, cotes, value, météo,
+points attendus, deuxième avis et actus blessures."""
 
 from __future__ import annotations
 
@@ -7,7 +8,7 @@ from datetime import datetime
 from . import predictor, services, stats
 from .fallback import Result
 from .schema import parse_utc
-from .teams import same_team
+from .teams import best_match, same_team
 
 
 def group_events(quotes: list[dict]) -> list[dict]:
@@ -34,12 +35,14 @@ def analyze(
     matches: Result,
     quotes: list[dict] | None = None,
     with_weather: bool = True,
+    with_news: bool = False,
 ) -> dict:
     messages: list[str] = []
     result: dict = {
         "league": league, "home": home, "away": away, "kickoff": kickoff.isoformat(),
         "features": None, "probabilities": None, "standings": None,
         "odds": {"selected": None, "all": quotes or []}, "value_bets": [], "weather": None,
+        "xpoints": None, "second_opinion": None, "news": None,
         "messages": messages, "sources": {"matches": matches.meta()},
     }
 
@@ -62,6 +65,37 @@ def analyze(
             result["value_bets"] = predictor.value_bets(result["probabilities"], quote)
     else:
         messages.append("Cotes indisponibles pour ce match.")
+
+    # Points réels contre points attendus : donnée d'information, pas une entrée du modèle actuel.
+    xpts = services.xpoints(league)
+    result["sources"]["xpoints"] = xpts.meta()
+    if xpts.ok:
+        by_team = {row["team"]: row for row in xpts.data}
+        found = {side: best_match(name, by_team) for side, name in (("home", home), ("away", away))}
+        result["xpoints"] = {side: by_team[name] if name else None for side, name in found.items()}
+        missing = [team for side, team in (("home", home), ("away", away)) if not found[side]]
+        if missing:
+            messages.append(f"Points attendus indisponibles pour {', '.join(missing)} (absent des données Football Charts).")
+    else:
+        messages.append(xpts.message or "Points attendus indisponibles.")
+
+    # Deuxième avis : le pronostic du modèle Bet Better pour ce match, s'il en publie un.
+    opinions = services.second_opinion(league)
+    result["sources"]["second_opinion"] = opinions.meta()
+    if opinions.ok:
+        result["second_opinion"] = next(
+            (o for o in opinions.data if same_team(o["home"], home) and same_team(o["away"], away)
+             and abs(parse_utc(o["utc_date"]) - kickoff).days < 2),
+            None,
+        )
+
+    # Actus blessures : à la demande seulement (The Guardian : 500 requêtes/jour).
+    if with_news:
+        result["news"] = {}
+        for side, team in (("home", home), ("away", away)):
+            found_news = services.news(team)
+            result["news"][side] = found_news.data or []
+            result["sources"][f"news_{side}"] = found_news.meta()
 
     if with_weather:
         weather = services.weather(home, kickoff)

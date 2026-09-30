@@ -28,6 +28,8 @@ def _env(name: str, default: str | None = None) -> str | None:
 # ---------------------------------------------------------------------------
 FOOTBALL_DATA_TOKEN = _env("FOOTBALL_DATA_TOKEN")
 PARLAY_API_KEY = _env("PARLAY_API_KEY")
+# Actus blessures (The Guardian) : clé gratuite, non commerciale. Sans clé, pas d'actus.
+GUARDIAN_API_KEY = _env("GUARDIAN_API_KEY")
 TELEGRAM_TOKEN = _env("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = _env("TELEGRAM_CHAT_ID")
 
@@ -65,7 +67,14 @@ TTL = {
     "weather": 3 * HOUR,
     # Stades : ils ne bougent pas.
     "venues": 30 * DAY,
+    # Points attendus (Football Charts) : ne changent qu'après une journée de championnat.
+    "xpoints": 12 * HOUR,
+    # Deuxième avis (Bet Better) : leur modèle est recalculé plusieurs fois par jour.
+    "second_opinion": 3 * HOUR,
+    # Actus (The Guardian) : 500 requêtes/jour, on ne relit pas la même équipe avant 6 h.
+    "news": 6 * HOUR,
 }
+NEWS_MAX_AGE_DAYS = 7  # une actu blessure plus ancienne n'est plus pertinente
 # Conditions Parlay : pas de conservation des cotes détaillées plus de 90 jours.
 ODDS_MAX_RETENTION_S = 90 * DAY
 
@@ -95,14 +104,17 @@ class League:
     parlay: str  # sport_key Parlay
     wikidata: str  # entité Wikidata du championnat
     openligadb: str | None = None  # raccourci OpenLigaDB (Bundesliga seulement)
+    football_charts: str = ""  # identifiant Football Charts (points attendus)
+    betbetter: str = ""  # identifiant Bet Better (deuxième avis)
 
 
 LEAGUES: dict[str, League] = {
-    "PL": League("PL", "Premier League", "E0", "soccer_epl", "Q9448"),
-    "PD": League("PD", "LaLiga", "SP1", "soccer_spain_la_liga", "Q324867"),
-    "SA": League("SA", "Serie A", "I1", "soccer_italy_serie_a", "Q15804"),
-    "BL1": League("BL1", "Bundesliga", "D1", "soccer_germany_bundesliga", "Q82595", openligadb="bl1"),
-    "FL1": League("FL1", "Ligue 1", "F1", "soccer_france_ligue_one", "Q13394"),
+    "PL": League("PL", "Premier League", "E0", "soccer_epl", "Q9448", football_charts="premier", betbetter="epl"),
+    "PD": League("PD", "LaLiga", "SP1", "soccer_spain_la_liga", "Q324867", football_charts="spain1", betbetter="la-liga"),
+    "SA": League("SA", "Serie A", "I1", "soccer_italy_serie_a", "Q15804", football_charts="italy1", betbetter="serie-a"),
+    "BL1": League("BL1", "Bundesliga", "D1", "soccer_germany_bundesliga", "Q82595", openligadb="bl1",
+                  football_charts="germany1", betbetter="bundesliga"),
+    "FL1": League("FL1", "Ligue 1", "F1", "soccer_france_ligue_one", "Q13394", football_charts="france1", betbetter="ligue-1"),
 }
 
 

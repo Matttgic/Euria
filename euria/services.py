@@ -10,8 +10,11 @@ from .config import TTL, get_league, season_for
 from .fallback import Provider, Result, fetch
 from .http import SourceError
 from .sources import (
+    betbetter,
+    football_charts,
     football_data_couk,
     football_data_org,
+    guardian,
     met_norway,
     nominatim,
     open_meteo,
@@ -99,7 +102,12 @@ def venue(team: str) -> Result:
 # ---------------------------------------------------------------------------
 # Météo au stade, à l'heure du coup d'envoi
 # ---------------------------------------------------------------------------
+WEATHER_HORIZON = open_meteo.HORIZON  # au-delà, aucune des deux sources ne prévoit
+
+
 def weather(home_team: str, kickoff: datetime) -> Result:
+    if kickoff - datetime.now(timezone.utc) > WEATHER_HORIZON:
+        return Result(None, None, None, message=f"Météo pas encore disponible : match dans plus de {WEATHER_HORIZON.days} jours.")
     place = venue(home_team)
     if not place.ok:
         return Result(None, None, None, stale=True, message=f"Météo indisponible : stade de {home_team} inconnu.", errors=place.errors)
@@ -116,3 +124,35 @@ def weather(home_team: str, kickoff: datetime) -> Result:
     if result.ok:
         result.data = {**result.data, "stadium": place.data.get("stadium"), "kickoff": schema.iso_utc(kickoff)}
     return result
+
+
+# ---------------------------------------------------------------------------
+# Enrichissements (sans secours gratuit : en cas de panne, dernière valeur connue)
+# ---------------------------------------------------------------------------
+def xpoints(league_code: str) -> Result:
+    """Points réels contre points attendus de chaque équipe (Football Charts)."""
+    league = get_league(league_code)
+    return fetch(
+        f"xpoints:{league.code}",
+        TTL["xpoints"],
+        [Provider(football_charts.NAME, lambda: football_charts.fetch_table(league), football_charts.ATTRIBUTION)],
+    )
+
+
+def second_opinion(league_code: str) -> Result:
+    """Pronostic 1N2 du modèle Bet Better pour les prochains matchs."""
+    league = get_league(league_code)
+    return fetch(
+        f"second_opinion:{league.code}",
+        TTL["second_opinion"],
+        [Provider(betbetter.NAME, lambda: betbetter.fetch_picks(league), betbetter.ATTRIBUTION)],
+    )
+
+
+def news(team: str) -> Result:
+    """Actus blessures des 7 derniers jours pour une équipe (The Guardian)."""
+    return fetch(
+        f"news:{normalize(team)}",
+        TTL["news"],
+        [Provider(guardian.NAME, lambda: guardian.search_injuries(team), guardian.ATTRIBUTION)],
+    )
