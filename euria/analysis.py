@@ -89,7 +89,7 @@ def analyze(
             None,
         )
 
-    # Actus blessures : à la demande seulement (Noozra : 100 requêtes/jour sans clé).
+    # Actus blessures : à la demande seulement (The Guardian : 500 requêtes/jour).
     if with_news:
         result["news"] = {}
         for side, team in (("home", home), ("away", away)):

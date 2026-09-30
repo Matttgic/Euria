@@ -34,7 +34,7 @@ XPOINTS = [
     schema.xpoints(team="Leeds United", played=5, points=7, expected_points=8.2, form="DWLDW"),
 ]
 OPINIONS = [schema.opinion(league="PL", utc_date=KICKOFF, home="Arsenal", away="Leeds United", outcome="Home", probability=0.7, fair_odds=1.43)]
-NEWS = {"Arsenal": [schema.news(headline="Havertz_back *soon*", url="https://example.invalid/a", published_at=schema.iso_utc(NOW), source="Sky Sports News")]}
+NEWS = {"Arsenal": [schema.news(headline="Havertz_back *soon*", url="https://example.invalid/a", published_at=schema.iso_utc(NOW), source="The Guardian")]}
 WEATHER = {**schema.weather(latitude=51.55, longitude=-0.1, time=KICKOFF, temperature_c=12.0, precipitation_mm=0.4, wind_speed_ms=5.0), "stadium": "Emirates Stadium"}
 
 
@@ -54,7 +54,7 @@ def fake_sources(monkeypatch):
     monkeypatch.setattr(services, "weather", lambda home, kickoff: Result(WEATHER, "MET Norway", "2026-09-30T08:00:00+00:00", attribution="Données météo : MET Norway (CC BY 4.0)"))
     monkeypatch.setattr(services, "xpoints", lambda code: Result(XPOINTS, "Football Charts", "2026-09-30T08:00:00+00:00", attribution="Data by football-charts.com"))
     monkeypatch.setattr(services, "second_opinion", lambda code: Result(OPINIONS, "Bet Better", "2026-09-30T08:00:00+00:00", attribution="Bet Better — https://betbetter.world"))
-    monkeypatch.setattr(services, "news", lambda team: Result(NEWS.get(team, []), "Noozra", "2026-09-30T08:00:00+00:00", attribution="Actus : Noozra (liens vers les éditeurs d'origine)"))
+    monkeypatch.setattr(services, "news", lambda team: Result(NEWS.get(team, []), "The Guardian", "2026-09-30T08:00:00+00:00", attribution="Actus : The Guardian"))
     sent: list[str] = []
     monkeypatch.setattr(telegram, "send", lambda msg: sent.append(msg) or True)
     monkeypatch.setattr(config, "MIN_MATCHES_PLAYED", 3)
@@ -109,7 +109,7 @@ def test_api_endpoints(fake_sources):
     assert "Données météo : MET Norway (CC BY 4.0)" in pred["meta"]["attribution"]
     assert report["sources"]["matches"]["updated_at"]
     assert report["xpoints"]["home"]["luck"] == 1.51 and report["second_opinion"]["outcome"] == "Home"
-    assert report["news"]["home"][0]["source"] == "Sky Sports News" and report["news"]["away"] == []
+    assert report["news"]["home"][0]["source"] == "The Guardian" and report["news"]["away"] == []
     assert "Data by football-charts.com" in pred["meta"]["attribution"]
 
 

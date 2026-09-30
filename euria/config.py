@@ -28,9 +28,8 @@ def _env(name: str, default: str | None = None) -> str | None:
 # ---------------------------------------------------------------------------
 FOOTBALL_DATA_TOKEN = _env("FOOTBALL_DATA_TOKEN")
 PARLAY_API_KEY = _env("PARLAY_API_KEY")
-# Facultative : sans clé, 100 requêtes/jour par IP, et Noozra refuse les serveurs GitHub Actions (HTTP 403,
-# constaté le 30/09/2026). Avec une clé gratuite : 5 000/jour, comptées par clé.
-NOOZRA_API_KEY = _env("NOOZRA_API_KEY")
+# Actus blessures (The Guardian) : clé gratuite, non commerciale. Sans clé, pas d'actus.
+GUARDIAN_API_KEY = _env("GUARDIAN_API_KEY")
 TELEGRAM_TOKEN = _env("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = _env("TELEGRAM_CHAT_ID")
 
@@ -72,7 +71,7 @@ TTL = {
     "xpoints": 12 * HOUR,
     # Deuxième avis (Bet Better) : leur modèle est recalculé plusieurs fois par jour.
     "second_opinion": 3 * HOUR,
-    # Actus (Noozra) : 100 requêtes/jour sans clé, donc on ne relit pas la même équipe avant 6 h.
+    # Actus (The Guardian) : 500 requêtes/jour, on ne relit pas la même équipe avant 6 h.
     "news": 6 * HOUR,
 }
 NEWS_MAX_AGE_DAYS = 7  # une actu blessure plus ancienne n'est plus pertinente

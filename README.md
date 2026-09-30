@@ -43,12 +43,13 @@ tests/                      tests hors ligne ; tests/live/ = un test réel par A
 | Stades | Wikidata | TheSportsDB + Nominatim | aucune | 30 j |
 | Points réels vs attendus | Football Charts | dernière valeur connue | aucune | 12 h |
 | Deuxième avis (pronostic 1N2) | Bet Better | dernière valeur connue | aucune | 3 h |
-| Actus blessures (7 derniers jours) | Noozra | dernière valeur connue | `NOOZRA_API_KEY` (gratuite ; indispensable sur GitHub Actions) | 6 h |
+| Actus blessures (7 derniers jours) | The Guardian | dernière valeur connue | `GUARDIAN_API_KEY` (gratuite, non commerciale) | 6 h |
 
 Les trois dernières lignes sont des informations affichées dans les alertes et l'API : elles ne sont
 pas des entrées du modèle actuel (elles sont enregistrées dans `data/predictions.csv` pour un futur
-réentraînement). Noozra est limité à 100 requêtes/jour sans clé : les actus ne sont cherchées que
-pour les matchs qui déclenchent une alerte, et via `/news` ou `/predict`.
+réentraînement). Les actus (The Guardian, 500 appels/jour) ne sont cherchées que pour les matchs qui
+déclenchent une alerte, et via `/news` ou `/predict`. Noozra, d'abord retenu, est bloqué sur GitHub
+Actions par une protection anti-robots.
 
 Le classement et les variables du modèle sont **calculés par Euria à partir des scores** : quelle que
 soit la source des matchs, le calcul est identique. Si toutes les sources d'une donnée tombent, la
@@ -58,7 +59,7 @@ Mentions obligatoires (ajoutées automatiquement là où la donnée est renvoyé
 « Football data provided by the Football-Data.org API », « Données météo : MET Norway (CC BY 4.0) »,
 « Données météo : Open-Meteo.com (CC BY 4.0) », « © OpenStreetMap contributors »,
 « Data by football-charts.com » (usage personnel ou de recherche, pas de revente),
-« Bet Better — https://betbetter.world » (CC BY 4.0), « Actus : Noozra ».
+« Bet Better — https://betbetter.world » (CC BY 4.0), « Actus : The Guardian » (clé non commerciale).
 
 ## Installation
 
@@ -82,7 +83,7 @@ Toutes les réponses : `{"data": ..., "meta": {"source", "updated_at", "stale", 
 | `GET /weather?home=Arsenal&kickoff=2026-10-10T11:30:00Z` | météo au stade de l'équipe à domicile |
 | `GET /xpoints/{league}` | points réels contre points attendus de chaque équipe |
 | `GET /second-opinion/{league}` | pronostics 1N2 du modèle Bet Better |
-| `GET /news?team=Arsenal` | actus blessures des 7 derniers jours (titres en anglais) |
+| `GET /news?team=Arsenal` | actus blessures des 7 derniers jours (The Guardian, en anglais) |
 | `POST /predict` `{"league": "PL", "home": "Arsenal", "away": "Leeds United"}` | probabilités, variables, cotes, value, météo, classement, points attendus, deuxième avis, actus |
 
 ## Tests

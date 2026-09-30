@@ -1,13 +1,13 @@
 """Chaque source, appliquée à une vraie réponse capturée le 30/09/2026, renvoie le format commun."""
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
 from euria import schema
 from euria.config import LEAGUES
 from euria.http import SourceError
-from euria.sources import betbetter, football_charts, noozra, football_data_couk, football_data_org, met_norway, nominatim, open_meteo, openligadb, parlay, thesportsdb, wikidata
+from euria.sources import betbetter, football_charts, guardian, football_data_couk, football_data_org, met_norway, nominatim, open_meteo, openligadb, parlay, thesportsdb, wikidata
 from tests.conftest import load_sample
 
 MATCH_KEYS = set(schema.match(league="PL", season=2026, utc_date="x", home="a", away="b", status="SCHEDULED"))
@@ -124,29 +124,32 @@ def test_betbetter_error_field():
         betbetter.parse_picks({"picks": [], "error": "model offline"}, LEAGUES["PL"])
 
 
-def test_noozra_search_and_age_filter():
-    news = noozra.parse_search(load_sample("noozra_search_arsenal.json"))
-    assert news[0]["source"] == "Sky Sports News" and "Havertz" in news[0]["headline"]
-    recent = {"articles": [
-        {"headline": "récent", "url": "u", "published_at": schema.iso_utc(datetime.now(timezone.utc)), "source": "S"},
-        {"headline": "ancien", "url": "u", "published_at": "2020-01-01T00:00:00Z", "source": "S"},
-    ]}
-    assert [n["headline"] for n in noozra.parse_search(recent, max_age_days=7)] == ["récent"]
+def test_guardian_documented_format():
+    news = guardian.parse_search(load_sample("guardian_search_doc_example.json"))
+    assert news == [{
+        "headline": "Russia-Ukraine war latest: what we know on day 240 of the invasion",
+        "url": "https://www.theguardian.com/world/2022/oct/21/russia-ukraine-war-latest-what-we-know-on-day-240-of-the-invasion",
+        "published_at": "2022-10-21T14:06:14Z",
+        "source": "The Guardian",
+    }]
+    with pytest.raises(SourceError):
+        guardian.parse_search({"response": {"status": "error", "message": "Invalid authentication credentials", "results": []}})
 
 
-def test_noozra_sends_key_when_configured(monkeypatch):
+def test_guardian_needs_key_and_filters_last_days(monkeypatch):
     from euria import config as cfg
 
     seen = {}
 
     def fake_get_json(source, url, params=None, headers=None):
-        seen["headers"] = headers
-        return {"articles": []}
+        seen.update(params)
+        return {"response": {"status": "ok", "results": []}}
 
-    monkeypatch.setattr(noozra, "get_json", fake_get_json)
-    monkeypatch.setattr(cfg, "NOOZRA_API_KEY", "nk_test")
-    noozra.search_injuries("Arsenal")
-    assert seen["headers"] == {"Authorization": "Bearer nk_test"}
-    monkeypatch.setattr(cfg, "NOOZRA_API_KEY", None)
-    noozra.search_injuries("Arsenal")
-    assert seen["headers"] is None
+    monkeypatch.setattr(guardian, "get_json", fake_get_json)
+    monkeypatch.setattr(cfg, "GUARDIAN_API_KEY", None)
+    with pytest.raises(SourceError):
+        guardian.search_injuries("Arsenal")
+    monkeypatch.setattr(cfg, "GUARDIAN_API_KEY", "g_test")
+    assert guardian.search_injuries("Arsenal") == []
+    assert seen["api-key"] == "g_test" and seen["section"] == "football" and seen["q"] == "Arsenal injury"
+    assert seen["from-date"] == (datetime.now(timezone.utc) - timedelta(days=cfg.NEWS_MAX_AGE_DAYS)).date().isoformat()

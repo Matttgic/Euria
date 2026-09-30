@@ -1,0 +1,28 @@
+{
+  "_note": "Exemple de réponse tiré de la documentation officielle (open-platform.theguardian.com/documentation/md/content_search.md).",
+  "response": {
+    "status": "ok",
+    "userTier": "developer",
+    "total": 1,
+    "startIndex": 1,
+    "pageSize": 10,
+    "currentPage": 1,
+    "pages": 1,
+    "orderBy": "newest",
+    "results": [
+      {
+        "id": "world/2022/oct/21/russia-ukraine-war-latest-what-we-know-on-day-240-of-the-invasion",
+        "type": "article",
+        "sectionId": "world",
+        "sectionName": "World news",
+        "webPublicationDate": "2022-10-21T14:06:14Z",
+        "webTitle": "Russia-Ukraine war latest: what we know on day 240 of the invasion",
+        "webUrl": "https://www.theguardian.com/world/2022/oct/21/russia-ukraine-war-latest-what-we-know-on-day-240-of-the-invasion",
+        "apiUrl": "https://content.guardianapis.com/world/2022/oct/21/russia-ukraine-war-latest-what-we-know-on-day-240-of-the-invasion",
+        "isHosted": false,
+        "pillarId": "pillar/news",
+        "pillarName": "News"
+      }
+    ]
+  }
+}

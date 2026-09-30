@@ -14,9 +14,9 @@ from .sources import (
     football_charts,
     football_data_couk,
     football_data_org,
+    guardian,
     met_norway,
     nominatim,
-    noozra,
     open_meteo,
     openligadb,
     parlay,
@@ -150,9 +150,9 @@ def second_opinion(league_code: str) -> Result:
 
 
 def news(team: str) -> Result:
-    """Actus blessures des 7 derniers jours pour une équipe (Noozra)."""
+    """Actus blessures des 7 derniers jours pour une équipe (The Guardian)."""
     return fetch(
         f"news:{normalize(team)}",
         TTL["news"],
-        [Provider(noozra.NAME, lambda: noozra.search_injuries(team), noozra.ATTRIBUTION)],
+        [Provider(guardian.NAME, lambda: guardian.search_injuries(team), guardian.ATTRIBUTION)],
     )
