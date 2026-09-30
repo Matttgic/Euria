@@ -1,0 +1,90 @@
+{
+ "_note": "Structure identique à la réponse réelle de /v1/try/soccer_epl/odds (30/09/2026). Les prix sont fictifs : les conditions Parlay interdisent de republier ou de conserver plus de 90 jours les cotes réelles.",
+ "demo": true,
+ "demo_message": "This is a free no-auth demo capped at 60 requests/hour and the first 5 events. Sign up free for 1,000 credits/month, all sports, all books, and all markets at https://parlay-api.com/signup",
+ "demo_signup_url": "https://parlay-api.com/signup",
+ "demo_remaining_hour": 59,
+ "sport_key": "soccer_epl",
+ "events_returned": 5,
+ "events": [
+  {
+   "id": "b9ad44991b7e8741db8209081bd2d65d",
+   "sport_key": "soccer_epl",
+   "sport_title": "EPL",
+   "commence_time": "2026-10-10T11:30:00Z",
+   "home_team": "Arsenal",
+   "away_team": "Leeds United",
+   "bookmakers": [
+    {
+     "key": "pinnacle",
+     "title": "Pinnacle",
+     "last_update": "2026-09-30T18:34:19Z",
+     "markets": [
+      {
+       "key": "h2h",
+       "last_update": "2026-09-30T18:09:00Z",
+       "outcomes": [
+        {
+         "name": "Arsenal",
+         "price": -250
+        },
+        {
+         "name": "Leeds United",
+         "price": 600
+        },
+        {
+         "name": "Draw",
+         "price": 400
+        }
+       ]
+      }
+     ],
+     "topped_up": true,
+     "last_update_ms": 1790793259359,
+     "stale_seconds": 5.65
+    }
+   ],
+   "canonical_event_id": "825539ebd4470d03",
+   "commence_time_reported": true
+  },
+  {
+   "id": "897bece180f4567d8ffa3a4b57ed0d48",
+   "sport_key": "soccer_epl",
+   "sport_title": "EPL",
+   "commence_time": "2026-10-10T14:00:00Z",
+   "home_team": "Aston Villa",
+   "away_team": "Brentford",
+   "bookmakers": [
+    {
+     "key": "pinnacle",
+     "title": "Pinnacle",
+     "last_update": "2026-09-30T18:34:19Z",
+     "markets": [
+      {
+       "key": "h2h",
+       "last_update": "2026-09-30T18:09:00Z",
+       "outcomes": [
+        {
+         "name": "Aston Villa",
+         "price": 160
+        },
+        {
+         "name": "Brentford",
+         "price": 150
+        },
+        {
+         "name": "Draw",
+         "price": 250
+        }
+       ]
+      }
+     ],
+     "last_update_ms": 1790793259359,
+     "stale_seconds": 5.65
+    }
+   ],
+   "canonical_event_id": "9ab3dcd9fae0d0e2",
+   "commence_time_reported": true
+  }
+ ]
+}

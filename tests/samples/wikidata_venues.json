@@ -1,0 +1,203 @@
+{
+ "head": {
+  "vars": [
+   "club",
+   "clubLabel",
+   "venueLabel",
+   "coord"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q704"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(4.982131 45.765224)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Olympique Lyonnais"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Parc Olympique Lyonnais"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q631"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(9.123888888 45.478055555)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Inter Milan"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Giuseppe Meazza Stadium"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1543"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(9.123888888 45.478055555)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "AC Milan"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Giuseppe Meazza Stadium"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q483020"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(2.25305 48.84145)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Paris Saint-Germain FC"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Parc des Princes"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q1051013"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(2.34511 48.81716)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Paris FC"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Stade Charléty"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q18656"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(-2.291388888 53.463055555)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Manchester United F.C."
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Old Trafford"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q8780"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(2.075667 41.347861)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "RCD Espanyol de Barcelona"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "RCDE Stadium"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q10315"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(-1.973617 43.301378)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Real Sociedad"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Anoeta Stadium"
+    }
+   },
+   {
+    "club": {
+     "type": "uri",
+     "value": "http://www.wikidata.org/entity/Q8780"
+    },
+    "coord": {
+     "datatype": "http://www.opengis.net/ont/geosparql#wktLiteral",
+     "type": "literal",
+     "value": "Point(2.133333333 41.393055555)"
+    },
+    "clubLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "RCD Espanyol de Barcelona"
+    },
+    "venueLabel": {
+     "xml:lang": "en",
+     "type": "literal",
+     "value": "Estadi de Sarrià"
+    }
+   }
+  ]
+ }
+}

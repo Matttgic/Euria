@@ -1,0 +1,1 @@
+{"latitude":48.84,"longitude":2.2599998,"generationtime_ms":0.17082691192626953,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":32.0,"hourly_units":{"time":"iso8601","temperature_2m":"°C","precipitation":"mm","wind_speed_10m":"m/s"},"hourly":{"time":["2026-10-12T19:00"],"temperature_2m":[13.0],"precipitation":[0.00],"wind_speed_10m":[0.78]}}
