@@ -77,3 +77,18 @@ def test_prune_removes_old_entries(monkeypatch):
     cache.write("matches:PL", [1], "A")
     assert cache.prune("odds:", -1) == 1
     assert cache.read("odds:PL") is None and cache.read("matches:PL") is not None
+
+
+def test_http_error_detail_from_json_and_html():
+    import requests
+
+    from euria.http import _error_detail
+
+    def response(body, content_type):
+        r = requests.Response()
+        r._content = body.encode()
+        r.headers["Content-Type"] = content_type
+        return r
+
+    assert _error_detail(response('{"detail": "missing bearer token"}', "application/json")) == "missing bearer token"
+    assert _error_detail(response("<html><title>Just a moment...</title></html>", "text/html")) == "Just a moment..."
