@@ -24,7 +24,18 @@ _STOPWORDS = {
 _AMBIGUOUS_SHORT = {"paris", "milan", "madrid", "manchester", "barcelona", "sevilla", "bilbao"}
 
 # Variantes observées dans les sources -> forme longue. Clés et valeurs déjà normalisées.
+# Les noms courts de football-data.org (« Barça », « Atleti », « HSV »…) ont été relevés le
+# 30/09/2026 par tests/live/test_live_team_names.py.
 _ALIASES = {
+    "barca": "barcelona",
+    "atleti": "atletico madrid",
+    "real oviedo": "oviedo",
+    "wolves": "wolverhampton",
+    "wolverhampton wanderers": "wolverhampton",
+    "hsv": "hamburg",
+    "bremen": "werder bremen",
+    "frankfurt": "eintracht frankfurt",
+    "olympique lyon": "lyon",
     "man city": "manchester city",
     "man united": "manchester united",
     "man utd": "manchester united",

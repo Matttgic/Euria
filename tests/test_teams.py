@@ -21,6 +21,21 @@ PAIRS = [
     ("Sociedad", "Real Sociedad"),
     ("Lens", "R.C. Lens"),
     ("Brighton", "Brighton & Hove Albion F.C."),
+    # Noms courts réels de football-data.org face à football-data.co.uk et à l'ancien suivi des paris
+    ("Barcelona", "Barça"),
+    ("Ath Madrid", "Atleti"),
+    ("Atletico Madrid", "Atleti"),
+    ("Oviedo", "Real Oviedo"),
+    ("Wolves", "Wolverhampton"),
+    ("Hamburg", "HSV"),
+    ("Hamburger SV", "HSV"),
+    ("Werder Bremen", "Bremen"),
+    ("Ein Frankfurt", "Frankfurt"),
+    ("Eintracht Frankfurt", "Frankfurt"),
+    ("Lyon", "Olympique Lyon"),
+    ("Borussia Mönchengladbach", "M'gladbach"),
+    ("Paris SG", "PSG"),
+    ("Nott'm Forest", "Nottingham"),
 ]
 
 
@@ -35,6 +50,8 @@ def test_known_variants_match(a, b):
     ("Milan", "Inter Milan"),
     ("Real Madrid", "Atlético Madrid"),
     ("Barcelona", "RCD Espanyol de Barcelona"),
+    ("Oviedo", "Real Madrid"),
+    ("Frankfurt", "Union Berlin"),
 ])
 def test_different_clubs_do_not_match(a, b):
     assert not same_team(a, b)
