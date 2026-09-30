@@ -1,6 +1,8 @@
 """Noozra : recherche dans les titres d'actualité sportive (blessures, suspensions) — sans clé.
 
-Sans clé : 100 requêtes/jour par IP (clé gratuite : 5 000/jour). Chaque titre renvoie vers l'article
+Sans clé : 100 requêtes/jour par IP. Clé gratuite (NOOZRA_API_KEY, en-tête Authorization: Bearer) :
+5 000/jour comptées par clé — nécessaire sur GitHub Actions, dont les adresses reçoivent HTTP 403
+sans clé. Chaque titre renvoie vers l'article
 de l'éditeur d'origine (Sky Sports, Independent…), en anglais pour l'essentiel.
 Adresse : GET https://noozra.com/api/search?q={texte}&category=sports&limit={n}
 Champs utilisés : articles[].headline / url / published_at / source."""
@@ -32,5 +34,6 @@ def parse_search(payload: dict, max_age_days: int | None = None) -> list[dict]:
 
 
 def search_injuries(team: str, limit: int = 5) -> list[dict]:
-    payload = get_json(NAME, URL, params={"q": f"{team} injury", "category": "sports", "limit": limit})
+    headers = {"Authorization": f"Bearer {config.NOOZRA_API_KEY}"} if config.NOOZRA_API_KEY else None
+    payload = get_json(NAME, URL, params={"q": f"{team} injury", "category": "sports", "limit": limit}, headers=headers)
     return parse_search(payload, config.NEWS_MAX_AGE_DAYS)

@@ -132,3 +132,21 @@ def test_noozra_search_and_age_filter():
         {"headline": "ancien", "url": "u", "published_at": "2020-01-01T00:00:00Z", "source": "S"},
     ]}
     assert [n["headline"] for n in noozra.parse_search(recent, max_age_days=7)] == ["récent"]
+
+
+def test_noozra_sends_key_when_configured(monkeypatch):
+    from euria import config as cfg
+
+    seen = {}
+
+    def fake_get_json(source, url, params=None, headers=None):
+        seen["headers"] = headers
+        return {"articles": []}
+
+    monkeypatch.setattr(noozra, "get_json", fake_get_json)
+    monkeypatch.setattr(cfg, "NOOZRA_API_KEY", "nk_test")
+    noozra.search_injuries("Arsenal")
+    assert seen["headers"] == {"Authorization": "Bearer nk_test"}
+    monkeypatch.setattr(cfg, "NOOZRA_API_KEY", None)
+    noozra.search_injuries("Arsenal")
+    assert seen["headers"] is None

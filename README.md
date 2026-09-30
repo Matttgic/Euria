@@ -43,7 +43,7 @@ tests/                      tests hors ligne ; tests/live/ = un test réel par A
 | Stades | Wikidata | TheSportsDB + Nominatim | aucune | 30 j |
 | Points réels vs attendus | Football Charts | dernière valeur connue | aucune | 12 h |
 | Deuxième avis (pronostic 1N2) | Bet Better | dernière valeur connue | aucune | 3 h |
-| Actus blessures (7 derniers jours) | Noozra | dernière valeur connue | aucune | 6 h |
+| Actus blessures (7 derniers jours) | Noozra | dernière valeur connue | `NOOZRA_API_KEY` (gratuite ; indispensable sur GitHub Actions) | 6 h |
 
 Les trois dernières lignes sont des informations affichées dans les alertes et l'API : elles ne sont
 pas des entrées du modèle actuel (elles sont enregistrées dans `data/predictions.csv` pour un futur

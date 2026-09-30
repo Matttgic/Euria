@@ -28,6 +28,9 @@ def _env(name: str, default: str | None = None) -> str | None:
 # ---------------------------------------------------------------------------
 FOOTBALL_DATA_TOKEN = _env("FOOTBALL_DATA_TOKEN")
 PARLAY_API_KEY = _env("PARLAY_API_KEY")
+# Facultative : sans clé, 100 requêtes/jour par IP, et Noozra refuse les serveurs GitHub Actions (HTTP 403,
+# constaté le 30/09/2026). Avec une clé gratuite : 5 000/jour, comptées par clé.
+NOOZRA_API_KEY = _env("NOOZRA_API_KEY")
 TELEGRAM_TOKEN = _env("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = _env("TELEGRAM_CHAT_ID")
 
