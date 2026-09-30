@@ -1,0 +1,13 @@
+{
+ "teams": [
+  {
+   "idTeam": "133739",
+   "strTeam": "Barcelona",
+   "strSport": "Soccer",
+   "strLeague": "Spanish La Liga",
+   "strStadium": "Spotify Camp Nou",
+   "strLocation": "Barcelona",
+   "strCountry": "Spain"
+  }
+ ]
+}
