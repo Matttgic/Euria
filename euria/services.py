@@ -10,7 +10,6 @@ from .config import TTL, get_league, season_for
 from .fallback import Provider, Result, fetch
 from .http import SourceError
 from .sources import (
-    api_football,
     football_data_couk,
     football_data_org,
     met_norway,
@@ -42,7 +41,9 @@ def matches(league_code: str, season: int | None = None) -> Result:
 
 
 # ---------------------------------------------------------------------------
-# Cotes 1N2
+# Cotes 1N2 — pas de secours gratuit : API-Football (offre gratuite) n'a plus accès à la saison
+# en cours (« Free plans do not have access to this season », constaté le 30/09/2026). En cas de
+# panne de Parlay, la dernière valeur connue est utilisée.
 # ---------------------------------------------------------------------------
 def odds(league_code: str) -> Result:
     league = get_league(league_code)
@@ -52,7 +53,6 @@ def odds(league_code: str) -> Result:
         TTL["odds"],
         [
             Provider(parlay.NAME, lambda: parlay.fetch_odds(league), parlay.ATTRIBUTION),
-            Provider(api_football.NAME, lambda: api_football.fetch_odds(league), api_football.ATTRIBUTION),
         ],
     )
 

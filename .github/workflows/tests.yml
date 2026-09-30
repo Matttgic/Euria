@@ -34,5 +34,4 @@ jobs:
         env:
           FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
           PARLAY_API_KEY: ${{ secrets.PARLAY_API_KEY }}
-          API_FOOTBALL_KEY: ${{ secrets.API_KEY_FOOTBALL }}
         run: pytest -m live -rs

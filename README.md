@@ -38,7 +38,7 @@ tests/                      tests hors ligne ; tests/live/ = un test réel par A
 | Donnée | Principale | Secours | Clé | Cache |
 |---|---|---|---|---|
 | Matchs et scores | football-data.org | football-data.co.uk (CSV), OpenLigaDB (Bundesliga) | `FOOTBALL_DATA_TOKEN` (gratuite) | 1 h |
-| Cotes 1N2 | Parlay API (PMU, Unibet, bet365, Pinnacle) | API-Football (bet365) | `PARLAY_API_KEY`, `API_FOOTBALL_KEY` (gratuites) | 4 h |
+| Cotes 1N2 | Parlay API (PMU, Unibet, bet365, Pinnacle) | aucun gratuit (dernière valeur connue) | `PARLAY_API_KEY` (gratuite) | 4 h |
 | Météo au stade | MET Norway | Open-Meteo (non commercial) | aucune | 3 h |
 | Stades | Wikidata | TheSportsDB + Nominatim | aucune | 30 j |
 

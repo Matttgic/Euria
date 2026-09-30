@@ -28,8 +28,6 @@ def _env(name: str, default: str | None = None) -> str | None:
 # ---------------------------------------------------------------------------
 FOOTBALL_DATA_TOKEN = _env("FOOTBALL_DATA_TOKEN")
 PARLAY_API_KEY = _env("PARLAY_API_KEY")
-# API_KEY_FOOTBALL = ancien nom utilisé par bot.py, gardé pour ne pas casser les secrets existants
-API_FOOTBALL_KEY = _env("API_FOOTBALL_KEY") or _env("API_KEY_FOOTBALL")
 TELEGRAM_TOKEN = _env("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = _env("TELEGRAM_CHAT_ID")
 
@@ -95,17 +93,16 @@ class League:
     name: str
     couk: str  # fichier CSV football-data.co.uk
     parlay: str  # sport_key Parlay
-    api_football: int  # identifiant API-Football
     wikidata: str  # entité Wikidata du championnat
     openligadb: str | None = None  # raccourci OpenLigaDB (Bundesliga seulement)
 
 
 LEAGUES: dict[str, League] = {
-    "PL": League("PL", "Premier League", "E0", "soccer_epl", 39, "Q9448"),
-    "PD": League("PD", "LaLiga", "SP1", "soccer_spain_la_liga", 140, "Q324867"),
-    "SA": League("SA", "Serie A", "I1", "soccer_italy_serie_a", 135, "Q15804"),
-    "BL1": League("BL1", "Bundesliga", "D1", "soccer_germany_bundesliga", 78, "Q82595", openligadb="bl1"),
-    "FL1": League("FL1", "Ligue 1", "F1", "soccer_france_ligue_one", 61, "Q13394"),
+    "PL": League("PL", "Premier League", "E0", "soccer_epl", "Q9448"),
+    "PD": League("PD", "LaLiga", "SP1", "soccer_spain_la_liga", "Q324867"),
+    "SA": League("SA", "Serie A", "I1", "soccer_italy_serie_a", "Q15804"),
+    "BL1": League("BL1", "Bundesliga", "D1", "soccer_germany_bundesliga", "Q82595", openligadb="bl1"),
+    "FL1": League("FL1", "Ligue 1", "F1", "soccer_france_ligue_one", "Q13394"),
 }
 
 
