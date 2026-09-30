@@ -2,18 +2,19 @@
 
 Clé gratuite (API_FOOTBALL_KEY) : 100 appels/jour. Coût : 1 appel pour la liste des matchs
 + 1 appel par match. On se limite donc aux matchs des DAYS_AHEAD prochains jours.
-Adresses (celles qu'utilisait déjà Euria avant la refonte) :
-  GET https://v3.football.api-sports.io/fixtures?league={id}&next=10
+Adresses :
+  GET https://v3.football.api-sports.io/fixtures?league={id}&season={année}&from={AAAA-MM-JJ}&to={AAAA-MM-JJ}
   GET https://v3.football.api-sports.io/odds?fixture={id}&bookmaker=8&bet=1   (8 = bet365, 1 = 1N2)
-⚠️ Je n'ai pas pu appeler ces adresses sans ta clé : les champs viennent de l'ancien code, qui a
-fonctionné jusqu'en février 2026. Le test tests/live/test_live_api_football.py les vérifie dès que
-la clé est présente."""
+L'ancien code utilisait fixtures?next=10, refusé par l'offre gratuite (« Free plans do not have
+access to the Next parameter », constaté le 30/09/2026) : d'où la plage de dates.
+Le test tests/live/test_live_api_football.py appelle fetch_fixtures() et vérifie les champs utilisés."""
 
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 
 from .. import config, schema
+from ..config import season_for
 from ..config import League
 from ..http import SourceError, get_json, require
 
@@ -57,12 +58,28 @@ def parse_odds(payload, league: League, fixture: dict) -> dict | None:
     )
 
 
+def fetch_fixtures(league: League) -> list:
+    """Matchs des DAYS_AHEAD prochains jours (réponse brute d'API-Football)."""
+    today = datetime.now(timezone.utc).date()
+    payload = get_json(
+        NAME,
+        f"{BASE_URL}/fixtures",
+        params={
+            "league": league.api_football,
+            "season": season_for(today),
+            "from": today.isoformat(),
+            "to": (today + timedelta(days=config.DAYS_AHEAD)).isoformat(),
+        },
+        headers=_headers(),
+    )
+    return _response(payload)
+
+
 def fetch_odds(league: League) -> list[dict]:
     headers = _headers()
-    fixtures_payload = get_json(NAME, f"{BASE_URL}/fixtures", params={"league": league.api_football, "next": 10}, headers=headers)
     horizon = datetime.now(timezone.utc) + timedelta(days=config.DAYS_AHEAD)
     out = []
-    for f in _response(fixtures_payload):
+    for f in fetch_fixtures(league):
         kickoff = f["fixture"].get("date")
         if not kickoff or schema.parse_utc(kickoff) > horizon:
             continue
