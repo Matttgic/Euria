@@ -53,3 +53,28 @@ def weather(
 
 def venue(*, team: str, stadium: str | None, latitude: float, longitude: float) -> dict:
     return {"team": team, "stadium": stadium, "latitude": round(float(latitude), 5), "longitude": round(float(longitude), 5)}
+
+
+def xpoints(*, team: str, played: int, points: int, expected_points: float, form: str | None = None) -> dict:
+    """Points réels contre points attendus. luck > 0 : l'équipe a pris plus de points que son jeu ne le laissait prévoir."""
+    return {
+        "team": team, "played": played, "points": points, "expected_points": round(float(expected_points), 2),
+        "luck": round(points - float(expected_points), 2), "form": form,
+    }
+
+
+def opinion(
+    *, league: str, utc_date: str, home: str, away: str, outcome: str, probability: float,
+    fair_odds: float | None = None, confidence: str | None = None,
+) -> dict:
+    """Pronostic 1N2 d'un modèle extérieur (outcome : Home, Draw ou Away ; probability entre 0 et 1)."""
+    if outcome not in ("Home", "Draw", "Away"):
+        raise ValueError(f"issue inconnue : {outcome}")
+    return {
+        "league": league, "utc_date": utc_date, "home": home, "away": away, "outcome": outcome,
+        "probability": round(float(probability), 4), "fair_odds": fair_odds, "confidence": confidence,
+    }
+
+
+def news(*, headline: str, url: str, published_at: str, source: str | None) -> dict:
+    return {"headline": headline, "url": url, "published_at": published_at, "source": source}

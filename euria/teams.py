@@ -36,6 +36,10 @@ _ALIASES = {
     "bremen": "werder bremen",
     "frankfurt": "eintracht frankfurt",
     "olympique lyon": "lyon",
+    # Football Charts et Bet Better (relevés le 30/09/2026)
+    "atl madrid": "atletico madrid",
+    "dep a coruna": "deportivo coruna",
+    "ca osasuna": "osasuna",
     "man city": "manchester city",
     "man united": "manchester united",
     "man utd": "manchester united",
@@ -47,8 +51,7 @@ _ALIASES = {
     "bayern munchen": "bayern munich",
     "bayern": "bayern munich",
     "dortmund": "borussia dortmund",
-    "leverkusen": "bayer 04 leverkusen",
-    "bayer leverkusen": "bayer 04 leverkusen",
+    "leverkusen": "bayer leverkusen",
     "ath bilbao": "athletic",
     "athletic bilbao": "athletic",
     "ath madrid": "atletico madrid",
@@ -72,7 +75,6 @@ _ALIASES = {
     "real madrid futbol": "real madrid",
     "hull": "hull",
     "stade rennais": "rennes",
-    "stade brestois 29": "brest",
     "stade brestois": "brest",
     "olympique lyonnais": "lyon",
     "olympique marseille": "marseille",
@@ -86,17 +88,10 @@ _ALIASES = {
     "troyes": "troyes",
     "auxerre": "auxerre",
     "lens": "lens",
-    "mainz 05": "mainz",
-    "paderborn 07": "paderborn",
-    "1899 hoffenheim": "hoffenheim",
     "werder bremen": "werder bremen",
     "hamburger": "hamburg",
-    "schalke 04": "schalke",
     "union berlin": "union berlin",
     "fiorentina": "fiorentina",
-    "bologna 1909": "bologna",
-    "parma 1913": "parma",
-    "como 1907": "como",
 }
 
 
@@ -104,7 +99,8 @@ def normalize(name: str) -> str:
     text = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
     text = text.replace("&", " and ").replace("'", "").replace("’", "").replace(".", "")
     text = re.sub(r"[^a-z0-9 ]+", " ", text)
-    tokens = [t for t in text.split() if t not in _STOPWORDS and not (t.isdigit() and len(t) == 1)]
+    # Les nombres (« 1. FC », « 04 », « 07 », « 1899 ») ne distinguent jamais un club.
+    tokens = [t for t in text.split() if t not in _STOPWORDS and not t.isdigit()]
     key = " ".join(tokens) or text.strip()
     return _ALIASES.get(key, key)
 
@@ -121,7 +117,12 @@ def similarity(a: str, b: str) -> float:
     return difflib.SequenceMatcher(None, na, nb).ratio()
 
 
-def best_match(name: str, candidates: Iterable[str], threshold: float = 0.85) -> str | None:
+# Seuil de ressemblance approximative. 0,85 laissait passer « Atl. Madrid » -> « Real Madrid » (0,857) :
+# en dessous de 0,9, on préfère ne pas rapprocher (et ajouter un alias explicite).
+MATCH_THRESHOLD = 0.9
+
+
+def best_match(name: str, candidates: Iterable[str], threshold: float = MATCH_THRESHOLD) -> str | None:
     """Candidat le plus proche, ou None si aucun n'est assez proche ou si deux sont ex æquo."""
     scored = sorted(((similarity(name, c), c) for c in set(candidates)), reverse=True)
     if not scored or scored[0][0] < threshold:
@@ -132,4 +133,4 @@ def best_match(name: str, candidates: Iterable[str], threshold: float = 0.85) ->
 
 
 def same_team(a: str, b: str) -> bool:
-    return similarity(a, b) >= 0.85
+    return similarity(a, b) >= MATCH_THRESHOLD

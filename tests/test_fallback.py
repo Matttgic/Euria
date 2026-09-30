@@ -60,6 +60,18 @@ def test_empty_answer_tries_next_source():
     assert only_empty.data == [] and only_empty.stale is False
 
 
+def test_empty_answer_is_cached():
+    calls = []
+
+    def empty():
+        calls.append(1)
+        return []
+
+    fetch("k", 3600, [Provider("A", empty)])
+    again = fetch("k", 3600, [Provider("A", empty)])
+    assert again.data == [] and len(calls) == 1
+
+
 def test_prune_removes_old_entries(monkeypatch):
     cache.write("odds:PL", [1], "A")
     cache.write("matches:PL", [1], "A")

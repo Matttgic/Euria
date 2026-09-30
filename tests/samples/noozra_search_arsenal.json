@@ -1,0 +1,42 @@
+{
+ "query": "Arsenal injury",
+ "articles": [
+  {
+   "id": "6852ffad-f5fe-4b26-9ff8-7207288dc179",
+   "headline": "Havertz returning to Arsenal after suffering injury with Germany",
+   "url": "https://www.skysports.com/football/news/12040/13591713/kai-havertz-returning-to-arsenal-to-be-assessed-after-suffering-injury-for-germany-against-netherlands",
+   "published_at": "2026-09-25T10:22:17.657823Z",
+   "source": "Sky Sports News",
+   "category": "sports",
+   "image_url": "https://e1.365dm.com/26/09/1920x1080/skysports-kai-havertz-germany_7360653.jpg?20260924203711",
+   "image_width": 1920,
+   "image_height": 1080,
+   "description": "Kai Havertz is returning to Arsenal to be assessed after suffering an injury in Germany's Nations League clash with Netherlands."
+  },
+  {
+   "id": "abb8ae5f-1258-4b35-9bf2-3659517e2523",
+   "headline": "Kai Havertz returns to Arsenal for treatment on hamstring injury",
+   "url": "https://www.independent.co.uk/sport/football/havertz-injury-arsenal-hamstring-latest-germany-netherlands-b3056328.html",
+   "published_at": "2026-09-25T10:19:19Z",
+   "source": "Independent Sport",
+   "category": "sports",
+   "image_url": "https://static.independent.co.uk/2026/09/24/20/2296962990..?width=1200&auto=webp&trim=0%2C0%2C1%2C0",
+   "image_width": 1200,
+   "image_height": 800,
+   "description": "Havertz will play no further part in Germany’s Nations League games after suffering a ‘muscle sprain’ in the 1-1 draw with the Netherlands"
+  },
+  {
+   "id": "7a5ea28e-52f1-4f84-92ce-cb572295bdd5",
+   "headline": "Arsenal dealt injury blow as Kai Havertz limps off in Germany clash",
+   "url": "https://www.independent.co.uk/sport/football/kai-havertz-injury-latest-arsenal-germany-netherlands-b3056007.html",
+   "published_at": "2026-09-24T19:53:19Z",
+   "source": "Independent Sport",
+   "category": "sports",
+   "image_url": "https://static.independent.co.uk/2026/09/24/20/2296962844..?width=1200&auto=webp&crop=3%3A2",
+   "image_width": 1200,
+   "image_height": 800,
+   "description": "Havertz was chosen to lead the line in Jurgen Klopp’s first match as Germany manager"
+  }
+ ],
+ "count": 3
+}

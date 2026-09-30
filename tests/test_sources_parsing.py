@@ -7,7 +7,7 @@ import pytest
 from euria import schema
 from euria.config import LEAGUES
 from euria.http import SourceError
-from euria.sources import football_data_couk, football_data_org, met_norway, nominatim, open_meteo, openligadb, parlay, thesportsdb, wikidata
+from euria.sources import betbetter, football_charts, noozra, football_data_couk, football_data_org, met_norway, nominatim, open_meteo, openligadb, parlay, thesportsdb, wikidata
 from tests.conftest import load_sample
 
 MATCH_KEYS = set(schema.match(league="PL", season=2026, utc_date="x", home="a", away="b", status="SCHEDULED"))
@@ -101,3 +101,34 @@ def test_thesportsdb_and_nominatim():
     assert lat == pytest.approx(41.38, abs=0.01) and lon == pytest.approx(2.12, abs=0.01)
     with pytest.raises(SourceError):
         nominatim.parse_place([])
+
+
+def test_football_charts_luck():
+    rows = football_charts.parse_table(load_sample("football_charts_premier_table.json"))
+    city = rows[0]
+    assert (city["team"], city["points"], city["expected_points"], city["luck"]) == ("Manchester City", 15, 10.51, 4.49)
+
+
+def test_betbetter_away_at_home_convention():
+    opinions = betbetter.parse_picks(load_sample("betbetter_bundesliga_picks.json"), LEAGUES["BL1"])
+    assert len(opinions) == 3  # le pronostic « Total Goals » est ignoré
+    gladbach = opinions[0]
+    # « TSG Hoffenheim @ Borussia Monchengladbach » : Gladbach reçoit (vérifié sur le calendrier OpenLigaDB)
+    assert (gladbach["home"], gladbach["away"], gladbach["outcome"]) == ("Borussia Monchengladbach", "TSG Hoffenheim", "Home")
+    assert gladbach["probability"] == pytest.approx(0.304) and gladbach["utc_date"] == "2026-10-18T15:30:00Z"
+    assert opinions[2]["outcome"] == "Draw"
+
+
+def test_betbetter_error_field():
+    with pytest.raises(SourceError):
+        betbetter.parse_picks({"picks": [], "error": "model offline"}, LEAGUES["PL"])
+
+
+def test_noozra_search_and_age_filter():
+    news = noozra.parse_search(load_sample("noozra_search_arsenal.json"))
+    assert news[0]["source"] == "Sky Sports News" and "Havertz" in news[0]["headline"]
+    recent = {"articles": [
+        {"headline": "récent", "url": "u", "published_at": schema.iso_utc(datetime.now(timezone.utc)), "source": "S"},
+        {"headline": "ancien", "url": "u", "published_at": "2020-01-01T00:00:00Z", "source": "S"},
+    ]}
+    assert [n["headline"] for n in noozra.parse_search(recent, max_age_days=7)] == ["récent"]

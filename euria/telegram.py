@@ -9,6 +9,15 @@ import requests
 from . import config
 
 log = logging.getLogger(__name__)
+_MARKDOWN_SPECIAL = ("\\", "_", "*", "`", "[")
+
+
+def escape(text: str) -> str:
+    """Échappe un texte extérieur (titre d'actu, nom d'équipe) pour le Markdown de Telegram :
+    un « _ » ou un « * » non fermé ferait refuser tout le message."""
+    for char in _MARKDOWN_SPECIAL:
+        text = text.replace(char, "\\" + char)
+    return text
 
 
 def send(message: str) -> bool:

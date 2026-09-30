@@ -78,6 +78,24 @@ def get_odds(league: str) -> dict:
     return _envelope(services.odds(_league(league)))
 
 
+@app.get("/xpoints/{league}")
+def get_xpoints(league: str) -> dict:
+    """Points réels contre points attendus de chaque équipe (luck > 0 : plus de points que prévu)."""
+    return _envelope(services.xpoints(_league(league)))
+
+
+@app.get("/second-opinion/{league}")
+def get_second_opinion(league: str) -> dict:
+    """Pronostics 1N2 du modèle Bet Better pour les prochains matchs."""
+    return _envelope(services.second_opinion(_league(league)))
+
+
+@app.get("/news")
+def get_news(team: str = Query(..., description="Équipe, ex. Arsenal")) -> dict:
+    """Actus blessures des 7 derniers jours (titres en anglais, liens vers les éditeurs)."""
+    return _envelope(services.news(team))
+
+
 @app.get("/weather")
 def get_weather(
     home: str = Query(..., description="Équipe à domicile (le stade est le sien)"),
@@ -111,7 +129,7 @@ def predict(req: PredictRequest) -> dict:
         kickoff = datetime.now(timezone.utc) + timedelta(hours=1)
     elif kickoff.tzinfo is None:
         kickoff = kickoff.replace(tzinfo=timezone.utc)
-    report = analysis.analyze(code, req.home, req.away, kickoff, matches, event["quotes"] if event else None)
+    report = analysis.analyze(code, req.home, req.away, kickoff, matches, event["quotes"] if event else None, with_news=True)
     report["sources"]["odds"] = odds.meta()
     attributions = sorted({s["attribution"] for s in report["sources"].values() if s and s.get("attribution")})
     return {"data": report, "meta": {"attribution": attributions, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}}

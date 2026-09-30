@@ -7,7 +7,7 @@ import pytest
 
 from euria import config
 from euria.config import LEAGUES
-from euria.sources import football_data_couk, football_data_org
+from euria.sources import betbetter, football_charts, football_data_couk, football_data_org
 from euria.teams import best_match
 from tests.live.conftest import current_season, require_key
 
@@ -29,3 +29,22 @@ def test_names_match_between_sources(code):
         f"{code} — sans correspondance : {unmatched} ; doublons : {sorted(duplicates)} ; "
         f"noms football-data.org : {sorted(fd_names)}"
     )
+
+
+def _assert_all_match(code, names, reference):
+    mapping = {name: best_match(name, reference) for name in sorted(names)}
+    unmatched = [n for n, m in mapping.items() if m is None]
+    matched = [m for m in mapping.values() if m]
+    duplicates = {m for m in matched if matched.count(m) > 1}
+    assert not unmatched and not duplicates, (
+        f"{code} — sans correspondance : {unmatched} ; doublons : {sorted(duplicates)} ; référence : {sorted(reference)}"
+    )
+
+
+@pytest.mark.parametrize("code", list(LEAGUES))
+def test_enrichment_names_match_results(code):
+    """Les équipes de Football Charts et de Bet Better doivent se rapprocher des résultats (sans clé)."""
+    league = LEAGUES[code]
+    reference = {m[k] for m in football_data_couk.fetch_matches(league, current_season()) for k in ("home", "away")}
+    _assert_all_match(f"{code} Football Charts", {r["team"] for r in football_charts.fetch_table(league)}, reference)
+    _assert_all_match(f"{code} Bet Better", {o[k] for o in betbetter.fetch_picks(league) for k in ("home", "away")}, reference)
