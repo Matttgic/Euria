@@ -8,7 +8,7 @@ from functools import lru_cache
 
 import numpy as np
 
-from . import config
+from . import config, market
 
 log = logging.getLogger(__name__)
 OUTCOMES = ("Home", "Draw", "Away")
@@ -53,3 +53,16 @@ def value_bets(probabilities: dict[str, float], quote: dict, threshold: float | 
         if value > threshold:
             out.append({"outcome": outcome, "probability": probabilities[outcome], "odds": prices[outcome], "value": round(value, 3)})
     return sorted(out, key=lambda b: -b["value"])
+
+
+def market_probabilities(quotes: list[dict]) -> dict | None:
+    """Probabilités du marché sans marge (méthode de Shin), sur Pinnacle si disponible
+    (marché le plus efficient), sinon sur la cote retenue pour la value."""
+    by_book = {q["bookmaker"]: q for q in quotes}
+    quote = by_book.get("pinnacle") or choose_quote(quotes)
+    if not quote:
+        return None
+    probs = market.implied_shin([quote["home_odds"], quote["draw_odds"], quote["away_odds"]])
+    if not probs:
+        return None
+    return {"bookmaker": quote["bookmaker"], **{o: round(p, 4) for o, p in zip(OUTCOMES, probs)}}

@@ -3,7 +3,9 @@
 Hors annuaire Public APIs (validé). Mis à jour environ deux fois par semaine : les derniers
 matchs peuvent manquer. Ne contient que des matchs joués (pas de calendrier à venir).
 Adresse : GET https://football-data.co.uk/mmz4281/{2627}/{E0|F1|D1|I1|SP1}.csv
-Colonnes utilisées : Date (jj/mm/aaaa), Time (heure de Londres), HomeTeam, AwayTeam, FTHG, FTAG."""
+Colonnes utilisées : Date (jj/mm/aaaa), Time (heure de Londres), HomeTeam, AwayTeam, FTHG, FTAG.
+Cotes de clôture 1N2 (calcul de la CLV) : PSCH/PSCD/PSCA (Pinnacle), à défaut AvgCH/AvgCD/AvgCA
+(moyenne du marché)."""
 
 from __future__ import annotations
 
@@ -21,6 +23,8 @@ ATTRIBUTION = "Résultats : football-data.co.uk"
 BASE_URL = "https://football-data.co.uk/mmz4281"
 _LONDON = ZoneInfo("Europe/London")
 REQUIRED_COLUMNS = {"Date", "Time", "HomeTeam", "AwayTeam", "FTHG", "FTAG"}
+# Par ordre de préférence : Pinnacle (marché de référence), puis moyenne des bookmakers.
+CLOSING_COLUMNS = (("Pinnacle", ("PSCH", "PSCD", "PSCA")), ("Moyenne marché", ("AvgCH", "AvgCD", "AvgCA")))
 
 
 def season_folder(season: int) -> str:
@@ -53,6 +57,41 @@ def parse_csv(text: str, league: League, season: int) -> list[dict]:
             )
         )
     return out
+
+
+def _odds(row: dict, columns: tuple[str, str, str]) -> list[float] | None:
+    try:
+        values = [float(row.get(c) or "") for c in columns]
+    except ValueError:
+        return None
+    return values if all(v > 1.0 for v in values) else None
+
+
+def parse_closing_odds(text: str) -> list[dict]:
+    """Cotes 1N2 de clôture des matchs joués : {utc_date, home, away, source, odds: [1, N, 2]}."""
+    reader = csv.DictReader(io.StringIO(text.lstrip("﻿")))
+    require(NAME, REQUIRED_COLUMNS <= set(reader.fieldnames or []), f"colonnes attendues {sorted(REQUIRED_COLUMNS)}")
+    out = []
+    for row in reader:
+        if not row.get("HomeTeam"):
+            continue
+        for source, columns in CLOSING_COLUMNS:
+            odds = _odds(row, columns)
+            if odds:
+                out.append({
+                    "utc_date": _kickoff(row["Date"], row.get("Time", "")),
+                    "home": row["HomeTeam"],
+                    "away": row["AwayTeam"],
+                    "source": source,
+                    "odds": odds,
+                })
+                break
+    return out
+
+
+def fetch_closing_odds(league: League, season: int) -> list[dict]:
+    text = get_text(NAME, f"{BASE_URL}/{season_folder(season)}/{league.couk}.csv")
+    return parse_closing_odds(text)
 
 
 def fetch_matches(league: League, season: int) -> list[dict]:

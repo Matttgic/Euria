@@ -41,7 +41,7 @@ def analyze(
     result: dict = {
         "league": league, "home": home, "away": away, "kickoff": kickoff.isoformat(),
         "features": None, "probabilities": None, "standings": None,
-        "odds": {"selected": None, "all": quotes or []}, "value_bets": [], "weather": None,
+        "odds": {"selected": None, "market": None, "all": quotes or []}, "value_bets": [], "weather": None,
         "xpoints": None, "second_opinion": None, "news": None,
         "messages": messages, "sources": {"matches": matches.meta()},
     }
@@ -63,6 +63,10 @@ def analyze(
         result["odds"]["selected"] = quote
         if quote and result["probabilities"]:
             result["value_bets"] = predictor.value_bets(result["probabilities"], quote)
+        result["odds"]["market"] = predictor.market_probabilities(quotes)
+        for bet in result["value_bets"]:
+            if result["odds"]["market"]:
+                bet["market_probability"] = result["odds"]["market"][bet["outcome"]]
     else:
         messages.append("Cotes indisponibles pour ce match.")
 
