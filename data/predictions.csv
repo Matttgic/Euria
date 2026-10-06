@@ -136,3 +136,60 @@ run_at,league,kickoff,home,away,p_home,p_draw,p_away,home_gf,home_ga,home_cs,hom
 2026-10-05T16:49:09+00:00,FL1,2026-10-11T13:00:00+00:00,Nice,Strasbourg,0.0517,0.0378,0.9105,0.6,1.2,1,1,2,2,2.0,2.0,0,2,1,2,14,8,21.1,0.0,1.7,-2.07,1.56,Away,0.342,pmu,Away,football-data.org,Parlay API,MET Norway
 2026-10-05T16:49:09+00:00,FL1,2026-10-11T15:15:00+00:00,Rennes,Auxerre,0.3818,0.5006,0.1176,1.6,1.8,1,3,1,1,1.4,2.4,1,2,0,3,5,10,15.2,0.1,2.4,2.35,0.66,Away,0.152,pmu,Draw,football-data.org,Parlay API,MET Norway
 2026-10-05T16:49:09+00:00,FL1,2026-10-11T18:45:00+00:00,Troyes,Marseille,0.1913,0.4837,0.325,0.8,2.2,1,1,1,3,1.4,1.6,1,1,0,4,16,17,13.1,0.0,0.8,-1.14,-3.49,Away,0.589,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T11:30:00+00:00,Arsenal,Leeds United,0.2679,0.6136,0.1185,1.6,0.8,3,4,0,1,1.4,0.6,2,2,3,0,2,5,14.7,0.0,5.4,1.51,1.97,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T14:00:00+00:00,Aston Villa,Brentford,0.0262,0.2035,0.7703,0.8,1.8,1,1,1,3,2.0,0.8,2,2,3,0,16,4,12.7,0.02,5.9,-2.04,1.38,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T14:00:00+00:00,Chelsea,AFC Bournemouth,0.4214,0.1169,0.4617,2.0,2.4,0,2,1,2,1.2,1.6,0,0,3,2,10,17,14.8,0.0,5.1,-1.15,-3.06,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T14:00:00+00:00,Ipswich Town,Fulham,0.4869,0.238,0.2752,1.4,2.2,0,2,0,3,1.0,1.6,1,0,2,3,11,19,14.5,0.02,7.3,1.35,-3.6,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T14:00:00+00:00,Sunderland,Brighton & Hove Albion,0.0036,0.0155,0.9809,1.2,2.0,1,1,1,3,3.2,1.0,3,3,1,1,14,3,12.4,0.0,8.6,-1.07,3.1,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-10T16:30:00+00:00,Manchester United,Tottenham Hotspur,0.7673,0.1392,0.0935,1.6,1.6,0,1,2,2,0.4,1.6,2,0,2,3,12,20,11.1,0.0,4.4,-4.18,-5.45,,,bet365,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-11T13:00:00+00:00,Crystal Palace,Nottingham Forest,0.0928,0.2005,0.7067,1.2,2.2,1,1,1,3,0.8,1.0,1,1,2,2,15,13,13.9,0.0,3.1,-1.56,-1.63,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-11T13:00:00+00:00,Hull City,Everton,0.164,0.4066,0.4294,1.2,0.8,3,2,2,1,1.2,0.6,3,2,3,0,8,7,14.0,0.0,4.9,4.49,2.38,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-11T15:30:00+00:00,Liverpool,Manchester City,0.0904,0.1327,0.7769,1.4,0.8,3,2,3,0,2.6,1.0,2,5,0,0,6,1,11.7,0.0,1.5,-0.51,4.49,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PL,2026-10-12T19:00:00+00:00,Coventry City,Newcastle United,0.0419,0.2564,0.7017,0.2,2.0,1,1,0,4,1.8,1.8,1,2,2,1,18,9,17.3,0.02,5.1,-1.35,1.0,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-09T19:00:00+00:00,Malaga CF,Espanyol,0.1719,0.3095,0.5186,0.429,1.714,1,0,2,3,1.429,1.429,2,1,1,3,20,15,20.6,0.0,2.1,-3.64,-1.87,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-10T12:00:00+00:00,Rayo Vallecano,Athletic Bilbao,0.074,0.2746,0.6514,1.571,2.286,0,2,1,2,1.167,1.0,3,2,2,1,12,10,17.8,0.0,0.8,0.18,-1.23,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-10T16:30:00+00:00,FC Barcelona,Getafe,0.8319,0.1437,0.0245,4.429,1.0,3,5,0,0,0.571,1.0,2,1,2,2,1,11,,,,3.37,-0.97,,,pmu,Draw,football-data.org,Parlay API,
+2026-10-06T14:45:35+00:00,PD,2026-10-10T19:00:00+00:00,Real Madrid,Villarreal,0.894,0.0782,0.0278,2.571,1.143,1,3,0,2,1.857,1.714,0,2,0,3,4,9,16.9,0.0,1.0,-1.4,-3.78,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-11T12:00:00+00:00,Elche,Celta Vigo,0.0515,0.5738,0.3746,1.571,2.429,0,1,1,3,1.143,0.857,3,1,3,1,18,14,23.6,0.0,1.8,-0.65,-3.3,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-11T14:15:00+00:00,Real Sociedad,RC Deportivo La Coruna,0.052,0.2356,0.7124,1.286,1.857,1,3,1,1,1.429,1.143,0,2,2,1,8,7,18.9,0.0,1.9,0.76,1.65,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-11T16:30:00+00:00,Real Betis,Osasuna,0.7932,0.1456,0.0612,1.286,1.0,4,3,1,1,0.857,1.857,2,1,1,3,3,13,26.5,0.0,1.2,5.97,-0.82,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-11T19:00:00+00:00,Racing Santander,Valencia,0.5555,0.1778,0.2667,1.571,3.0,0,2,0,3,0.571,1.857,2,1,0,4,16,19,17.7,0.0,0.3,-0.34,-3.54,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,PD,2026-10-12T19:00:00+00:00,Levante UD,Sevilla,0.0394,0.0817,0.8789,1.333,2.0,2,1,2,2,1.429,1.286,2,2,1,2,17,5,19.9,0.0,1.1,-0.48,4.86,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-10T13:00:00+00:00,Genoa,Fiorentina,0.0549,0.2893,0.6558,0.6,2.0,0,0,1,4,1.2,2.4,0,1,1,3,19,17,20.8,0.0,1.5,-4.93,-3.0,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-10T16:00:00+00:00,Inter,Parma Calcio 1913,0.8324,0.1296,0.038,3.0,1.6,1,4,1,0,0.8,1.4,0,1,1,3,2,15,16.8,0.0,0.9,2.3,-0.55,,,bet365,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-10T18:45:00+00:00,SSC Napoli,Frosinone Calcio,0.2076,0.2468,0.5455,1.4,1.2,2,2,1,2,1.8,0.8,2,3,1,1,9,6,16.6,0.32,0.6,-0.34,5.19,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-11T10:30:00+00:00,Como,Roma,0.3014,0.141,0.5576,1.8,1.2,0,3,1,1,2.8,0.6,3,4,1,0,8,1,20.2,0.0,1.5,0.32,3.57,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-11T13:00:00+00:00,Lazio,Monza,0.7418,0.2071,0.0511,1.6,0.6,3,4,1,0,1.6,2.4,0,1,1,3,3,16,22.5,0.0,1.0,6.07,-1.57,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-11T13:00:00+00:00,Lecce,Bologna,0.2787,0.2125,0.5088,1.0,2.0,1,2,0,3,0.6,1.2,0,0,2,3,12,18,21.8,0.15,2.2,1.66,-4.77,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-11T16:00:00+00:00,Sassuolo,AC Milan,0.0954,0.1517,0.7528,1.8,1.8,0,2,1,2,2.0,0.8,2,3,2,0,10,5,17.8,0.0,0.3,1.54,1.85,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-11T18:45:00+00:00,Cagliari,Juventus,0.2409,0.2654,0.4937,1.0,0.4,3,4,0,1,1.6,0.8,3,3,1,1,4,7,19.9,0.0,3.5,6.54,-0.22,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-12T16:30:00+00:00,Atalanta,Venezia,0.8304,0.0839,0.0857,1.0,1.4,1,2,0,3,0.8,2.6,0,0,0,5,11,20,15.7,0.0,0.8,-1.39,-6.08,,,pmu,Home,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,SA,2026-10-12T18:45:00+00:00,Torino,Udinese,0.1632,0.2661,0.5708,1.0,1.6,0,1,1,3,1.6,2.2,0,1,1,3,14,13,16.8,0.0,0.2,-0.81,-1.49,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-09T16:30:00+00:00,Eintracht Braunschweig,Holstein Kiel,,,,,,,,,,,,,,,,,,12.1,0.07,6.5,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-09T16:30:00+00:00,Heidenheim,Kaiserslautern,,,,,,,,,,,,,,,,,,7.8,0.0,2.2,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-09T18:30:00+00:00,Borussia Dortmund,Werder Bremen,,,,,,,,,,,,,,,,,,12.0,0.35,6.0,4.66,2.5,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T11:00:00+00:00,Darmstadt,Energie Cottbus,,,,,,,,,,,,,,,,,,14.3,0.1,6.1,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T11:00:00+00:00,FC Magdeburg,Hannover 96,,,,,,,,,,,,,,,,,,15.8,0.02,5.7,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T11:00:00+00:00,Osnabruck,Dynamo Dresden,,,,,,,,,,,,,,,,,,14.0,0.17,6.5,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T13:30:00+00:00,1. FC Union Berlin,Elversberg,,,,,,,,,,,,,,,,,,14.9,0.07,5.3,-2.53,3.83,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T13:30:00+00:00,FC Augsburg,Bayern Munich,,,,,,,,,,,,,,,,,,14.9,0.02,5.4,2.24,-0.29,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T13:30:00+00:00,TSG Hoffenheim,Hamburger SV,,,,,,,,,,,,,,,,,,14.0,0.3,5.3,-3.33,-0.72,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T13:30:00+00:00,Mainz 05,Bayer Leverkusen,,,,,,,,,,,,,,,,,,15.7,0.0,4.9,0.01,-0.8,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T13:30:00+00:00,SC Paderborn 07,VfB Stuttgart,,,,,,,,,,,,,,,,,,14.2,0.05,6.6,0.85,-2.26,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T16:30:00+00:00,RB Leipzig,Eintracht Frankfurt,,,,,,,,,,,,,,,,,,11.8,0.02,3.0,-1.1,-0.48,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-10T18:30:00+00:00,Nurnberg,Wolfsburg,,,,,,,,,,,,,,,,,,11.4,0.03,2.9,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T11:30:00+00:00,Bochum,Arminia Bielefeld,,,,,,,,,,,,,,,,,,13.5,0.03,4.9,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T11:30:00+00:00,Hertha BSC,Greuther Furth,,,,,,,,,,,,,,,,,,14.4,0.08,6.0,,,,,pinnacle,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T11:30:00+00:00,St. Pauli,Karlsruher,,,,,,,,,,,,,,,,,,,,,,,,,pinnacle,,football-data.org,Parlay API,
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T13:30:00+00:00,1. FC Köln,Borussia Mönchengladbach,,,,,,,,,,,,,,,,,,13.9,0.02,5.3,-0.89,,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T13:30:00+00:00,FC Koeln,Borussia Moenchengladbach,,,,,,,,,,,,,,,,,,13.9,0.02,5.3,,,,,bet365,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,BL1,2026-10-11T15:30:00+00:00,SC Freiburg,FC Schalke 04,,,,,,,,,,,,,,,,,,10.7,0.0,0.7,3.17,0.42,,,pmu,,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-09T18:45:00+00:00,Lens,Lyon,0.122,0.1688,0.7092,1.8,1.8,0,1,1,3,2.0,0.4,3,3,2,0,15,2,15.1,0.98,6.0,-4.95,2.47,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-10T15:15:00+00:00,Lille,Le Havre,0.6603,0.308,0.0317,1.6,0.8,3,3,1,1,0.8,1.4,1,0,2,3,4,18,12.5,0.0,4.1,1.89,-3.08,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-10T18:45:00+00:00,AS Monaco,Toulouse,0.6346,0.3046,0.0607,1.6,0.6,2,4,1,0,1.4,1.8,0,1,2,2,1,13,20.7,0.0,3.5,5.82,-2.01,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-10T18:45:00+00:00,Brest,Angers,0.093,0.1797,0.7273,1.4,1.6,0,1,2,2,1.2,1.0,2,2,1,2,11,7,13.0,0.0,2.2,-1.05,1.16,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-10T18:45:00+00:00,Lorient,Paris FC,0.0645,0.2855,0.65,1.0,1.2,2,1,2,2,1.6,0.6,3,3,2,0,12,3,15.6,0.0,3.9,-1.57,3.43,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-10T18:45:00+00:00,Paris Saint-Germain,Le Mans,0.4331,0.1793,0.3876,1.6,1.4,1,2,2,1,1.8,1.8,0,1,3,1,6,9,13.4,0.0,1.9,-3.01,1.13,,,bet365,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-11T13:00:00+00:00,Nice,Strasbourg,0.0517,0.0378,0.9105,0.6,1.2,1,1,2,2,2.0,2.0,0,2,1,2,14,8,21.7,0.0,2.3,-2.07,1.56,,,pmu,Away,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-11T15:15:00+00:00,Rennes,Auxerre,0.3818,0.5006,0.1176,1.6,1.8,1,3,1,1,1.4,2.4,1,2,0,3,5,10,14.6,0.0,2.4,2.35,0.66,,,pmu,Draw,football-data.org,Parlay API,MET Norway
+2026-10-06T14:45:35+00:00,FL1,2026-10-11T18:45:00+00:00,Troyes,Marseille,0.1913,0.4837,0.325,0.8,2.2,1,1,1,3,1.4,1.6,1,1,0,4,16,17,13.4,0.0,1.8,-1.14,-3.49,Away,0.589,pmu,Draw,football-data.org,Parlay API,MET Norway
