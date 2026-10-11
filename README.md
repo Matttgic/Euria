@@ -8,6 +8,16 @@ Serie A, Bundesliga, Ligue 1), avec une API FastAPI. Chaque jour, il :
 3. envoie une alerte quand probabilité × cote dépasse le seuil (1,10 par défaut).
 
 > Outil d'analyse, pas une garantie de gain. Bilan réel au 30/09/2026 (240 paris, ancien modèle) : ROI −5,2 %.
+> CLV de ces paris (recalculée le 02/10/2026 sur 239 paris, clôture football-data.co.uk sans marge par la
+> méthode de Shin) : **−9,5 %** en moyenne, seulement 15 % des paris ont battu la clôture, alors que la
+> « value » annoncée était de +45 % en moyenne. Le modèle surestime fortement son avantage.
+
+La **CLV** (closing line value) mesure l'avantage réel bien plus vite que le ROI : cote prise × probabilité
+juste à la clôture − 1. Elle est calculée pour chaque pari réglé (colonnes `CoteCloture`, `SourceCloture`,
+`CLV` de `data/suivi_paris.csv`) et affichée dans le bilan Telegram. Clôture de référence : Pinnacle
+(`PSCH/PSCD/PSCA`), à défaut la moyenne du marché (`AvgCH/AvgCD/AvgCA`) ; football-data.co.uk ne publie
+plus Pinnacle depuis mi-janvier 2026. Chaque alerte affiche aussi la probabilité du marché sans marge
+(Pinnacle si disponible) à côté de celle du modèle.
 
 ## Architecture
 
@@ -23,6 +33,7 @@ euria/
   services.py               matchs, cotes, stades, météo prêts à l'emploi
   teams.py                  rapprochement des noms d'équipes entre sources
   stats.py                  classement et 12 variables du modèle, calculés à partir des scores
+  market.py                 probabilités du marché sans marge (Shin) et CLV
   predictor.py              modèle unique models/model_sklearn.pkl + calcul de la value
   analysis.py               analyse d'un match (partagée par le bot et l'API)
   betting.py / telegram.py  suivi des paris (data/suivi_paris.csv) et alertes
@@ -41,6 +52,7 @@ tests/                      tests hors ligne ; tests/live/ = un test réel par A
 | Cotes 1N2 | Parlay API (PMU, Unibet, bet365, Pinnacle) | aucun gratuit (dernière valeur connue) | `PARLAY_API_KEY` (gratuite) | 4 h |
 | Météo au stade | MET Norway | Open-Meteo (non commercial) | aucune | 3 h |
 | Stades | Wikidata | TheSportsDB + Nominatim | aucune | 30 j |
+| Cotes de clôture (CLV) | football-data.co.uk | aucun (dernière valeur connue) | aucune | 12 h |
 | Points réels vs attendus | Football Charts | dernière valeur connue | aucune | 12 h |
 | Deuxième avis (pronostic 1N2) | Bet Better | dernière valeur connue | aucune | 3 h |
 | Actus blessures (7 derniers jours) | The Guardian | dernière valeur connue | `GUARDIAN_API_KEY` (gratuite, non commerciale) | 6 h |
