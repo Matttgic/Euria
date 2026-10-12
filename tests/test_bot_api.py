@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 from fastapi.testclient import TestClient
 
-from euria import betting, bot, config, schema, services, telegram
+from euria import betting, bot, config, market, schema, services, telegram
 from euria.fallback import Result
 
 NOW = datetime.now(timezone.utc)
@@ -35,6 +35,9 @@ XPOINTS = [
 ]
 OPINIONS = [schema.opinion(league="PL", utc_date=KICKOFF, home="Arsenal", away="Leeds United", outcome="Home", probability=0.7, fair_odds=1.43)]
 NEWS = {"Arsenal": [schema.news(headline="Havertz_back *soon*", url="https://example.invalid/a", published_at=schema.iso_utc(NOW), source="The Guardian")]}
+# Clôture Pinnacle du match d'hier (Arsenal 2-1 Leeds) : la cote prise 1,5 bat la clôture.
+CLOSING = [{"utc_date": schema.iso_utc(NOW - timedelta(days=1)), "home": "Arsenal", "away": "Leeds",
+            "source": "Pinnacle", "odds": [1.4, 4.8, 8.0]}]
 WEATHER = {**schema.weather(latitude=51.55, longitude=-0.1, time=KICKOFF, temperature_c=12.0, precipitation_mm=0.4, wind_speed_ms=5.0), "stadium": "Emirates Stadium"}
 
 
@@ -51,6 +54,9 @@ def fake_sources(monkeypatch):
 
     monkeypatch.setattr(services, "matches", matches)
     monkeypatch.setattr(services, "odds", odds)
+    monkeypatch.setattr(services, "closing_odds", lambda code, season: Result(
+        CLOSING if code == "PL" else [], "football-data.co.uk", "2026-09-30T08:00:00+00:00",
+        attribution="Résultats : football-data.co.uk"))
     monkeypatch.setattr(services, "weather", lambda home, kickoff: Result(WEATHER, "MET Norway", "2026-09-30T08:00:00+00:00", attribution="Données météo : MET Norway (CC BY 4.0)"))
     monkeypatch.setattr(services, "xpoints", lambda code: Result(XPOINTS, "Football Charts", "2026-09-30T08:00:00+00:00", attribution="Data by football-charts.com"))
     monkeypatch.setattr(services, "second_opinion", lambda code: Result(OPINIONS, "Bet Better", "2026-09-30T08:00:00+00:00", attribution="Bet Better — https://betbetter.world"))
@@ -71,6 +77,10 @@ def test_bot_settles_bets_and_sends_value_bet(fake_sources):
     rows = betting.load()
     assert rows[0]["Result"] == "Win" and rows[0]["Ligue"] == "PL"  # 2-1 hier
     assert summary["settled"] == 1 and summary["alerts"] == 1
+    assert summary["clv_filled"] == 1
+    assert rows[0]["SourceCloture"] == "Pinnacle" and float(rows[0]["CLV"]) > 0
+    assert float(rows[0]["CoteCloture"]) == pytest.approx(1.0 / market.implied_shin([1.4, 4.8, 8.0])[0], abs=1e-3)
+    assert any("CLV moyenne : +" in m and "sur 1 paris" in m for m in fake_sources)
     new = rows[1]
     assert (new["Match"], new["Bookmaker"], new["Ligue"], new["CoupEnvoi"]) == ("Arsenal vs Leeds United", "pmu", "PL", KICKOFF)
     assert any("NOUVELLES OPPORTUNITÉS" in m and "Cotes : Parlay API" in m for m in fake_sources)
@@ -78,6 +88,8 @@ def test_bot_settles_bets_and_sends_value_bet(fake_sources):
     alert = next(m for m in fake_sources if "NOUVELLES OPPORTUNITÉS" in m)
     assert "Points réels − attendus : Arsenal +1.5 · Leeds United −1.2" in alert
     assert "Bet Better : Domicile 70 %" in alert
+    # Pari conseillé : le nul. Pinnacle 1,4 / 4,5 / 8,0 sans marge (Shin) : 20 % pour le nul
+    assert "marché (pinnacle, sans marge) : 20 %" in alert
     assert "Havertz\\_back \\*soon\\*" in alert  # titre extérieur échappé pour le Markdown de Telegram
     assert "Data by football-charts.com" in alert and "Bet Better — https://betbetter.world" in alert
     assert config.PREDICTIONS_FILE.exists()

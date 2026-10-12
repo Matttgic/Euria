@@ -105,6 +105,7 @@ def run() -> dict:
     # 1. Règlement des paris et bilan
     rows = betting.load()
     settled = betting.settle(rows)
+    clv_filled = betting.fill_clv(rows)
     betting.save(rows)
     telegram.send(betting.summary(rows))
     already_bet = betting.existing_keys(rows)
@@ -138,10 +139,15 @@ def run() -> dict:
             if betting.bet_key(match_name, event["utc_date"]) in already_bet:
                 continue
             quote = report["odds"]["selected"]
+            market_view = report["odds"]["market"]
+            market_text = (
+                f" · marché ({market_view['bookmaker']}, sans marge) : {round(best['market_probability'] * 100)} %"
+                if market_view and "market_probability" in best else ""
+            )
             alerts.append("\n".join([
                 f"⚽️ *{telegram.escape(match_name)}* ({league.name}, {kickoff:%d/%m %H:%M} UTC)",
                 f"🎯 {best['outcome']} @ {best['odds']} chez {quote['bookmaker']} "
-                f"(IA : {round(best['probability'] * 100)} %) | Value : {best['value']}",
+                f"(IA : {round(best['probability'] * 100)} %{market_text}) | Value : {best['value']}",
                 *_enrichment_lines(report, best, attributions),
             ]))
             rows.append({
@@ -159,7 +165,7 @@ def run() -> dict:
     if warnings:
         telegram.send("⚠️ *Sources en difficulté*\n" + "\n".join(f"• {w}" for w in dict.fromkeys(warnings)))
 
-    summary = {"settled": settled, "analysed": analysed, "alerts": len(alerts), "warnings": list(dict.fromkeys(warnings))}
+    summary = {"settled": settled, "clv_filled": clv_filled, "analysed": analysed, "alerts": len(alerts), "warnings": list(dict.fromkeys(warnings))}
     log.info("Terminé : %s", summary)
     return summary
 

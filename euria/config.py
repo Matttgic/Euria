@@ -73,6 +73,8 @@ TTL = {
     "second_opinion": 3 * HOUR,
     # Actus (The Guardian) : 500 requêtes/jour, on ne relit pas la même équipe avant 6 h.
     "news": 6 * HOUR,
+    # Cotes de clôture (football-data.co.uk) : fichier mis à jour environ deux fois par semaine.
+    "closing_odds": 12 * HOUR,
 }
 NEWS_MAX_AGE_DAYS = 7  # une actu blessure plus ancienne n'est plus pertinente
 # Conditions Parlay : pas de conservation des cotes détaillées plus de 90 jours.

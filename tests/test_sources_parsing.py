@@ -31,6 +31,23 @@ def test_football_data_couk_converts_london_time_to_utc():
     assert (matches[0]["home"], matches[0]["away"], matches[0]["home_goals"], matches[0]["away_goals"]) == ("Arsenal", "Coventry", 3, 0)
 
 
+def test_football_data_couk_closing_odds_prefers_pinnacle():
+    closing = football_data_couk.parse_closing_odds(load_sample("couk_E0_2526_closing.csv"))
+    assert len(closing) == 5
+    first = closing[0]
+    assert (first["home"], first["away"], first["utc_date"]) == ("Liverpool", "Bournemouth", "2025-08-15T19:00:00Z")
+    assert first["source"] == "Pinnacle" and first["odds"] == [1.29, 6.55, 9.75]
+
+
+def test_football_data_couk_closing_odds_falls_back_to_market_average():
+    text = ("Date,Time,HomeTeam,AwayTeam,FTHG,FTAG,PSCH,PSCD,PSCA,AvgCH,AvgCD,AvgCA\n"
+            "16/08/2025,15:00,Brighton,Fulham,1,1,,,,1.85,3.7,4.3\n"
+            "16/08/2025,15:00,Leeds,Everton,1,0,,,,,,\n")
+    closing = football_data_couk.parse_closing_odds(text)
+    assert len(closing) == 1  # sans aucune cote de clôture, le match est ignoré
+    assert closing[0]["source"] == "Moyenne marché" and closing[0]["odds"] == [1.85, 3.7, 4.3]
+
+
 def test_football_data_couk_rejects_unexpected_columns():
     with pytest.raises(SourceError):
         football_data_couk.parse_csv("a,b\n1,2\n", LEAGUES["PL"], 2026)

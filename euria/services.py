@@ -127,6 +127,19 @@ def weather(home_team: str, kickoff: datetime) -> Result:
 
 
 # ---------------------------------------------------------------------------
+# Cotes de clôture (CLV des paris suivis) — football-data.co.uk, matchs joués seulement
+# ---------------------------------------------------------------------------
+def closing_odds(league_code: str, season: int) -> Result:
+    league = get_league(league_code)
+    ttl = TTL["closing_odds"] if season >= season_for() else TTL["venues"]
+    return fetch(
+        f"closing:{league.code}:{season}",
+        ttl,
+        [Provider(football_data_couk.NAME, lambda: football_data_couk.fetch_closing_odds(league, season), football_data_couk.ATTRIBUTION)],
+    )
+
+
+# ---------------------------------------------------------------------------
 # Enrichissements (sans secours gratuit : en cas de panne, dernière valeur connue)
 # ---------------------------------------------------------------------------
 def xpoints(league_code: str) -> Result:
