@@ -321,10 +321,10 @@ Manchester City vs Ipswich Town,Home,1.23,1.117,2026-10-10 14:14,,PL,pinnacle,20
 Alaves (Bookings) vs Atletico Madrid (Bookings),Draw,4.14,1.218,2026-10-10 14:14,Loss,PD,pinnacle,2026-10-10T14:15:00Z
 Real Madrid (Bookings) vs Villarreal (Bookings),Home,3.89,3.478,2026-10-10 14:14,Win,PD,pinnacle,2026-10-10T19:00:00Z
 Elche (Bookings) vs Celta Vigo (Bookings),Draw,4.01,2.301,2026-10-10 14:14,Win,PD,pinnacle,2026-10-11T12:00:00Z
-Deportivo La Coruna vs Levante,Home,2.08,1.694,2026-10-10 14:14,,PD,pinnacle,2026-10-16T19:00:00Z
+Deportivo La Coruna vs Levante,Home,2.08,1.694,2026-10-10 14:14,Loss,PD,pinnacle,2026-10-16T19:00:00Z
 Espanyol vs Atletico Madrid,Away,1.82,1.525,2026-10-10 14:14,,PD,pinnacle,2026-10-17T12:00:00Z
 Lecce (Bookings) vs Bologna (Bookings),Away,2.64,1.343,2026-10-10 14:14,Win,SA,pinnacle,2026-10-11T13:00:00Z
-Frosinone vs Sassuolo,Home,2.42,2.136,2026-10-10 14:14,,SA,pinnacle,2026-10-16T18:45:00Z
+Frosinone vs Sassuolo,Home,2.42,2.136,2026-10-10 14:14,Win,SA,pinnacle,2026-10-16T18:45:00Z
 Venezia vs Napoli,Away,1.704,1.185,2026-10-10 14:14,,SA,pinnacle,2026-10-17T13:00:00Z
 Brest (Bookings) vs Angers (Bookings),Away,2.23,1.622,2026-10-10 14:14,Loss,FL1,pinnacle,2026-10-10T18:45:00Z
 Paris Saint-Germain (Bookings) vs Le Mans (Bookings),Home,4.17,1.806,2026-10-10 14:14,Win,FL1,pinnacle,2026-10-10T18:45:00Z
@@ -337,12 +337,12 @@ Brighton vs Crystal Palace,Home,1.562,1.501,2026-10-11 14:39,,PL,pinnacle,2026-1
 Leeds United vs Manchester United,Draw,3.58,1.772,2026-10-11 14:39,,PL,pinnacle,2026-10-18T13:00:00Z
 Real Betis (Bookings) vs Osasuna (Bookings),Home,3.69,2.927,2026-10-11 14:39,Win,PD,pinnacle,2026-10-11T16:30:00Z
 Racing Santander (Bookings) vs Valencia (Bookings),Home,2.49,1.383,2026-10-11 14:39,Loss,PD,pinnacle,2026-10-11T19:00:00Z
-RC Deportivo La Coruna vs Levante UD,Home,2.1,1.71,2026-10-11 14:39,,PD,bet365,2026-10-16T19:00:00Z
+RC Deportivo La Coruna vs Levante UD,Home,2.1,1.71,2026-10-11 14:39,Loss,PD,bet365,2026-10-16T19:00:00Z
 Real Betis vs Barcelona,Away,1.4,1.186,2026-10-11 14:39,,PD,bet365,2026-10-17T16:30:00Z
 Valencia vs Athletic Bilbao,Away,2.06,1.645,2026-10-11 14:39,,PD,pinnacle,2026-10-17T19:00:00Z
 Osasuna vs Racing Santander,Away,4.0,2.47,2026-10-11 14:39,,PD,bet365,2026-10-18T12:00:00Z
 Celta Vigo vs Deportivo Alaves,Away,3.75,1.87,2026-10-11 14:39,,PD,bet365,2026-10-18T14:15:00Z
-Frosinone Calcio vs Sassuolo,Home,2.4,2.147,2026-10-11 14:39,,SA,bet365,2026-10-16T18:45:00Z
+Frosinone Calcio vs Sassuolo,Home,2.4,2.147,2026-10-11 14:39,Win,SA,bet365,2026-10-16T18:45:00Z
 Venezia vs SSC Napoli,Away,1.699,1.375,2026-10-11 14:39,,SA,bet365,2026-10-17T13:00:00Z
 Bologna vs Internazionale,Away,1.625,1.457,2026-10-11 14:39,,SA,pinnacle,2026-10-17T16:00:00Z
 Roma vs Genoa,Home,1.35,1.309,2026-10-11 14:39,,SA,pinnacle,2026-10-17T18:45:00Z
@@ -364,7 +364,7 @@ Real Madrid vs Sevilla,Home,1.249,1.207,2026-10-12 17:23,,PD,pinnacle,2026-10-18
 AC Milan vs Atalanta,Home,1.877,1.233,2026-10-12 17:23,,SA,pinnacle,2026-10-18T16:00:00Z
 Juventus vs Lazio,Away,5.44,3.148,2026-10-12 17:23,,SA,pinnacle,2026-10-18T18:45:00Z
 Monza vs Cagliari,Away,3.2,2.126,2026-10-12 17:23,,SA,pinnacle,2026-10-19T16:30:00Z
-Eintracht Frankfurt vs FC Koln,Away,3.45,2.278,2026-10-12 17:23,,BL1,pinnacle,2026-10-16T18:30:00Z
+Eintracht Frankfurt vs FC Koln,Away,3.45,2.278,2026-10-12 17:23,Loss,BL1,pinnacle,2026-10-16T18:30:00Z
 Hamburger SV vs VfB Stuttgart,Away,1.8,1.518,2026-10-12 17:23,,BL1,bet365,2026-10-17T13:30:00Z
 Schalke 04 vs Mainz 05,Away,2.2,2.041,2026-10-12 17:23,,BL1,bet365,2026-10-17T13:30:00Z
 Bayern Munich vs RB Leipzig,Away,10.04,1.551,2026-10-12 17:23,,BL1,pinnacle,2026-10-17T16:30:00Z
@@ -393,10 +393,10 @@ Brighton (Bookings) vs Crystal Palace (Bookings),Home,3.07,3.007,2026-10-16 13:0
 Leeds United (Bookings) vs Manchester United (Bookings),Draw,3.99,1.975,2026-10-16 13:01,,PL,pinnacle,2026-10-18T13:00:00Z
 Nottingham Forest (Bookings) vs Arsenal (Bookings),Away,3.04,2.402,2026-10-16 13:01,,PL,pinnacle,2026-10-18T15:30:00Z
 Tottenham Hotspur (Bookings) vs Coventry City (Bookings),Away,1.885,1.141,2026-10-16 13:01,,PL,pinnacle,2026-10-19T19:00:00Z
-Deportivo La Coruna (Bookings) vs Levante (Bookings),Home,2.26,1.183,2026-10-16 13:01,,PD,pinnacle,2026-10-16T19:00:00Z
+Deportivo La Coruna (Bookings) vs Levante (Bookings),Home,2.26,1.183,2026-10-16 13:01,Loss,PD,pinnacle,2026-10-16T19:00:00Z
 Espanyol (Bookings) vs Atletico Madrid (Bookings),Away,2.32,1.944,2026-10-16 13:01,,PD,pinnacle,2026-10-17T12:00:00Z
 Levante UD vs Athletic Bilbao,Away,2.1,1.438,2026-10-16 13:01,,PD,bet365,2026-10-21T18:00:00Z
-Frosinone (Bookings) vs Sassuolo (Bookings),Home,2.58,2.059,2026-10-16 13:01,,SA,pinnacle,2026-10-16T18:45:00Z
+Frosinone (Bookings) vs Sassuolo (Bookings),Home,2.58,2.059,2026-10-16 13:01,Win,SA,pinnacle,2026-10-16T18:45:00Z
 Sassuolo vs Napoli,Away,2.37,1.836,2026-10-16 13:01,,SA,pinnacle,2026-10-17T10:30:00Z
 Venezia (Bookings) vs Napoli (Bookings),Away,3.1,2.508,2026-10-16 13:01,,SA,pinnacle,2026-10-17T13:00:00Z
 Roma (Bookings) vs Genoa (Bookings),Home,3.24,3.141,2026-10-16 13:01,,SA,pinnacle,2026-10-17T18:45:00Z
@@ -404,7 +404,7 @@ Udinese (Bookings) vs Lecce (Bookings),Away,2.19,1.102,2026-10-16 13:01,,SA,pinn
 Fiorentina (Bookings) vs Como (Bookings),Away,2.4,2.148,2026-10-16 13:01,,SA,pinnacle,2026-10-18T13:00:00Z
 Juventus (Bookings) vs Lazio (Bookings),Away,1.909,1.105,2026-10-16 13:01,,SA,pinnacle,2026-10-18T18:45:00Z
 Monza (Bookings) vs Cagliari (Bookings),Away,2.36,1.568,2026-10-16 13:01,,SA,pinnacle,2026-10-19T16:30:00Z
-Eintracht Frankfurt (Bookings) vs FC Koln (Bookings),Away,2.21,1.459,2026-10-16 13:01,,BL1,pinnacle,2026-10-16T18:30:00Z
+Eintracht Frankfurt (Bookings) vs FC Koln (Bookings),Away,2.21,1.459,2026-10-16 13:01,Loss,BL1,pinnacle,2026-10-16T18:30:00Z
 Elversberg (Bookings) vs Augsburg (Bookings),Away,2.39,1.478,2026-10-16 13:01,,BL1,pinnacle,2026-10-17T13:30:00Z
 Schalke 04 (Bookings) vs Mainz 05 (Bookings),Away,2.34,2.17,2026-10-16 13:01,,BL1,pinnacle,2026-10-17T13:30:00Z
 Union Berlin (Bookings) vs Borussia Dortmund (Bookings),Away,2.69,2.551,2026-10-16 13:01,,BL1,pinnacle,2026-10-17T13:30:00Z
@@ -419,3 +419,14 @@ Angers (Bookings) vs Marseille (Bookings),Away,2.28,1.179,2026-10-16 13:01,,FL1,
 Le Havre (Bookings) vs Auxerre (Bookings),Away,2.24,1.409,2026-10-16 13:01,,FL1,pinnacle,2026-10-18T15:15:00Z
 Lorient (Bookings) vs Monaco (Bookings),Away,1.935,1.261,2026-10-16 13:01,,FL1,pinnacle,2026-10-18T15:15:00Z
 Lyon (Bookings) vs Nice (Bookings),Home,3.43,2.928,2026-10-16 13:01,,FL1,pinnacle,2026-10-18T18:45:00Z
+Ipswich Town vs Nottingham Forest,Home,3.1,1.707,2026-10-17 11:59,,PL,bet365,2026-10-23T19:00:00Z
+Aston Villa vs Manchester City,Away,1.719,1.662,2026-10-17 11:59,,PL,pinnacle,2026-10-24T11:30:00Z
+Villarreal (Bookings) vs Elche (Bookings),Home,3.59,2.383,2026-10-17 11:59,,PD,pinnacle,2026-10-17T14:15:00Z
+Valencia (Bookings) vs Athletic Bilbao (Bookings),Away,2.09,1.646,2026-10-17 11:59,,PD,pinnacle,2026-10-17T19:00:00Z
+Alaves vs Malaga,Home,1.855,1.23,2026-10-17 11:59,,PD,pinnacle,2026-10-23T19:00:00Z
+Como vs Fiorentina,Home,3.34,2.361,2026-10-17 11:59,,SA,pinnacle,2026-10-17T13:00:00Z
+Torino vs Monza,Away,3.5,1.482,2026-10-17 11:59,,SA,bet365,2026-10-23T18:45:00Z
+Stuttgart vs Borussia Monchengladbach,Draw,5.53,2.822,2026-10-17 11:59,,BL1,pinnacle,2026-10-23T18:30:00Z
+VfB Stuttgart vs Borussia Moenchengladbach,Draw,5.0,2.551,2026-10-17 11:59,,BL1,bet365,2026-10-23T18:30:00Z
+Paris FC vs Rennes,Home,2.33,1.672,2026-10-17 11:59,,FL1,pinnacle,2026-10-18T15:15:00Z
+Brest vs Nice,Home,2.2,1.868,2026-10-17 11:59,,FL1,bet365,2026-10-23T18:45:00Z
