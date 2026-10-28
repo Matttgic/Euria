@@ -483,9 +483,9 @@ Manchester United vs Bournemouth,Away,4.0,1.514,2026-10-20 13:21,Win,PL,pinnacle
 Levante vs Athletic Bilbao,Away,2.22,1.167,2026-10-20 13:21,Loss,PD,pinnacle,2026-10-21T18:00:00Z
 Levante (Bookings) vs Athletic Bilbao (Bookings),Draw,4.19,1.446,2026-10-20 13:21,Loss,PD,pinnacle,2026-10-21T18:00:00Z
 Sevilla vs Osasuna,Home,1.99,1.209,2026-10-20 13:21,Win,PD,pinnacle,2026-10-26T20:00:00Z
-Sassuolo vs Lazio,Away,2.48,1.762,2026-10-21 13:27,,SA,pinnacle,2026-10-27T17:30:00Z
-Roma vs Cagliari,Home,1.339,1.123,2026-10-21 13:27,,SA,pinnacle,2026-10-27T19:45:00Z
-Torino vs Como,Home,4.89,2.046,2026-10-21 13:27,,SA,pinnacle,2026-10-27T19:45:00Z
+Sassuolo vs Lazio,Away,2.48,1.762,2026-10-21 13:27,Win,SA,pinnacle,2026-10-27T17:30:00Z
+Roma vs Cagliari,Home,1.339,1.123,2026-10-21 13:27,Win,SA,pinnacle,2026-10-27T19:45:00Z
+Torino vs Como,Home,4.89,2.046,2026-10-21 13:27,Loss,SA,pinnacle,2026-10-27T19:45:00Z
 Ipswich Town (Bookings) vs Nottingham Forest (Bookings),Home,2.43,1.318,2026-10-22 13:28,Loss,PL,pinnacle,2026-10-23T19:00:00Z
 Aston Villa (Bookings) vs Manchester City (Bookings),Away,2.06,1.975,2026-10-22 13:28,Loss,PL,pinnacle,2026-10-24T11:30:00Z
 Arsenal (Bookings) vs Everton (Bookings),Draw,3.99,3.163,2026-10-22 13:28,Loss,PL,pinnacle,2026-10-24T14:00:00Z
@@ -591,12 +591,17 @@ Marseille vs Toulouse,Home,1.926,1.145,2026-10-26 14:52,,FL1,pinnacle,2026-11-01
 Manchester City vs Brighton,Draw,4.53,1.441,2026-10-27 13:59,,PL,pinnacle,2026-10-31T15:00:00Z
 Newcastle United vs Everton,Home,2.26,1.144,2026-10-27 13:59,,PL,pinnacle,2026-11-02T20:00:00Z
 Deportivo La Coruna vs Osasuna,Away,3.63,1.673,2026-10-27 13:59,,PD,pinnacle,2026-11-02T20:00:00Z
-Sassuolo (Bookings) vs Lazio (Bookings),Away,2.43,1.848,2026-10-27 13:59,,SA,pinnacle,2026-10-27T17:30:00Z
-Roma (Bookings) vs Cagliari (Bookings),Home,3.75,3.478,2026-10-27 13:59,,SA,pinnacle,2026-10-27T19:45:00Z
-Torino (Bookings) vs Como (Bookings),Away,2.64,1.482,2026-10-27 13:59,,SA,pinnacle,2026-10-27T19:45:00Z
+Sassuolo (Bookings) vs Lazio (Bookings),Away,2.43,1.848,2026-10-27 13:59,Win,SA,pinnacle,2026-10-27T17:30:00Z
+Roma (Bookings) vs Cagliari (Bookings),Home,3.75,3.478,2026-10-27 13:59,Win,SA,pinnacle,2026-10-27T19:45:00Z
+Torino (Bookings) vs Como (Bookings),Away,2.64,1.482,2026-10-27 13:59,Win,SA,pinnacle,2026-10-27T19:45:00Z
 Genoa (Bookings) vs Juventus (Bookings),Away,2.51,2.106,2026-10-27 13:59,,SA,pinnacle,2026-10-28T19:45:00Z
 Monza (Bookings) vs Napoli (Bookings),Away,2.57,1.311,2026-10-27 13:59,,SA,pinnacle,2026-10-28T19:45:00Z
 Sassuolo vs Fiorentina,Draw,3.65,2.432,2026-10-27 13:59,,SA,pinnacle,2026-11-02T17:30:00Z
 Atalanta vs Parma,Away,6.71,1.256,2026-10-27 13:59,,SA,pinnacle,2026-11-02T19:45:00Z
 Nice vs Rennes,Away,2.41,1.338,2026-10-27 13:59,,FL1,pinnacle,2026-10-30T18:00:00Z
 Lorient vs Brest,Home,2.6,1.239,2026-10-27 13:59,,FL1,pinnacle,2026-11-02T19:45:00Z
+Frosinone (Bookings) vs Lecce (Bookings),Home,3.26,2.094,2026-10-28 14:52,,SA,pinnacle,2026-10-29T17:30:00Z
+Fiorentina (Bookings) vs Atalanta (Bookings),Away,1.952,1.498,2026-10-28 14:52,,SA,pinnacle,2026-10-29T19:45:00Z
+Como vs Venezia,Home,1.308,1.106,2026-10-28 14:52,,SA,pinnacle,2026-11-01T11:30:00Z
+Lazio vs Cagliari,Home,1.427,1.288,2026-10-28 14:52,,SA,pinnacle,2026-11-01T14:00:00Z
+Werder Bremen vs Hoffenheim,Away,2.96,1.926,2026-10-28 14:52,,BL1,pinnacle,2026-10-29T17:00:00Z
