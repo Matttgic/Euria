@@ -108,6 +108,38 @@ ${ligne(`${cle(false)}Sinon <i class="p">${pct(1 - m.p_milieu)}</i>`, `${signe(h
     : '<p class="vide">Aucun milieu en value au dernier relevé. Ils apparaissent surtout sur les totaux de points quand deux bookmakers n’ont pas la même ligne.</p>');
 }
 
+const CONCLURE = 30;   // milieux réglés avant de tirer une conclusion
+
+function bilan() {
+  if (!D) return;
+  const B = D.bilan_regle || {}, liste = D.regles || [], tout = B.tout || {};
+  const attente = tout.en_attente ? ` ${pluriel(tout.en_attente, 'milieu')} en attente de résultat.` : '';
+  if (!tout.n) {
+    remplir($('bi-resume'), `<p class="vide">Aucun milieu réglé pour l’instant. Le premier bilan arrive après les premiers matchs.${attente}</p>`);
+    $('bi-liste').innerHTML = '';
+    return;
+  }
+  const bloc = (titre, b) => !b || !b.n ? '' : `<div class="bi-per"><h3>${titre}</h3>`
+    + ligne(`Milieux réglés`, String(b.n))
+    + ligne(`Résultat (100\u00a0€ par milieu)`, signe(b.resultat), classe(b.resultat))
+    + ligne(`Espérance annoncée`, signe(b.esperance), classe(b.esperance))
+    + ligne(`Milieux tombés`, `${b.tombes} (attendu ≈\u00a0${nb(b.tombes_attendus, 1)})`) + '</div>';
+  const n = tout.n, verdict = n < CONCLURE
+    ? `<b>Trop tôt pour conclure</b>&nbsp;: ${n}/${CONCLURE} milieux réglés. Un milieu tombe rarement, le résultat varie beaucoup au début.`
+    : tout.resultat > 0
+      ? `<b>Ça marche pour l’instant</b>&nbsp;: ${signe(tout.resultat)} sur ${n} milieux (espérance ${signe(tout.esperance)}).`
+      : `<b>Pas concluant</b>&nbsp;: ${signe(tout.resultat)} sur ${n} milieux alors que l’espérance était ${signe(tout.esperance)}. Attends encore avant de miser.`;
+  remplir($('bi-resume'), `<p class="bilan">${verdict}${attente}</p><div class="bi-grille">`
+    + bloc('7 derniers jours', B['7']) + bloc('30 derniers jours', B['30']) + bloc('Depuis le début', tout) + '</div>');
+  remplir($('bi-liste'), '<table class="bi-table"><thead><tr><th>Match</th><th>Espérance</th><th>Résultat</th></tr></thead><tbody>'
+    + liste.map(e => `<tr><td><b>${esc(e.match)}</b><small>${esc(sport(e.sport))} · ${esc(quand(e.debut))} · `
+      + `${esc(zone({...e, ecart: String(e.marche || '').endsWith('HANDICAP')}))}`
+      + `${Array.isArray(e.score) ? ` · score ${e.score.map(Number).join('\u2011')}` : ''}</small></td>`
+      + `<td class="${classe(e.esperance_initiale)}">${signe(e.esperance_initiale)}</td>`
+      + `<td class="${classe(e.resultat_100)}">${signe(e.resultat_100)}${e.tombe ? '<small>milieu tombé</small>' : ''}</td></tr>`).join('')
+    + '</tbody></table>');
+}
+
 function freebets() {
   if (!D) return;
   const conv = D.conversions || {}, books = Object.keys(conv), sel = $('df-book');
@@ -149,6 +181,7 @@ async function charger() {
   }
   etat();
   milieux();
+  bilan();
   freebets();
 }
 
