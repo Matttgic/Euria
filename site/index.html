@@ -5,153 +5,216 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Euria</title>
 <meta name="description" content="Paris sans pronostic relevés en direct : milieux en value et meilleures conversions de freebets, avec les calculs pour les promos et les combinés boostés.">
+<meta name="theme-color" content="#ffd100">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="polices/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="haut">
-  <p class="surtitre">Paris sportifs · sans pronostic · en direct</p>
-  <h1>Euria</h1>
-  <p class="chapo">Les milieux en value et les meilleurs paris pour convertir un freebet, trouvés tout seuls à chaque relevé des cotes françaises (toutes les 5 à 10 minutes, par Cote Value). En bas, les calculs à la main.</p>
-  <p class="etat" id="etat" aria-live="polite">Chargement des cotes…</p>
-  <nav class="onglets" aria-label="Sections">
-    <a href="#direct-milieux">Milieux</a><a href="#direct-freebets">Freebets</a><a href="#calculs">Calculs</a>
-  </nav>
-</header>
-<main>
 
-<section id="direct-milieux" class="bloc" aria-labelledby="t-direct-milieux">
-  <h2 id="t-direct-milieux"><span class="num">●</span> Milieux en direct</h2>
-  <p class="aide">« Plus de » une ligne chez un bookmaker, « Moins de » une ligne plus haute chez un autre : si le résultat tombe entre les deux, les deux paris gagnent. Seuls ceux qui rapportent en moyenne d’après les cotes justes de Pinnacle sont listés.</p>
-  <div class="grille"><label><span>Somme des deux mises <span class="unite">€</span></span><input id="dm-total" inputmode="decimal" value="100"></label></div>
+<header class="tete">
+  <div class="cadre tete-in">
+    <div class="marque">
+      <h1>Euria</h1>
+      <p>Paris sportifs<br>sans pronostic</p>
+    </div>
+    <p class="etat" id="etat">Chargement des cotes…</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="cadre nav-in">
+    <a href="#direct-milieux">Milieux <span class="nb" id="nb-milieux" hidden></span></a>
+    <a href="#direct-freebets">Freebets</a>
+    <a href="#calculs">Calculs</a>
+    <span class="nav-heure" id="nav-heure"></span>
+  </div>
+</nav>
+
+<main>
+<div class="cadre">
+
+<section id="direct-milieux" class="sec" aria-labelledby="t-direct-milieux">
+  <div class="sec-tete">
+    <h2 id="t-direct-milieux">Milieux en direct</h2>
+    <p class="sec-compte" id="dm-compte"></p>
+  </div>
+  <p class="intro">«&nbsp;Plus de&nbsp;» une ligne chez un bookmaker, «&nbsp;Moins de&nbsp;» une ligne plus haute chez un autre&nbsp;: si le résultat tombe entre les deux, les deux paris gagnent. Seuls ceux qui rapportent en moyenne d’après les cotes justes de Pinnacle sont listés.</p>
+  <div class="champs reglages">
+    <label class="ch"><span>Somme des deux mises</span><span class="u" data-u="€"><input id="dm-total" inputmode="decimal" value="100"></span></label>
+  </div>
   <div id="dm-liste" class="liste"></div>
-  <p class="note" id="dm-bilan"></p>
-  <p class="note">Alerte sur ton téléphone : dans <a href="https://matttgic.github.io/cotes-value/#notifications">Cote Value › Notifications</a>, coche « Milieux en value » (espérance d’au moins 2 %), puis enregistre.</p>
+  <p class="bilan" id="dm-bilan"></p>
+  <p class="note">Alerte sur ton téléphone&nbsp;: dans <a href="https://matttgic.github.io/cotes-value/#notifications">Cote Value, onglet Notifications</a>, coche «&nbsp;Milieux en value&nbsp;» (espérance d’au moins 2&nbsp;%), puis enregistre.</p>
 </section>
 
-<section id="direct-freebets" class="bloc" aria-labelledby="t-direct-freebets">
-  <h2 id="t-direct-freebets"><span class="num">●</span> Convertir un freebet maintenant</h2>
-  <p class="aide">Tu as un freebet ou un « pari remboursé si perdant » chez un bookmaker : voici les paris qui le transforment en gain garanti avec les cotes du moment, couverts chez les autres.</p>
-  <div class="grille">
-    <label>Chez<select id="df-book"></select></label>
-    <label>Offre<select id="df-type"><option value="freebet">freebet</option><option value="rembourse">pari remboursé si perdant</option></select></label>
-    <label><span id="df-montant-nom">Montant du freebet <span class="unite">€</span></span><input id="df-montant" inputmode="decimal" value="10"></label>
-    <label class="si-df-rembourse" hidden><span>Valeur d’1 € remboursé <span class="unite">%, 100 = argent</span></span><input id="df-valeur" inputmode="decimal" value="75"></label>
-    <label class="si-df-rembourse" hidden><span>Remboursement maximal <span class="unite">€, vide = sans plafond</span></span><input id="df-plafond" inputmode="decimal" value=""></label>
+<section id="direct-freebets" class="sec" aria-labelledby="t-direct-freebets">
+  <div class="sec-tete">
+    <h2 id="t-direct-freebets">Convertir un freebet</h2>
+    <p class="sec-compte">avec les cotes du moment</p>
+  </div>
+  <p class="intro">Tu as un freebet ou un «&nbsp;pari remboursé si perdant&nbsp;» chez un bookmaker&nbsp;: voici les paris qui le transforment en gain garanti, couverts aux meilleures cotes des autres.</p>
+  <div class="champs reglages">
+    <label class="ch"><span>Chez</span><select id="df-book"></select></label>
+    <label class="ch"><span>Offre</span><select id="df-type"><option value="freebet">freebet</option><option value="rembourse">pari remboursé si perdant</option></select></label>
+    <label class="ch"><span id="df-montant-nom">Montant du freebet</span><span class="u" data-u="€"><input id="df-montant" inputmode="decimal" value="10"></span></label>
+    <label class="ch si-df-rembourse" hidden><span>Valeur d’1 € remboursé (100 = argent)</span><span class="u" data-u="%"><input id="df-valeur" inputmode="decimal" value="75"></span></label>
+    <label class="ch si-df-rembourse" hidden><span>Remboursement maximal</span><span class="u" data-u="€"><input id="df-plafond" inputmode="decimal" value="" placeholder="sans plafond"></span></label>
   </div>
   <div id="df-liste" class="liste"></div>
 </section>
 
-<p class="autres" id="autres"></p>
+<p class="renvoi" id="autres" hidden></p>
 
-<h2 class="intertitre" id="calculs">Calculs à la main</h2>
+</div>
 
-<section id="freebets" class="bloc" aria-labelledby="t-freebets">
-  <h2 id="t-freebets"><span class="num">1</span> Freebets et bonus couverts</h2>
-  <p class="aide">Tu joues le freebet (ou le pari remboursé) chez un bookmaker et tu couvres toutes les autres issues chez un autre : le gain est le même quoi qu’il arrive.</p>
-  <div class="choix" role="radiogroup" aria-label="Type d’offre">
-    <label><input type="radio" name="fb-type" value="freebet" checked> Freebet</label>
-    <label><input type="radio" name="fb-type" value="rembourse"> Pari remboursé si perdant</label>
+<div class="bande" id="calculs">
+  <div class="cadre">
+    <h2>Calculs à la main</h2>
+    <p>Pour une offre que la page ne relève pas&nbsp;: promo annoncée en texte libre, match absent du relevé, cotes vues ailleurs.</p>
+    <nav class="sous-nav" aria-label="Calculs à la main">
+      <a href="#freebets"><span class="no">1</span>Freebets</a>
+      <a href="#milieux"><span class="no">2</span>Milieux</a>
+      <a href="#promos"><span class="no">3</span>Promos foot</a>
+      <a href="#combine"><span class="no">4</span>Combiné boosté</a>
+    </nav>
   </div>
-  <div class="grille">
-    <label><span>Montant <span class="unite" id="fb-montant-nom">du freebet</span></span><input id="fb-montant" inputmode="decimal" value="10"></label>
-    <label>Cote de ton pari (issue A)<input id="fb-cote" inputmode="decimal" value="4,00"></label>
-    <label>Issues à couvrir<select id="fb-issues"><option value="1">1 : « pas A » (2 issues, double chance…)</option><option value="2">2 : nul et l’autre équipe</option></select></label>
-    <label>Cote de couverture 1<input id="fb-c1" inputmode="decimal" value="1,33"></label>
-    <label class="si-2" hidden>Cote de couverture 2<input id="fb-c2" inputmode="decimal" value="4,50"></label>
-    <label class="si-freebet case"><input type="checkbox" id="fb-rendue"> Mise rendue avec le gain (rare)</label>
-    <label class="si-rembourse" hidden>Remboursé en<select id="fb-forme"><option value="freebet">freebet</option><option value="argent">argent</option></select></label>
-    <label class="si-rembourse si-fbrembourse" hidden><span>Valeur d’1 € de freebet <span class="unite">%</span></span><input id="fb-valeur" inputmode="decimal" value="75"></label>
-    <label class="si-rembourse" hidden><span>Remboursement maximal <span class="unite">€, vide = sans plafond</span></span><input id="fb-plafond" inputmode="decimal" value=""></label>
+</div>
+
+<div class="cadre">
+
+<section id="freebets" class="sec calc" aria-labelledby="t-freebets">
+  <div class="sec-tete"><h2 id="t-freebets"><span class="no">1</span>Freebets et bonus couverts</h2></div>
+  <p class="intro">Tu joues le freebet (ou le pari remboursé) chez un bookmaker et tu couvres toutes les autres issues chez un autre&nbsp;: le gain est le même quoi qu’il arrive.</p>
+  <div class="calc-corps">
+    <div class="calc-saisie">
+      <div class="seg" role="radiogroup" aria-label="Type d’offre">
+        <label><input type="radio" name="fb-type" value="freebet" checked><span>Freebet</span></label>
+        <label><input type="radio" name="fb-type" value="rembourse"><span>Pari remboursé si perdant</span></label>
+      </div>
+      <div class="champs">
+        <label class="ch"><span id="fb-montant-nom">Montant du freebet</span><span class="u" data-u="€"><input id="fb-montant" inputmode="decimal" value="10"></span></label>
+        <label class="ch"><span>Cote de ton pari (issue A)</span><input id="fb-cote" inputmode="decimal" value="4,00"></label>
+        <label class="ch large"><span>Issues à couvrir</span><select id="fb-issues"><option value="1">1&nbsp;: «&nbsp;pas A&nbsp;» (2 issues, double chance…)</option><option value="2">2&nbsp;: nul et l’autre équipe</option></select></label>
+        <label class="ch"><span>Cote de couverture 1</span><input id="fb-c1" inputmode="decimal" value="1,33"></label>
+        <label class="ch si-2" hidden><span>Cote de couverture 2</span><input id="fb-c2" inputmode="decimal" value="4,50"></label>
+        <label class="ch case large si-freebet"><input type="checkbox" id="fb-rendue"><span>Mise rendue avec le gain (rare)</span></label>
+        <label class="ch si-rembourse" hidden><span>Remboursé en</span><select id="fb-forme"><option value="freebet">freebet</option><option value="argent">argent</option></select></label>
+        <label class="ch si-rembourse si-fbrembourse" hidden><span>Valeur d’1 € de freebet</span><span class="u" data-u="%"><input id="fb-valeur" inputmode="decimal" value="75"></span></label>
+        <label class="ch si-rembourse" hidden><span>Remboursement maximal</span><span class="u" data-u="€"><input id="fb-plafond" inputmode="decimal" value="" placeholder="sans plafond"></span></label>
+      </div>
+    </div>
+    <div class="resultat" id="fb-res" aria-live="polite"></div>
   </div>
-  <div class="resultat" id="fb-res" aria-live="polite"></div>
   <details class="comment"><summary>Comment c’est calculé</summary>
-    <p>Freebet (mise non rendue) de F € à la cote c : s’il gagne, il paie F × (c − 1). Chaque couverture reçoit F × (c − 1) / sa cote : toutes les issues rapportent la même somme. Gain garanti = F × (c − 1) × (1 − Σ 1/cote de couverture).</p>
-    <p>Pari remboursé si perdant : mise M à la cote c, remboursement R (en argent, ou sa valeur si c’est un freebet). Couverture = (M × c − R) / sa cote. Gain garanti = M × (c − 1) − total des couvertures.</p>
-    <p>Un freebet se convertit mieux à cote haute (3 à 6) et avec une couverture au meilleur prix. La valeur d’un freebet remboursé est celle de sa propre conversion : 70 à 80 % en pratique.</p>
+    <p>Freebet (mise non rendue) de F € à la cote c&nbsp;: s’il gagne, il paie F × (c − 1). Chaque couverture reçoit F × (c − 1) / sa cote&nbsp;: toutes les issues rapportent la même somme. Gain garanti = F × (c − 1) × (1 − Σ 1/cote de couverture).</p>
+    <p>Pari remboursé si perdant&nbsp;: mise M à la cote c, remboursement R (en argent, ou sa valeur si c’est un freebet). Couverture = (M × c − R) / sa cote. Gain garanti = M × (c − 1) − total des couvertures.</p>
+    <p>Un freebet se convertit mieux à cote haute (3 à 6) et avec une couverture au meilleur prix. La valeur d’un freebet remboursé est celle de sa propre conversion&nbsp;: 70 à 80&nbsp;% en pratique.</p>
   </details>
 </section>
 
-<section id="milieux" class="bloc" aria-labelledby="t-milieux">
-  <h2 id="t-milieux"><span class="num">2</span> Milieux</h2>
-  <p class="aide">« Plus de » une ligne chez un bookmaker, « Moins de » une ligne plus haute chez un autre. Si le résultat tombe entre les deux, les deux paris gagnent. Marche pour un total de points ou de buts, ou pour un écart (handicaps).</p>
-  <div class="grille">
-    <label>« Plus de » (ligne)<input id="mi-l1" inputmode="decimal" value="210,5"></label>
-    <label>sa cote<input id="mi-c1" inputmode="decimal" value="1,90"></label>
-    <label>« Moins de » (ligne)<input id="mi-l2" inputmode="decimal" value="213,5"></label>
-    <label>sa cote<input id="mi-c2" inputmode="decimal" value="1,90"></label>
-    <label><span>Somme des deux mises <span class="unite">€</span></span><input id="mi-total" inputmode="decimal" value="200"></label>
-    <label>Mises<select id="mi-mode"><option value="egal">égales</option><option value="equilibre">équilibrées (même retour hors milieu)</option></select></label>
-    <label class="large">Probabilité du milieu<select id="mi-proba"><option value="aucune">non estimée</option><option value="deux">deux lignes Pinnacle</option><option value="normale">une ligne Pinnacle et une loi normale</option></select></label>
-    <label class="si-deux" hidden>Pinnacle Plus de la 1re ligne<input id="mi-p1p" inputmode="decimal" value=""></label>
-    <label class="si-deux" hidden>Pinnacle Moins de la 1re ligne<input id="mi-p1m" inputmode="decimal" value=""></label>
-    <label class="si-deux" hidden>Pinnacle Plus de la 2e ligne<input id="mi-p2p" inputmode="decimal" value=""></label>
-    <label class="si-deux" hidden>Pinnacle Moins de la 2e ligne<input id="mi-p2m" inputmode="decimal" value=""></label>
-    <label class="si-normale" hidden>Ligne Pinnacle<input id="mi-nl" inputmode="decimal" value=""></label>
-    <label class="si-normale" hidden>Pinnacle Plus de<input id="mi-np" inputmode="decimal" value=""></label>
-    <label class="si-normale" hidden>Pinnacle Moins de<input id="mi-nm" inputmode="decimal" value=""></label>
-    <label class="si-normale" hidden>Écart-type<select id="mi-sigma"><option value="13">NBA, total des points (13)</option><option value="12">NBA, écart de points (12)</option><option value="10">NFL, total des points (10)</option><option value="13.5">NFL, écart de points (13,5)</option><option value="autre">autre…</option></select></label>
-    <label class="si-sigma" hidden>Écart-type choisi<input id="mi-sigma-autre" inputmode="decimal" value=""></label>
+<section id="milieux" class="sec calc" aria-labelledby="t-milieux">
+  <div class="sec-tete"><h2 id="t-milieux"><span class="no">2</span>Milieux</h2></div>
+  <p class="intro">«&nbsp;Plus de&nbsp;» une ligne chez un bookmaker, «&nbsp;Moins de&nbsp;» une ligne plus haute chez un autre. Si le résultat tombe entre les deux, les deux paris gagnent. Marche pour un total de points ou de buts, ou pour un écart (handicaps).</p>
+  <div class="calc-corps">
+    <div class="calc-saisie">
+      <div class="champs">
+        <label class="ch"><span>«&nbsp;Plus de&nbsp;» (ligne)</span><input id="mi-l1" inputmode="decimal" value="210,5"></label>
+        <label class="ch"><span>Sa cote</span><input id="mi-c1" inputmode="decimal" value="1,90"></label>
+        <label class="ch"><span>«&nbsp;Moins de&nbsp;» (ligne)</span><input id="mi-l2" inputmode="decimal" value="213,5"></label>
+        <label class="ch"><span>Sa cote</span><input id="mi-c2" inputmode="decimal" value="1,90"></label>
+        <label class="ch"><span>Somme des deux mises</span><span class="u" data-u="€"><input id="mi-total" inputmode="decimal" value="200"></span></label>
+        <label class="ch large"><span>Mises</span><select id="mi-mode"><option value="egal">égales</option><option value="equilibre">équilibrées (même retour hors milieu)</option></select></label>
+        <label class="ch large"><span>Probabilité du milieu</span><select id="mi-proba"><option value="aucune">non estimée</option><option value="deux">deux lignes Pinnacle</option><option value="normale">une ligne Pinnacle et une loi normale</option></select></label>
+        <label class="ch si-deux" hidden><span>Pinnacle Plus de la 1re ligne</span><input id="mi-p1p" inputmode="decimal" value=""></label>
+        <label class="ch si-deux" hidden><span>Pinnacle Moins de la 1re ligne</span><input id="mi-p1m" inputmode="decimal" value=""></label>
+        <label class="ch si-deux" hidden><span>Pinnacle Plus de la 2e ligne</span><input id="mi-p2p" inputmode="decimal" value=""></label>
+        <label class="ch si-deux" hidden><span>Pinnacle Moins de la 2e ligne</span><input id="mi-p2m" inputmode="decimal" value=""></label>
+        <label class="ch large si-normale" hidden><span>Ligne Pinnacle</span><input id="mi-nl" inputmode="decimal" value=""></label>
+        <label class="ch si-normale" hidden><span>Pinnacle Plus de</span><input id="mi-np" inputmode="decimal" value=""></label>
+        <label class="ch si-normale" hidden><span>Pinnacle Moins de</span><input id="mi-nm" inputmode="decimal" value=""></label>
+        <label class="ch large si-normale" hidden><span>Écart-type</span><select id="mi-sigma"><option value="13">NBA, total des points (13)</option><option value="12">NBA, écart de points (12)</option><option value="10">NFL, total des points (10)</option><option value="13.5">NFL, écart de points (13,5)</option><option value="autre">autre…</option></select></label>
+        <label class="ch si-sigma" hidden><span>Écart-type choisi</span><input id="mi-sigma-autre" inputmode="decimal" value=""></label>
+      </div>
+    </div>
+    <div class="resultat" id="mi-res" aria-live="polite"></div>
   </div>
-  <div class="resultat" id="mi-res" aria-live="polite"></div>
   <details class="comment"><summary>Comment c’est calculé</summary>
-    <p>Résultat de chaque cas = ce que rapportent les paris gagnants − la somme misée. Rentable dès que le milieu tombe plus souvent que : perte hors milieu / (gain dans le milieu + perte hors milieu).</p>
-    <p>Probabilité avec deux lignes Pinnacle : P(Plus de la 1re) − P(Plus de la 2e), marges retirées. Avec une seule ligne : le résultat suit une loi normale centrée là où Pinnacle place sa ligne (sa probabilité juste), avec l’écart-type choisi ; c’est une approximation.</p>
-    <p>Demi-lignes seulement (210,5…) : avec une ligne entière, un remboursement est possible et le calcul change.</p>
+    <p>Résultat de chaque cas = ce que rapportent les paris gagnants − la somme misée. Rentable dès que le milieu tombe plus souvent que&nbsp;: perte hors milieu / (gain dans le milieu + perte hors milieu).</p>
+    <p>Probabilité avec deux lignes Pinnacle&nbsp;: P(Plus de la 1re) − P(Plus de la 2e), marges retirées. Avec une seule ligne&nbsp;: le résultat suit une loi normale centrée là où Pinnacle place sa ligne (sa probabilité juste), avec l’écart-type choisi&nbsp;; c’est une approximation.</p>
+    <p>Demi-lignes seulement (210,5…)&nbsp;: avec une ligne entière, un remboursement est possible et le calcul change.</p>
   </details>
 </section>
 
-<section id="promos" class="bloc" aria-labelledby="t-promos">
-  <h2 id="t-promos"><span class="num">3</span> Promos « remboursé si… » et « payé si 2 buts d’avance »</h2>
-  <p class="aide">Football. Les cotes 1, N, 2 de Pinnacle donnent les probabilités justes ; un modèle de Poisson ajusté dessus donne les événements que Pinnacle ne cote pas (défaite d’un but, 0-0, avance de deux buts).</p>
-  <div class="grille">
-    <label>Pinnacle 1<input id="pr-p1" inputmode="decimal" value="2,05"></label>
-    <label>Pinnacle N<input id="pr-pn" inputmode="decimal" value="3,50"></label>
-    <label>Pinnacle 2<input id="pr-p2" inputmode="decimal" value="3,90"></label>
-    <label><span>Pinnacle Plus de 2,5 <span class="unite">facultatif</span></span><input id="pr-po" inputmode="decimal" value=""></label>
-    <label><span>Pinnacle Moins de 2,5 <span class="unite">facultatif</span></span><input id="pr-pu" inputmode="decimal" value=""></label>
-    <label>Ton pari<select id="pr-camp"><option value="dom">victoire de l’équipe à domicile (1)</option><option value="ext">victoire de l’équipe à l’extérieur (2)</option></select></label>
-    <label>Cote chez ton bookmaker<input id="pr-cote" inputmode="decimal" value="1,95"></label>
-    <label><span>Mise <span class="unite">€</span></span><input id="pr-mise" inputmode="decimal" value="20"></label>
-    <label class="large">Promo<select id="pr-type"></select></label>
-    <label class="si-autre" hidden><span>Probabilité de l’événement <span class="unite">%</span></span><input id="pr-autre" inputmode="decimal" value=""></label>
-    <label class="si-rembourse-promo">Remboursé en<select id="pr-forme"><option value="argent">argent</option><option value="freebet">freebet</option></select></label>
-    <label class="si-fb-promo" hidden><span>Valeur d’1 € de freebet <span class="unite">%</span></span><input id="pr-valeur" inputmode="decimal" value="75"></label>
-    <label class="si-rembourse-promo"><span>Remboursement maximal <span class="unite">€, vide = sans plafond</span></span><input id="pr-plafond" inputmode="decimal" value=""></label>
+<section id="promos" class="sec calc" aria-labelledby="t-promos">
+  <div class="sec-tete"><h2 id="t-promos"><span class="no">3</span>Promos foot</h2></div>
+  <p class="intro">«&nbsp;Remboursé si…&nbsp;» et «&nbsp;payé dès 2 buts d’avance&nbsp;». Les cotes 1, N, 2 de Pinnacle donnent les probabilités justes&nbsp;; un modèle de Poisson ajusté dessus donne ce que Pinnacle ne cote pas (défaite d’un but, 0-0, avance de deux buts).</p>
+  <div class="calc-corps">
+    <div class="calc-saisie">
+      <div class="champs">
+        <label class="ch"><span>Pinnacle 1</span><input id="pr-p1" inputmode="decimal" value="2,05"></label>
+        <label class="ch"><span>Pinnacle N</span><input id="pr-pn" inputmode="decimal" value="3,50"></label>
+        <label class="ch"><span>Pinnacle 2</span><input id="pr-p2" inputmode="decimal" value="3,90"></label>
+        <label class="ch"><span>Pinnacle Plus de 2,5</span><input id="pr-po" inputmode="decimal" value="" placeholder="facultatif"></label>
+        <label class="ch"><span>Pinnacle Moins de 2,5</span><input id="pr-pu" inputmode="decimal" value="" placeholder="facultatif"></label>
+        <label class="ch large"><span>Ton pari</span><select id="pr-camp"><option value="dom">victoire de l’équipe à domicile (1)</option><option value="ext">victoire de l’équipe à l’extérieur (2)</option></select></label>
+        <label class="ch"><span>Cote chez ton bookmaker</span><input id="pr-cote" inputmode="decimal" value="1,95"></label>
+        <label class="ch"><span>Mise</span><span class="u" data-u="€"><input id="pr-mise" inputmode="decimal" value="20"></span></label>
+        <label class="ch large"><span>Promo</span><select id="pr-type"></select></label>
+        <label class="ch si-autre" hidden><span>Probabilité de l’événement</span><span class="u" data-u="%"><input id="pr-autre" inputmode="decimal" value=""></span></label>
+        <label class="ch si-rembourse-promo"><span>Remboursé en</span><select id="pr-forme"><option value="argent">argent</option><option value="freebet">freebet</option></select></label>
+        <label class="ch si-fb-promo" hidden><span>Valeur d’1 € de freebet</span><span class="u" data-u="%"><input id="pr-valeur" inputmode="decimal" value="75"></span></label>
+        <label class="ch si-rembourse-promo"><span>Remboursement maximal</span><span class="u" data-u="€"><input id="pr-plafond" inputmode="decimal" value="" placeholder="sans plafond"></span></label>
+      </div>
+    </div>
+    <div class="resultat" id="pr-res" aria-live="polite"></div>
   </div>
-  <div class="resultat" id="pr-res" aria-live="polite"></div>
   <details class="comment"><summary>Comment c’est calculé</summary>
-    <p>Espérance sans promo = mise × (cote × P(victoire) − 1), P(victoire) étant la probabilité juste de Pinnacle. Une promo « remboursé si E » ajoute P(E) × la valeur du remboursement (E arrive quand le pari perd). « Payé dès 2 buts d’avance » ajoute la probabilité de mener de deux buts sans gagner à la fin.</p>
-    <p>Défaite d’un but, 0-0 et avance de deux buts viennent d’un modèle de Poisson : buts attendus des deux équipes ajustés pour retrouver le 1N2 de Pinnacle (et le Plus/Moins de 2,5 s’il est saisi), buts indépendants, au même rythme tout le match. Il sous-estime un peu les remontées (une équipe qui mène recule) : la valeur de « payé dès 2 buts d’avance » est un minimum.</p>
-    <p>Freebet remboursé : sa valeur est celle de sa conversion (70 à 80 % en pratique, voir le calcul 1).</p>
+    <p>Espérance sans promo = mise × (cote × P(victoire) − 1), P(victoire) étant la probabilité juste de Pinnacle. Une promo «&nbsp;remboursé si E&nbsp;» ajoute P(E) × la valeur du remboursement (E arrive quand le pari perd). «&nbsp;Payé dès 2 buts d’avance&nbsp;» ajoute la probabilité de mener de deux buts sans gagner à la fin.</p>
+    <p>Défaite d’un but, 0-0 et avance de deux buts viennent d’un modèle de Poisson&nbsp;: buts attendus des deux équipes ajustés pour retrouver le 1N2 de Pinnacle (et le Plus/Moins de 2,5 s’il est saisi), buts indépendants, au même rythme tout le match. Il sous-estime un peu les remontées (une équipe qui mène recule)&nbsp;: la valeur de «&nbsp;payé dès 2 buts d’avance&nbsp;» est un minimum.</p>
+    <p>Freebet remboursé&nbsp;: sa valeur est celle de sa conversion (70 à 80&nbsp;% en pratique, voir le calcul 1).</p>
   </details>
 </section>
 
-<section id="combine" class="bloc" aria-labelledby="t-combine">
-  <h2 id="t-combine"><span class="num">4</span> Combiné boosté</h2>
-  <p class="aide">« +X % sur tes combinés » : rentable seulement si le bonus dépasse les marges des sélections, qui se multiplient. Sélections de matchs différents.</p>
-  <div class="grille">
-    <label>Nombre de sélections<select id="cb-nombre"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
-    <label>Probabilités justes<select id="cb-mode"><option value="pinnacle">cotes Pinnacle du marché</option><option value="juste">cotes justes déjà connues</option></select></label>
+<section id="combine" class="sec calc" aria-labelledby="t-combine">
+  <div class="sec-tete"><h2 id="t-combine"><span class="no">4</span>Combiné boosté</h2></div>
+  <p class="intro">«&nbsp;+X&nbsp;% sur tes combinés&nbsp;»&nbsp;: rentable seulement si le bonus dépasse les marges des sélections, qui se multiplient. Sélections de matchs différents.</p>
+  <div class="calc-corps">
+    <div class="calc-saisie">
+      <div class="champs">
+        <label class="ch"><span>Nombre de sélections</span><select id="cb-nombre"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
+        <label class="ch large"><span>Probabilités justes</span><select id="cb-mode"><option value="pinnacle">cotes Pinnacle du marché</option><option value="juste">cotes justes déjà connues</option></select></label>
+      </div>
+      <div class="cb-lignes" id="cb-lignes"></div>
+      <p class="note si-cb-pinnacle">Pinnacle&nbsp;: la cote de ta sélection, puis celles des autres issues du même marché (2 ou 3 issues, le nul compris).</p>
+      <div class="champs cb-reglages">
+        <label class="ch"><span>Bonus</span><span class="u" data-u="%"><input id="cb-bonus" inputmode="decimal" value="25"></span></label>
+        <label class="ch"><span>Mise</span><span class="u" data-u="€"><input id="cb-mise" inputmode="decimal" value="10"></span></label>
+        <label class="ch large"><span>Bonus calculé sur</span><select id="cb-base"><option value="net">le gain net (cote − 1)</option><option value="total">le retour total (cote)</option></select></label>
+        <label class="ch"><span>Bonus payé en</span><select id="cb-forme"><option value="argent">argent</option><option value="freebet">freebet</option></select></label>
+        <label class="ch si-cb-fb" hidden><span>Valeur d’1 € de freebet</span><span class="u" data-u="%"><input id="cb-valeur" inputmode="decimal" value="75"></span></label>
+      </div>
+    </div>
+    <div class="resultat" id="cb-res" aria-live="polite"></div>
   </div>
-  <div class="cb-lignes" id="cb-lignes"></div>
-  <p class="note si-cb-pinnacle">Pinnacle : la cote de ta sélection, puis celles des autres issues du même marché (2 ou 3 issues, le nul compris).</p>
-  <div class="grille cb-reglages">
-    <label><span>Bonus <span class="unite">%</span></span><input id="cb-bonus" inputmode="decimal" value="25"></label>
-    <label>Bonus calculé sur<select id="cb-base"><option value="net">le gain net (cote − 1)</option><option value="total">le retour total (cote)</option></select></label>
-    <label>Bonus payé en<select id="cb-forme"><option value="argent">argent</option><option value="freebet">freebet</option></select></label>
-    <label class="si-cb-fb" hidden><span>Valeur d’1 € de freebet <span class="unite">%</span></span><input id="cb-valeur" inputmode="decimal" value="75"></label>
-    <label><span>Mise <span class="unite">€</span></span><input id="cb-mise" inputmode="decimal" value="10"></label>
-  </div>
-  <div class="resultat" id="cb-res" aria-live="polite"></div>
   <details class="comment"><summary>Comment c’est calculé</summary>
-    <p>Probabilité juste de chaque sélection : cotes Pinnacle du marché, marge retirée en proportion (ou la cote juste saisie). Le combiné passe avec la probabilité P = produit des probabilités (matchs indépendants) et paie la cote C = produit des cotes.</p>
-    <p>Bonus sur le gain net : retour = mise × (C + (C − 1) × bonus). Sur le retour total : mise × C × (1 + bonus). Payé en freebet : compté à sa valeur. Espérance = P × retour − mise. Bonus minimal = (1/P − C) / (C − 1), ou / C sur le retour total.</p>
-    <p>Lis bien le règlement : la plupart des bonus portent sur le gain net, ce qui vaut moins qu’un bonus sur le retour, surtout avec de petites cotes. Deux sélections du même match ne sont pas indépendantes : le calcul ne vaut plus.</p>
+    <p>Probabilité juste de chaque sélection&nbsp;: cotes Pinnacle du marché, marge retirée en proportion (ou la cote juste saisie). Le combiné passe avec la probabilité P = produit des probabilités (matchs indépendants) et paie la cote C = produit des cotes.</p>
+    <p>Bonus sur le gain net&nbsp;: retour = mise × (C + (C − 1) × bonus). Sur le retour total&nbsp;: mise × C × (1 + bonus). Payé en freebet&nbsp;: compté à sa valeur. Espérance = P × retour − mise. Bonus minimal = (1/P − C) / (C − 1), ou / C sur le retour total.</p>
+    <p>Lis bien le règlement&nbsp;: la plupart des bonus portent sur le gain net, ce qui vaut moins qu’un bonus sur le retour, surtout avec de petites cotes. Deux sélections du même match ne sont pas indépendantes&nbsp;: le calcul ne vaut plus.</p>
   </details>
 </section>
 
-<p class="pied">Calculs faits dans ton navigateur, rien n’est envoyé. Les bookmakers limitent les comptes qui ne jouent que les promos et les écarts de cote. Joueurs Info Service : 09 74 75 13 13.</p>
+</div>
 </main>
+
+<footer class="pied">
+  <div class="cadre">
+    <p>Calculs faits dans ton navigateur, rien n’est envoyé. Cotes relevées par <a href="https://matttgic.github.io/cotes-value/">Cote Value</a>, probabilités justes tirées de Pinnacle.</p>
+    <p>Les bookmakers limitent les comptes qui ne jouent que les promos et les écarts de cote.</p>
+    <p><b>Jeu responsable</b>&nbsp;: Joueurs Info Service, 09&nbsp;74&nbsp;75&nbsp;13&nbsp;13 (appel non surtaxé).</p>
+  </div>
+</footer>
+
 <script type="module" src="page.js"></script>
 <script type="module" src="direct.js"></script>
 </body>
