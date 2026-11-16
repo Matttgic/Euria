@@ -1,12 +1,2 @@
-# Secrets
-.env
-
-# Cache des API (contient des cotes brutes : ne jamais le publier, conditions Parlay)
-data/cache/
-
-# Python
-__pycache__/
-*.pyc
-.pytest_cache/
-.venv/
-venv/
+.DS_Store
+node_modules/
