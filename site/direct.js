@@ -83,7 +83,8 @@ function milieux() {
   if (!D) return;
   const total = lireNombre($('dm-total').value);
   const lignes = (D.milieux || []).map(m => ({m, r: milieuRecalcule(m, total > 0 ? total : 100)}))
-    .filter(x => x.r && !x.r.erreur);
+    .filter(x => x.r && !x.r.erreur)
+    .sort((x, y) => y.r.esperance - x.r.esperance);   // meilleure espérance en % d'abord (même total pour tous)
   $('dm-compte').textContent = lignes.length ? `${lignes.length} en value` : 'aucun en ce moment';
   $('nb-milieux').textContent = lignes.length;
   $('nb-milieux').hidden = !lignes.length;
