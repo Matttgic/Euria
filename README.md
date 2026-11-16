@@ -35,9 +35,17 @@ nombre du moment.
 ## Fichiers
 
 - `site/` : la page publiée (`index.html`, `style.css`, `page.js` pour les calculs à la main, `direct.js` pour la partie
-  en direct), calculs purs dans `site/calculs.js`. `?donnees=<adresse>` remplace la source d'`euria.json` (essais).
-- `tests/calculs.test.mjs` : `node --test tests/*.test.mjs` (Node 20 ou plus, aucune dépendance).
+  en direct, `affichage.js` pour la mise en forme commune), calculs purs dans `site/calculs.js`, police dans
+  `site/polices/`. `?donnees=<adresse>` remplace la source d'`euria.json` (essais).
+- `tests/` : `node --test tests/*.test.mjs` (Node 20 ou plus, aucune dépendance).
 - `.github/workflows/pages.yml` : tests puis publication sur GitHub Pages à chaque poussée sur `main`.
+
+## Présentation
+
+Une seule police, Archivo (chasse variable, licence OFL, servie avec la page), de l'encre, du papier et un jaune
+(`#ffd100`). Des filets plutôt que des cadres, les chiffres tabulaires dans les colonnes, le chiffre qui décide surligné.
+Mode sombre selon le téléphone. Tout le HTML produit passe par `remplir()` (`affichage.js`), qui met les espaces
+insécables de la typographie française (« », avant : ; ? ! et %).
 
 Rien n'est envoyé : la page lit les cotes publiées et calcule dans le navigateur. Jeu responsable : Joueurs Info
 Service, 09 74 75 13 13.
