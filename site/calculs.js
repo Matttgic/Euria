@@ -280,3 +280,32 @@ export function combineBooste({selections, mise, bonus, base = 'net', valeur = 1
   const bonusMinimal = assiette * valeur > 0 ? Math.max(0, (1 / proba - cote) / (assiette * valeur)) : Infinity;
   return {cote, proba, retour, esperance, rendement: esperance / mise, sansBonus: proba * cote - 1, bonusMinimal};
 }
+
+// --------------------------------------------------------------------------- en direct (euria.json de Cote Value)
+
+/**
+ * Paris relevés par Cote Value pour convertir une offre chez un bookmaker (`candidats` : euria.json › conversions),
+ * recalculés pour l'offre saisie : « freebet » (montant du freebet) ou « rembourse » (mise, remboursement compté
+ * `valeur`, plafonné à `plafond`). Le premier pari de chaque candidat est celui de l'offre, les autres le couvrent.
+ * Rend les candidats avec leur calcul (`calcul`), du plus gros gain garanti au plus petit.
+ */
+export function classerConversions(candidats, {type = 'freebet', montant, valeur = 0.75, plafond = Infinity}) {
+  const out = [];
+  for (const c of candidats || []) {
+    const [offre, ...couv] = c.jambes || [];
+    if (!offre || !couv.length) continue;
+    const cotes = couv.map(j => j.cote);
+    const calcul = type === 'freebet' ? couvrirFreebet({montant, cote: offre.cote, couvertures: cotes})
+      : couvrirRembourse({mise: montant, cote: offre.cote, couvertures: cotes, valeur, plafond});
+    if (calcul) out.push({...c, calcul});
+  }
+  return out.sort((a, b) => b.calcul.gain - a.calcul.gain);
+}
+
+/** Un milieu relevé par Cote Value (euria.json › milieux), recalculé pour `total` euros (mises équilibrées). */
+export function milieuRecalcule(m, total) {
+  const [a, b] = m.jambes || [];
+  if (!a || !b || !Array.isArray(m.bornes)) return null;
+  return milieu({ligne1: m.bornes[0], cote1: a.cote, ligne2: m.bornes[1], cote2: b.cote, total, mode: 'equilibre',
+                 pMilieu: {dessous: m.p_dessous, milieu: m.p_milieu, dessus: m.p_dessus}});
+}
