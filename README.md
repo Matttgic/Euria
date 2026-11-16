@@ -10,8 +10,11 @@ Page de calculs pour les paris sportifs, **sans aucun pronostic** : uniquement d
 3. **Promos « remboursé si… » et « payé dès 2 buts d'avance »** (football) : valeur exacte de la promo avec les
    probabilités justes du 1N2 de Pinnacle ; défaite d'un but, 0-0 et avance de deux buts par un modèle de Poisson ajusté
    sur ces cotes (la valeur « 2 buts d'avance » est un minimum : le modèle sous-estime les remontées).
+4. **Combiné boosté** (« +X % sur tes combinés ») : probabilité juste de chaque sélection (cotes Pinnacle du marché ou
+   cote juste), espérance avec le bonus sur le gain net ou sur le retour total, en argent ou en freebet, et bonus
+   minimal pour être rentable. Sélections de matchs différents (indépendantes).
 
-Les surebets et les cotes boostées sont suivis en direct par Cote Value (onglet Boosts).
+Les surebets, les cotes boostées et les boosts couverts sont suivis en direct par Cote Value (onglet Boosts).
 
 ## Fichiers
 

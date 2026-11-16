@@ -3,7 +3,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {
   lireNombre, probasJustes, couvrirFreebet, couvrirRembourse, milieu, probasMilieuDeuxLignes, probasMilieuNormale,
-  phi, phiInverse, scores, issues, ajusterPoisson, probaMenerDe, valeurPromo,
+  phi, phiInverse, scores, issues, ajusterPoisson, probaMenerDe, valeurPromo, probaSelection, combineBooste,
 } from '../site/calculs.js';
 
 const proche = (a, b, eps = 1e-2) => assert.ok(Math.abs(a - b) <= eps, `${a} ≠ ${b} (± ${eps})`);
@@ -143,4 +143,46 @@ test('autre événement : probabilité saisie, jamais plus que la défaite', () 
   const r = valeurPromo({type: 'autre', camp: 'dom', cote: 2.0, mise: 10, pinnacle: PIN, pAutre: 0.1});
   proche(r.ev, 1, 1e-9);
   assert.equal(valeurPromo({type: 'autre', camp: 'dom', cote: 2.0, mise: 10, pinnacle: PIN, pAutre: 0.6}), null);
+});
+
+test('probabilité d’une sélection : marché Pinnacle complet ou cote juste', () => {
+  proche(probaSelection({pinnacle: [1.95, 1.95]}), 0.5, 1e-12);
+  proche(probaSelection({pinnacle: [2.0, 3.6, 4.5]}), 0.5, 1e-12);
+  proche(probaSelection({juste: 2.5}), 0.4, 1e-12);
+  assert.equal(probaSelection({pinnacle: [1.95]}), null);          // une seule cote Pinnacle : marge inconnue
+  assert.equal(probaSelection({pinnacle: [1.95, NaN]}), null);
+  assert.equal(probaSelection({juste: 0.9}), null);
+});
+
+// Trois sélections à 5 % de marge chacune (cote = cote juste / 1,05) : 1,05³ − 1 = 15,8 % de marges cumulées.
+const marge5 = juste => ({cote: juste / 1.05, proba: 1 / juste});
+
+test('combiné boosté sur le retour total : +20 % bat 15,8 % de marges, quelles que soient les cotes', () => {
+  for (const juste of [1.3, 2.0, 3.0]) {
+    const r = combineBooste({selections: [marge5(juste), marge5(juste), marge5(juste)], mise: 10, bonus: 0.2, base: 'total'});
+    proche(r.rendement, 1.2 / 1.05 ** 3 - 1, 1e-9);              // +3,7 %
+    proche(r.bonusMinimal, 1.05 ** 3 - 1, 1e-9);
+  }
+});
+
+test('combiné boosté sur le gain net : tout dépend des cotes', () => {
+  const haut = combineBooste({selections: [marge5(2), marge5(2), marge5(2)], mise: 10, bonus: 0.2});
+  const bas = combineBooste({selections: [marge5(1.3), marge5(1.3), marge5(1.3)], mise: 10, bonus: 0.2});
+  proche(haut.rendement, 0.0117, 1e-3);                           // cotes à 1,90 : encore rentable
+  proche(bas.rendement, -0.0543, 1e-3);                           // cotes à 1,24 : perdant
+  proche(haut.sansBonus, 1 / 1.05 ** 3 - 1, 1e-9);
+  proche(haut.cote * (1 + haut.bonusMinimal) - haut.bonusMinimal, 8, 1e-9);   // à ce bonus, retour × P = mise
+  proche(haut.retour, 10 * (haut.cote + (haut.cote - 1) * 0.2), 1e-9);
+});
+
+test('combiné boosté : bonus en freebet compté à sa valeur, saisies impossibles refusées', () => {
+  const sel = [marge5(2), marge5(2), marge5(2)];
+  const argent = combineBooste({selections: sel, mise: 10, bonus: 0.2});
+  const freebet = combineBooste({selections: sel, mise: 10, bonus: 0.2, valeur: 0.75});
+  proche(argent.esperance - freebet.esperance, 0.125 * 10 * (argent.cote - 1) * 0.2 * 0.25, 1e-9);
+  proche(combineBooste({selections: [{cote: 2.2, proba: 0.5}, {cote: 2.2, proba: 0.5}], mise: 10, bonus: 0}).bonusMinimal, 0, 1e-12);
+  assert.equal(combineBooste({selections: [marge5(2)], mise: 10, bonus: 0.2}), null);
+  assert.equal(combineBooste({selections: sel, mise: 0, bonus: 0.2}), null);
+  assert.equal(combineBooste({selections: sel, mise: 10, bonus: 0.2, valeur: 1.5}), null);
+  assert.equal(combineBooste({selections: sel, mise: 10, bonus: 0.2, base: 'autre'}), null);
 });

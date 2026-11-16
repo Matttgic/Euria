@@ -4,16 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Promos et milieux</title>
-<meta name="description" content="Calculs exacts pour convertir un freebet, couvrir un pari remboursé, jouer un milieu et chiffrer une promo avec les cotes justes de Pinnacle.">
+<meta name="description" content="Calculs exacts pour convertir un freebet, couvrir un pari remboursé, jouer un milieu, chiffrer une promo ou un combiné boosté avec les cotes justes de Pinnacle.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="haut">
   <p class="surtitre">Paris sportifs · calculs sans pronostic</p>
   <h1>Promos et milieux</h1>
-  <p class="chapo">Trois calculs exacts : convertir un freebet ou un pari remboursé, jouer un milieu, chiffrer une promo « remboursé si… » avec les cotes justes de Pinnacle.</p>
+  <p class="chapo">Quatre calculs exacts : convertir un freebet ou un pari remboursé, jouer un milieu, chiffrer une promo « remboursé si… » et un combiné boosté avec les cotes justes de Pinnacle.</p>
   <nav class="onglets" aria-label="Calculs">
-    <a href="#freebets">Freebets</a><a href="#milieux">Milieux</a><a href="#promos">Promos</a>
+    <a href="#freebets">Freebets</a><a href="#milieux">Milieux</a><a href="#promos">Promos</a><a href="#combine">Combiné</a>
   </nav>
 </header>
 <main>
@@ -96,6 +96,30 @@
     <p>Espérance sans promo = mise × (cote × P(victoire) − 1), P(victoire) étant la probabilité juste de Pinnacle. Une promo « remboursé si E » ajoute P(E) × la valeur du remboursement (E arrive quand le pari perd). « Payé dès 2 buts d’avance » ajoute la probabilité de mener de deux buts sans gagner à la fin.</p>
     <p>Défaite d’un but, 0-0 et avance de deux buts viennent d’un modèle de Poisson : buts attendus des deux équipes ajustés pour retrouver le 1N2 de Pinnacle (et le Plus/Moins de 2,5 s’il est saisi), buts indépendants, au même rythme tout le match. Il sous-estime un peu les remontées (une équipe qui mène recule) : la valeur de « payé dès 2 buts d’avance » est un minimum.</p>
     <p>Freebet remboursé : sa valeur est celle de sa conversion (70 à 80 % en pratique, voir le calcul 1).</p>
+  </details>
+</section>
+
+<section id="combine" class="bloc" aria-labelledby="t-combine">
+  <h2 id="t-combine"><span class="num">4</span> Combiné boosté</h2>
+  <p class="aide">« +X % sur tes combinés » : rentable seulement si le bonus dépasse les marges des sélections, qui se multiplient. Sélections de matchs différents.</p>
+  <div class="grille">
+    <label>Nombre de sélections<select id="cb-nombre"><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
+    <label>Probabilités justes<select id="cb-mode"><option value="pinnacle">cotes Pinnacle du marché</option><option value="juste">cotes justes déjà connues</option></select></label>
+  </div>
+  <div class="cb-lignes" id="cb-lignes"></div>
+  <p class="note si-cb-pinnacle">Pinnacle : la cote de ta sélection, puis celles des autres issues du même marché (2 ou 3 issues, le nul compris).</p>
+  <div class="grille cb-reglages">
+    <label><span>Bonus <span class="unite">%</span></span><input id="cb-bonus" inputmode="decimal" value="25"></label>
+    <label>Bonus calculé sur<select id="cb-base"><option value="net">le gain net (cote − 1)</option><option value="total">le retour total (cote)</option></select></label>
+    <label>Bonus payé en<select id="cb-forme"><option value="argent">argent</option><option value="freebet">freebet</option></select></label>
+    <label class="si-cb-fb" hidden><span>Valeur d’1 € de freebet <span class="unite">%</span></span><input id="cb-valeur" inputmode="decimal" value="75"></label>
+    <label><span>Mise <span class="unite">€</span></span><input id="cb-mise" inputmode="decimal" value="10"></label>
+  </div>
+  <div class="resultat" id="cb-res" aria-live="polite"></div>
+  <details class="comment"><summary>Comment c’est calculé</summary>
+    <p>Probabilité juste de chaque sélection : cotes Pinnacle du marché, marge retirée en proportion (ou la cote juste saisie). Le combiné passe avec la probabilité P = produit des probabilités (matchs indépendants) et paie la cote C = produit des cotes.</p>
+    <p>Bonus sur le gain net : retour = mise × (C + (C − 1) × bonus). Sur le retour total : mise × C × (1 + bonus). Payé en freebet : compté à sa valeur. Espérance = P × retour − mise. Bonus minimal = (1/P − C) / (C − 1), ou / C sur le retour total.</p>
+    <p>Lis bien le règlement : la plupart des bonus portent sur le gain net, ce qui vaut moins qu’un bonus sur le retour, surtout avec de petites cotes. Deux sélections du même match ne sont pas indépendantes : le calcul ne vaut plus.</p>
   </details>
 </section>
 

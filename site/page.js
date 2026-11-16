@@ -1,7 +1,7 @@
 // Liaison des formulaires aux calculs (calculs.js) : tout est recalculé à chaque saisie, rien n'est envoyé.
 import {
   lireNombre, couvrirFreebet, couvrirRembourse, milieu, probasMilieuDeuxLignes, probasMilieuNormale, valeurPromo,
-  PROMOS,
+  PROMOS, probaSelection, combineBooste,
 } from './calculs.js';
 
 const $ = id => document.getElementById(id);
@@ -113,10 +113,75 @@ function promos() {
   $('pr-res').innerHTML = html;
 }
 
+// --------------------------------------------------------------------------- 4. combiné boosté
+
+// Saisies gardées quand on change le nombre de sélections ou le mode :
+// [cote du bookmaker, Pinnacle sélection, Pinnacle autre issue, Pinnacle 3e issue, cote juste].
+const cbSaisies = [['1,85', '1,95', '1,95', '', ''], ['2,10', '2,20', '3,50', '3,60', ''], ['1,60', '1,66', '2,35', '', '']];
+const CB_CHAMPS = {
+  pinnacle: [[0, 'Ton bookmaker'], [1, 'Pinnacle : ta sélection'], [2, 'Pinnacle : autre issue'], [3, 'Pinnacle : 3e issue']],
+  juste: [[0, 'Cote chez ton bookmaker'], [4, 'Cote juste']],
+};
+const attr = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+function lignesCombine() {
+  const zone = $('cb-lignes'), mode = $('cb-mode').value, nombre = Number($('cb-nombre').value);
+  const cle = `${mode}|${nombre}`;
+  if (zone.dataset.cle === cle) return;
+  const ancien = CB_CHAMPS[zone.dataset.mode];
+  if (ancien) zone.querySelectorAll('.cb-ligne').forEach((l, i) => {
+    l.querySelectorAll('input').forEach((x, k) => { cbSaisies[i][ancien[k][0]] = x.value; });
+  });
+  while (cbSaisies.length < nombre) cbSaisies.push(['', '', '', '', '']);
+  const champs = CB_CHAMPS[mode];
+  zone.dataset.cle = cle;
+  zone.dataset.mode = mode;
+  zone.classList.toggle('cb-mode-juste', mode === 'juste');
+  zone.innerHTML = `<div class="cb-tete" aria-hidden="true">${champs.map(([, t]) => `<span>${t}</span>`).join('')}</div>`
+    + Array.from({length: nombre}, (_, i) => `<div class="cb-ligne">${champs.map(([k, t]) =>
+      `<input inputmode="decimal" aria-label="Sélection ${i + 1}, ${t}" value="${attr(cbSaisies[i][k])}">`).join('')}</div>`).join('');
+  montrer('.si-cb-pinnacle', mode === 'pinnacle');
+}
+
+function combine() {
+  lignesCombine();
+  const juste = $('cb-mode').value === 'juste';
+  montrer('.si-cb-fb', $('cb-forme').value === 'freebet');
+  const selections = [], manquantes = [];
+  $('cb-lignes').querySelectorAll('.cb-ligne').forEach((l, i) => {
+    const v = [...l.querySelectorAll('input')].map(x => x.value.trim());
+    const coteBook = lireNombre(v[0]);
+    const proba = juste ? probaSelection({juste: lireNombre(v[1])})
+      : probaSelection({pinnacle: v.slice(1).filter(x => x !== '').map(lireNombre)});
+    if (coteBook > 1 && proba != null) selections.push({cote: coteBook, proba}); else manquantes.push(i + 1);
+  });
+  if (manquantes.length) {
+    $('cb-res').innerHTML = manque(`Sélection${manquantes.length > 1 ? 's' : ''} ${manquantes.join(', ')} : saisis la cote de ton bookmaker et ${
+      juste ? 'la cote juste' : 'au moins deux cotes Pinnacle du marché, ta sélection d’abord'}.`);
+    return;
+  }
+  const valeur = $('cb-forme').value === 'argent' ? 1 : n('cb-valeur') / 100;
+  const r = combineBooste({selections, mise: n('cb-mise'), bonus: n('cb-bonus') / 100, base: $('cb-base').value, valeur});
+  if (!r) { $('cb-res').innerHTML = manque('Saisis le bonus, la mise et une valeur de freebet entre 0 et 100 %.'); return; }
+  let html = selections.map((s, i) => {
+    const v = s.cote * s.proba - 1;
+    return ligne(`Sélection ${i + 1} : ${cote(s.cote)} pour une cote juste de ${cote(1 / s.proba)}`, (v > 0 ? '+' : '') + pct(v), classe(v));
+  }).join('');
+  html += ligne('Cote du combiné', cote(r.cote))
+    + ligne('Chance qu’il passe', `${pct(r.proba)}, 1 fois sur ${(1 / r.proba).toLocaleString('fr-FR', {maximumFractionDigits: 1})}`)
+    + ligne('Sans le bonus', pct(r.sansBonus), classe(r.sansBonus))
+    + ligne('Bonus minimal pour être rentable', r.bonusMinimal === 0 ? 'aucun : déjà rentable'
+      : Number.isFinite(r.bonusMinimal) ? '+' + pct(r.bonusMinimal) : '—')
+    + ligne('S’il passe', `retour ${euros(r.retour)}`);
+  html += `<div class="verdict ${classe(r.esperance)}">Avec le bonus : ${signe(r.esperance)} (${pct(r.rendement)}) · ${r.esperance > 0 ? 'à jouer' : 'à laisser'}</div>`;
+  html += `<p class="note">Rentable en moyenne seulement : ce combiné perd ${pct(1 - r.proba, 0)} du temps.</p>`;
+  $('cb-res').innerHTML = html;
+}
+
 // --------------------------------------------------------------------------- liaison
 
 $('pr-type').innerHTML = Object.entries(PROMOS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
-for (const [zone, calcul] of [['freebets', freebets], ['milieux', milieux], ['promos', promos]]) {
+for (const [zone, calcul] of [['freebets', freebets], ['milieux', milieux], ['promos', promos], ['combine', combine]]) {
   const section = $(zone);
   section.addEventListener('input', calcul);
   section.addEventListener('change', calcul);
