@@ -357,3 +357,7 @@ input[type="checkbox"], input[type="radio"] {
   .barre i { background: CanvasText; }
   .barre i.m, .cle.m { background: Highlight; }
 }
+
+/* Une page par onglet (onglets.js) */
+[data-page].cache { display: none !important; }
+.nav a[aria-current="page"] { border-bottom-color: var(--jaune); }

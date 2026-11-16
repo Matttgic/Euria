@@ -35,7 +35,7 @@
 <main>
 <div class="cadre">
 
-<section id="direct-milieux" class="sec" aria-labelledby="t-direct-milieux">
+<section id="direct-milieux" data-page="milieux" class="sec" aria-labelledby="t-direct-milieux">
   <div class="sec-tete">
     <h2 id="t-direct-milieux">Milieux en direct</h2>
     <p class="sec-compte" id="dm-compte"></p>
@@ -54,7 +54,7 @@
   <p class="note">Alerte sur ton téléphone&nbsp;: dans <a href="https://matttgic.github.io/cotes-value/#notifications">Cote Value, onglet Notifications</a>, coche «&nbsp;Milieux en value&nbsp;» (espérance d’au moins 2&nbsp;%), puis enregistre.</p>
 </section>
 
-<section id="bilan" class="sec" aria-labelledby="t-bilan">
+<section id="bilan" data-page="bilan" class="sec" aria-labelledby="t-bilan">
   <div class="sec-tete">
     <h2 id="t-bilan">Bilan des milieux</h2>
     <p class="sec-compte">sans miser un euro</p>
@@ -64,7 +64,7 @@
   <div id="bi-liste"></div>
 </section>
 
-<section id="direct-freebets" class="sec" aria-labelledby="t-direct-freebets">
+<section id="direct-freebets" data-page="freebets" class="sec" aria-labelledby="t-direct-freebets">
   <div class="sec-tete">
     <h2 id="t-direct-freebets">Convertir un freebet</h2>
     <p class="sec-compte">avec les cotes du moment</p>
@@ -80,11 +80,11 @@
   <div id="df-liste" class="liste"></div>
 </section>
 
-<p class="renvoi" id="autres" hidden></p>
+<p class="renvoi" id="autres" data-page="milieux" hidden></p>
 
 </div>
 
-<div class="bande" id="calculs">
+<div class="bande" id="calculs" data-page="calculs">
   <div class="cadre">
     <h2>Calculs à la main</h2>
     <p>Pour une offre que la page ne relève pas&nbsp;: promo annoncée en texte libre, match absent du relevé, cotes vues ailleurs.</p>
@@ -97,7 +97,7 @@
   </div>
 </div>
 
-<div class="cadre">
+<div class="cadre" data-page="calculs">
 
 <section id="freebets" class="sec calc" aria-labelledby="t-freebets">
   <div class="sec-tete"><h2 id="t-freebets"><span class="no">1</span>Freebets et bonus couverts</h2></div>
@@ -231,6 +231,7 @@
   </div>
 </footer>
 
+<script type="module" src="onglets.js"></script>
 <script type="module" src="page.js"></script>
 <script type="module" src="direct.js"></script>
 </body>
