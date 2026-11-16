@@ -246,3 +246,37 @@ export function valeurPromo({type, camp, cote, mise, pinnacle, remboursement = 1
   const ev = type === 'deuxButs' ? mise * (cote * pPaye - 1) : evSansPromo + pRembourse * rendu;
   return {ev, evSansPromo, pGagne, pRembourse, pPaye, lDom: fit.lDom, lExt: fit.lExt, erreur: fit.erreur};
 }
+
+// --------------------------------------------------------------------------- 6. combiné boosté
+
+/**
+ * Probabilité juste d'une sélection : cotes Pinnacle de tout le marché (`pinnacle`, ta sélection d'abord, au moins deux
+ * issues, marge retirée en proportion), ou cote juste déjà calculée (`juste`, par exemple celle de Cote Value).
+ */
+export function probaSelection({pinnacle = null, juste = null}) {
+  if (pinnacle) {
+    if (pinnacle.length < 2) return null;
+    const p = probasJustes(pinnacle);
+    return p ? p[0] : null;
+  }
+  return valide(juste) ? 1 / juste : null;
+}
+
+/**
+ * Combiné boosté : `selections` de matchs différents (indépendantes), chacune {cote, proba} (cote du bookmaker,
+ * probabilité juste). Bonus `bonus` (0,25 = +25 %) sur le gain net (`base` « net ») ou sur le retour total
+ * (« total »), payé en argent ou en freebet compté à `valeur` (1 = argent), s'il passe.
+ * Rend {cote, proba, retour, esperance, rendement, sansBonus, bonusMinimal}, esperance en € pour la mise.
+ */
+export function combineBooste({selections, mise, bonus, base = 'net', valeur = 1}) {
+  if (!(mise > 0) || !(bonus >= 0) || !(valeur >= 0 && valeur <= 1) || !['net', 'total'].includes(base)) return null;
+  if (!selections || selections.length < 2 || !selections.every(s => valide(s.cote) && s.proba > 0 && s.proba < 1)) return null;
+  const cote = selections.reduce((a, s) => a * s.cote, 1);
+  const proba = selections.reduce((a, s) => a * s.proba, 1);
+  const assiette = base === 'total' ? cote : cote - 1;          // ce que le bonus multiplie, par € misé
+  const retour = mise * (cote + assiette * bonus * valeur);     // s'il passe
+  const esperance = proba * retour - mise;
+  // bonus qui annule l'espérance : proba × (cote + assiette × b × valeur) = 1
+  const bonusMinimal = assiette * valeur > 0 ? Math.max(0, (1 / proba - cote) / (assiette * valeur)) : Infinity;
+  return {cote, proba, retour, esperance, rendement: esperance / mise, sansBonus: proba * cote - 1, bonusMinimal};
+}

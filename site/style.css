@@ -48,4 +48,10 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .comment summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--texte)}
 .comment p{margin:6px 0 10px}
 .pied{color:var(--doux);font-size:13px;margin:10px 0 40px}
+.cb-lignes{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px}
+.cb-tete,.cb-ligne{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.cb-mode-juste .cb-tete,.cb-mode-juste .cb-ligne{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cb-tete span{font-size:12px;font-weight:600;line-height:1.25;color:var(--doux);align-self:end}
+.cb-ligne input{padding:8px 6px}
+.cb-reglages{margin-top:12px}
 @media(max-width:560px){.grille{grid-template-columns:1fr}.bloc{padding:16px 14px 12px}h2{font-size:21px}}
