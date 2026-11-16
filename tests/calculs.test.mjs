@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
   lireNombre, probasJustes, couvrirFreebet, couvrirRembourse, milieu, probasMilieuDeuxLignes, probasMilieuNormale,
   phi, phiInverse, scores, issues, ajusterPoisson, probaMenerDe, valeurPromo, probaSelection, combineBooste,
+  classerConversions, milieuRecalcule,
 } from '../site/calculs.js';
 
 const proche = (a, b, eps = 1e-2) => assert.ok(Math.abs(a - b) <= eps, `${a} ≠ ${b} (± ${eps})`);
@@ -185,4 +186,30 @@ test('combiné boosté : bonus en freebet compté à sa valeur, saisies impossib
   assert.equal(combineBooste({selections: sel, mise: 0, bonus: 0.2}), null);
   assert.equal(combineBooste({selections: sel, mise: 10, bonus: 0.2, valeur: 1.5}), null);
   assert.equal(combineBooste({selections: sel, mise: 10, bonus: 0.2, base: 'autre'}), null);
+});
+
+// Données au format d'euria.json (Cote Value, cotes/euria.py).
+const CANDIDATS = [
+  {match: 'A – B', jambes: [{cote: 3.4}, {cote: 1.98}, {cote: 4.5}]},     // nul, couvert par les deux équipes
+  {match: 'C – D', jambes: [{cote: 1.95}, {cote: 1.8}]},
+  {match: 'E – F', jambes: [{cote: 2.0}]},                                  // sans couverture : ignoré
+];
+
+test('en direct : conversions recalculées pour le montant saisi, la meilleure d’abord', () => {
+  const fb = classerConversions(CANDIDATS, {type: 'freebet', montant: 10});
+  assert.deepEqual(fb.map(c => c.match), ['A – B', 'C – D']);
+  proche(fb[0].calcul.gain, 24 * (1 - 1 / 1.98 - 1 / 4.5), 1e-9);
+  proche(fb[0].calcul.mises[0], 24 / 1.98, 1e-9);
+  const rb = classerConversions(CANDIDATS, {type: 'rembourse', montant: 50, valeur: 0.75, plafond: 20});
+  proche(rb[0].calcul.rendu, 15, 1e-9);                               // 75 % de 20 € remboursés
+  assert.equal(classerConversions(CANDIDATS, {type: 'freebet', montant: 0}).length, 0);
+  assert.deepEqual(classerConversions(null, {montant: 10}), []);
+});
+
+test('en direct : milieu recalculé pour la somme saisie', () => {
+  const m = {bornes: [210.5, 213.5], jambes: [{cote: 1.95}, {cote: 2.0}], p_dessous: 0.45, p_milieu: 0.08, p_dessus: 0.47};
+  const r = milieuRecalcule(m, 200);
+  proche(r.mises[0], 200 * 2 / 3.95, 1e-9);
+  proche(r.esperance, r.mises[0] * (1.95 * 0.55 - 1) + r.mises[1] * (2 * 0.53 - 1), 1e-9);
+  assert.equal(milieuRecalcule({jambes: []}, 100), null);
 });

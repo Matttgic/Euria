@@ -54,4 +54,22 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 .cb-tete span{font-size:12px;font-weight:600;line-height:1.25;color:var(--doux);align-self:end}
 .cb-ligne input{padding:8px 6px}
 .cb-reglages{margin-top:12px}
+a{color:var(--accent)}
+.etat{margin:0 0 14px;font-size:14px;color:var(--doux)}.etat b{font-weight:600}
+.liste{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.carte{border:1px solid var(--ligne);border-radius:12px;padding:12px 12px 4px;background:var(--fond)}
+.carte h3{font:600 17px/1.25 var(--sans);margin:2px 0 4px}
+.meta{margin:0;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--doux)}
+.zone{margin:0 0 6px;font-size:14px;color:var(--doux)}
+.jambe{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:2px 12px;align-items:center;padding:8px 0;border-top:1px dashed var(--ligne)}
+.jambe .book{grid-column:1/-1;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.jambe b{font-weight:600;min-width:0}
+.jambe .cote{font:600 15px var(--mono);text-align:right}
+.jambe .cote small{display:block;font:400 11px var(--mono);color:var(--doux)}
+.jambe .mise{font:700 15px var(--mono);text-align:right;min-width:76px}
+.ouvrir{grid-column:1/-1;justify-self:start;display:inline-flex;align-items:center;min-height:44px;margin-top:4px;padding:0 14px;
+  border:1px solid var(--accent);border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+.vide{color:var(--doux);margin:6px 0}
+.autres{margin:0 0 6px;font-size:14px}
+.intertitre{font:400 28px/1.2 var(--serif);margin:34px 0 0;scroll-margin-top:72px}
 @media(max-width:560px){.grille{grid-template-columns:1fr}.bloc{padding:16px 14px 12px}h2{font-size:21px}}

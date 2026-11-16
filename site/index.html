@@ -3,20 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Promos et milieux</title>
-<meta name="description" content="Calculs exacts pour convertir un freebet, couvrir un pari remboursé, jouer un milieu, chiffrer une promo ou un combiné boosté avec les cotes justes de Pinnacle.">
+<title>Euria</title>
+<meta name="description" content="Paris sans pronostic relevés en direct : milieux en value et meilleures conversions de freebets, avec les calculs pour les promos et les combinés boostés.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="haut">
-  <p class="surtitre">Paris sportifs · calculs sans pronostic</p>
-  <h1>Promos et milieux</h1>
-  <p class="chapo">Quatre calculs exacts : convertir un freebet ou un pari remboursé, jouer un milieu, chiffrer une promo « remboursé si… » et un combiné boosté avec les cotes justes de Pinnacle.</p>
-  <nav class="onglets" aria-label="Calculs">
-    <a href="#freebets">Freebets</a><a href="#milieux">Milieux</a><a href="#promos">Promos</a><a href="#combine">Combiné</a>
+  <p class="surtitre">Paris sportifs · sans pronostic · en direct</p>
+  <h1>Euria</h1>
+  <p class="chapo">Les milieux en value et les meilleurs paris pour convertir un freebet, trouvés tout seuls à chaque relevé des cotes françaises (toutes les 5 à 10 minutes, par Cote Value). En bas, les calculs à la main.</p>
+  <p class="etat" id="etat" aria-live="polite">Chargement des cotes…</p>
+  <nav class="onglets" aria-label="Sections">
+    <a href="#direct-milieux">Milieux</a><a href="#direct-freebets">Freebets</a><a href="#calculs">Calculs</a>
   </nav>
 </header>
 <main>
+
+<section id="direct-milieux" class="bloc" aria-labelledby="t-direct-milieux">
+  <h2 id="t-direct-milieux"><span class="num">●</span> Milieux en direct</h2>
+  <p class="aide">« Plus de » une ligne chez un bookmaker, « Moins de » une ligne plus haute chez un autre : si le résultat tombe entre les deux, les deux paris gagnent. Seuls ceux qui rapportent en moyenne d’après les cotes justes de Pinnacle sont listés.</p>
+  <div class="grille"><label><span>Somme des deux mises <span class="unite">€</span></span><input id="dm-total" inputmode="decimal" value="100"></label></div>
+  <div id="dm-liste" class="liste"></div>
+  <p class="note" id="dm-bilan"></p>
+  <p class="note">Alerte sur ton téléphone : dans <a href="https://matttgic.github.io/cotes-value/#notifications">Cote Value › Notifications</a>, coche « Milieux en value » (espérance d’au moins 2 %), puis enregistre.</p>
+</section>
+
+<section id="direct-freebets" class="bloc" aria-labelledby="t-direct-freebets">
+  <h2 id="t-direct-freebets"><span class="num">●</span> Convertir un freebet maintenant</h2>
+  <p class="aide">Tu as un freebet ou un « pari remboursé si perdant » chez un bookmaker : voici les paris qui le transforment en gain garanti avec les cotes du moment, couverts chez les autres.</p>
+  <div class="grille">
+    <label>Chez<select id="df-book"></select></label>
+    <label>Offre<select id="df-type"><option value="freebet">freebet</option><option value="rembourse">pari remboursé si perdant</option></select></label>
+    <label><span id="df-montant-nom">Montant du freebet <span class="unite">€</span></span><input id="df-montant" inputmode="decimal" value="10"></label>
+    <label class="si-df-rembourse" hidden><span>Valeur d’1 € remboursé <span class="unite">%, 100 = argent</span></span><input id="df-valeur" inputmode="decimal" value="75"></label>
+    <label class="si-df-rembourse" hidden><span>Remboursement maximal <span class="unite">€, vide = sans plafond</span></span><input id="df-plafond" inputmode="decimal" value=""></label>
+  </div>
+  <div id="df-liste" class="liste"></div>
+</section>
+
+<p class="autres" id="autres"></p>
+
+<h2 class="intertitre" id="calculs">Calculs à la main</h2>
 
 <section id="freebets" class="bloc" aria-labelledby="t-freebets">
   <h2 id="t-freebets"><span class="num">1</span> Freebets et bonus couverts</h2>
@@ -126,5 +153,6 @@
 <p class="pied">Calculs faits dans ton navigateur, rien n’est envoyé. Les bookmakers limitent les comptes qui ne jouent que les promos et les écarts de cote. Joueurs Info Service : 09 74 75 13 13.</p>
 </main>
 <script type="module" src="page.js"></script>
+<script type="module" src="direct.js"></script>
 </body>
 </html>
