@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {
   lireNombre, probasJustes, couvrirFreebet, couvrirRembourse, milieu, probasMilieuDeuxLignes, probasMilieuNormale,
   phi, phiInverse, scores, issues, ajusterPoisson, probaMenerDe, valeurPromo, probaSelection, combineBooste,
-  classerConversions, milieuRecalcule,
+  classerConversions, milieuRecalcule, milieuPlafonne,
 } from '../site/calculs.js';
 
 const proche = (a, b, eps = 1e-2) => assert.ok(Math.abs(a - b) <= eps, `${a} ≠ ${b} (± ${eps})`);
@@ -212,4 +212,17 @@ test('en direct : milieu recalculé pour la somme saisie', () => {
   proche(r.mises[0], 200 * 2 / 3.95, 1e-9);
   proche(r.esperance, r.mises[0] * (1.95 * 0.55 - 1) + r.mises[1] * (2 * 0.53 - 1), 1e-9);
   assert.equal(milieuRecalcule({jambes: []}, 100), null);
+});
+
+test('en direct : perte hors milieu plafonnée en réduisant les mises', () => {
+  const m = {bornes: [2.5, 3.5], jambes: [{cote: 1.66}, {cote: 1.61}], p_dessous: 0.4, p_milieu: 0.23, p_dessus: 0.37};
+  const libre = milieuPlafonne(m, 100, NaN);
+  assert.equal(libre.reduit, false);
+  proche(Math.min(libre.dessous, libre.dessus), -18.27);
+  const r = milieuPlafonne(m, 100, 5);
+  assert.equal(r.reduit, true);
+  proche(Math.min(r.dessous, r.dessus), -5, 1e-9);
+  proche(r.total, 100 * 5 / 18.27);
+  proche(r.esperance / r.total, libre.esperance / 100, 1e-9);
+  assert.equal(milieuPlafonne(m, 100, 50).reduit, false);
 });
