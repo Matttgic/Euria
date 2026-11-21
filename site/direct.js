@@ -1,7 +1,7 @@
 // Partie « en direct » : lit euria.json, publié par Cote Value à chaque relevé (même origine que cette page,
 // https://matttgic.github.io), et affiche les milieux en value et les meilleures conversions de freebets.
 // Les mises sont recalculées ici pour les montants saisis (calculs.js). ?donnees=<adresse> remplace la source (essais).
-import {lireNombre, classerConversions, milieuRecalcule} from './calculs.js';
+import {lireNombre, classerConversions, milieuPlafonne} from './calculs.js';
 import {nb, euros, signe, pct, classe, esc, ligne, cle, barre, remplir} from './affichage.js';
 
 const SOURCE = new URLSearchParams(location.search).get('donnees') || 'https://matttgic.github.io/cotes-value/euria.json';
@@ -81,10 +81,10 @@ function etat() {
 
 function milieux() {
   if (!D) return;
-  const total = lireNombre($('dm-total').value);
-  const lignes = (D.milieux || []).map(m => ({m, r: milieuRecalcule(m, total > 0 ? total : 100)}))
+  const total = lireNombre($('dm-total').value), perteMax = lireNombre($('dm-perte').value);
+  const lignes = (D.milieux || []).map(m => ({m, r: milieuPlafonne(m, total > 0 ? total : 100, perteMax)}))
     .filter(x => x.r && !x.r.erreur)
-    .sort((x, y) => y.r.esperance - x.r.esperance);   // meilleure espérance en % d'abord (même total pour tous)
+    .sort((x, y) => y.r.esperance / y.r.total - x.r.esperance / x.r.total);   // meilleure espérance en % d'abord
   $('dm-compte').textContent = lignes.length ? `${lignes.length} en value` : 'aucun en ce moment';
   $('nb-milieux').textContent = lignes.length;
   $('nb-milieux').hidden = !lignes.length;
@@ -97,15 +97,16 @@ function milieux() {
   remplir($('dm-liste'), lignes.length ? lignes.map(({m, r}, i) => {
     const [a, b] = m.jambes, hors = Math.min(r.dessous, r.dessus);
     const parts = [m.p_dessous, m.p_milieu, m.p_dessus];
-    return `<article class="op">${entete(m, i)}${chiffre('Espérance', r.esperance, `${pct(r.esperance / total)} de la mise`)}
+    return `<article class="op">${entete(m, i)}${chiffre('Espérance', r.esperance, `${pct(r.esperance / r.total)} de la mise`)}
 <p class="op-zone">Les deux paris gagnent si ${esc(zone(m))}.</p>
+${r.reduit ? `<p class="op-zone">Mises réduites à ${euros(r.total)} au total pour ne pas perdre plus de ${euros(perteMax)} hors du milieu.</p>` : ''}
 ${paris(jambe(a, '', r.mises[0]) + jambe(b, '', r.mises[1]))}
 <div class="issues">${barre(parts, `Milieu : ${pct(m.p_milieu)} de chances, ${signe(r.dedans)}. `
       + `Sinon : ${pct(1 - m.p_milieu)}, au pire ${signe(hors)}.`)}
 ${ligne(`${cle(true)}Milieu <i class="p">${pct(m.p_milieu)}</i>`, signe(r.dedans), classe(r.dedans))}
 ${ligne(`${cle(false)}Sinon <i class="p">${pct(1 - m.p_milieu)}</i>`, `${signe(hors)} au pire`, classe(hors))}</div></article>`;
   }).join('')
-    : '<p class="vide">Aucun milieu en value au dernier relevé. Ils apparaissent surtout sur les totaux de points quand deux bookmakers n’ont pas la même ligne.</p>');
+    : '<p class="vide">Aucun milieu en value au dernier relevé. Il en faut deux bookmakers qui n’ont pas la même ligne. Au basket, ils affichent presque toujours les mêmes lignes avec environ 12 % de marge sur les totaux&nbsp;: un milieu y perd en moyenne.</p>');
 }
 
 const CONCLURE = 30;   // milieux réglés avant de tirer une conclusion

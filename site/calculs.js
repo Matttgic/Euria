@@ -309,3 +309,16 @@ export function milieuRecalcule(m, total) {
   return milieu({ligne1: m.bornes[0], cote1: a.cote, ligne2: m.bornes[1], cote2: b.cote, total, mode: 'equilibre',
                  pMilieu: {dessous: m.p_dessous, milieu: m.p_milieu, dessus: m.p_dessus}});
 }
+
+/** Milieu en direct dont la perte hors milieu ne dépasse pas ``perteMax`` € : la somme misée est réduite d'autant
+ * (même cotes, mêmes proportions). ``perteMax`` vide ou nul : aucune limite. */
+export function milieuPlafonne(m, total, perteMax) {
+  let r = milieuRecalcule(m, total);
+  if (!r || r.erreur) return r;
+  const perte = -Math.min(r.dessous, r.dessus);
+  if (perteMax > 0 && perte > perteMax) {
+    const reduit = total * perteMax / perte;
+    r = {...milieuRecalcule(m, reduit), total: reduit, reduit: true};
+  } else r = {...r, total, reduit: false};
+  return r;
+}
