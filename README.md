@@ -9,7 +9,7 @@ françaises (toutes les 5 à 10 minutes, `cotes/euria.py` du dépôt cotes-value
 
 - **Milieux en value** : « Plus de » une ligne chez un bookmaker et « Moins de » une ligne plus haute chez un autre (ou
   deux handicaps). Seuls ceux dont l'espérance est positive d'après les cotes justes de Pinnacle aux deux lignes sont
-  listés, avec les mises pour la somme saisie (réduites si la perte hors du milieu dépasserait la « perte max » saisie), le résultat dans et hors du milieu, la chance du milieu. Alerte Pushover :
+  listés (chance estimée par un modèle, et signalée, quand Pinnacle n'a qu'une des deux lignes), avec les mises pour la somme saisie (réduites si la perte hors du milieu dépasserait la « perte max » saisie), le résultat dans et hors du milieu, la chance du milieu. Alerte Pushover :
   case « Milieux en value » dans Cote Value › Notifications.
 - **Convertir un freebet maintenant** : pour le bookmaker choisi, les paris qui transforment un freebet ou un « pari
   remboursé si perdant » en gain garanti avec les cotes du moment, couverts aux meilleures cotes des autres.
