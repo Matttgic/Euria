@@ -33,7 +33,7 @@ function jambe(j, role, mise) {
     ? `<a href="${esc(j.lien)}" target="_blank" rel="noopener" title="Ouvrir le match chez ${nom}">${nom}</a>` : nom;
   return `<tr><td class="qui"><span class="book">${book}${role ? ` <em>${role}</em>` : ''}</span>`
     + `<span class="pari">${esc(j.pari)}</span></td>`
-    + `<td class="cote">${nb(j.cote)}${j.cote_juste ? `<small>juste ${nb(j.cote_juste)}</small>` : ''}</td>`
+    + `<td class="cote">${nb(j.cote)}${j.cote_juste ? `<small>${j.estimee ? 'estimée' : 'juste'} ${nb(j.cote_juste)}</small>` : ''}</td>`
     + `<td class="mise">${euros(mise)}</td></tr>`;
 }
 
@@ -98,7 +98,7 @@ function milieux() {
     const [a, b] = m.jambes, hors = Math.min(r.dessous, r.dessus);
     const parts = [m.p_dessous, m.p_milieu, m.p_dessus];
     return `<article class="op">${entete(m, i)}${chiffre('Espérance', r.esperance, `${pct(r.esperance / r.total)} de la mise`)}
-<p class="op-zone">Les deux paris gagnent si ${esc(zone(m))}.</p>
+<p class="op-zone">Les deux paris gagnent si ${esc(zone(m))}.${m.estime ? ' Chance estimée par un modèle : Pinnacle n’a pas l’une des deux lignes.' : ''}</p>
 ${r.reduit ? `<p class="op-zone">Mises réduites à ${euros(r.total)} au total pour ne pas perdre plus de ${euros(perteMax)} hors du milieu.</p>` : ''}
 ${paris(jambe(a, '', r.mises[0]) + jambe(b, '', r.mises[1]))}
 <div class="issues">${barre(parts, `Milieu : ${pct(m.p_milieu)} de chances, ${signe(r.dedans)}. `
