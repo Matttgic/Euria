@@ -19,7 +19,6 @@ const jour = iso => date(iso).toLocaleDateString('fr-FR', {day: '2-digit', month
 const quand = iso => valide(iso) ? date(iso).toLocaleString('fr-FR', {weekday: 'short', day: '2-digit', month: '2-digit',
   hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris'}) : '';
 const sport = s => SPORTS[s] || (s ? s[0].toUpperCase() + s.slice(1) : '');
-const numero = i => String(i + 1).padStart(2, '0');
 const pluriel = (k, mot, s = 's') => `${k} ${mot}${k > 1 ? s : ''}`;
 const lire = k => { try { return localStorage.getItem(k); } catch { return null; } };
 const ecrire = (k, v) => { try { localStorage.setItem(k, v); } catch { /* stockage indisponible */ } };
@@ -41,7 +40,7 @@ const paris = lignes => '<table class="paris"><thead class="vh"><tr><th>Bookmake
   + `<th>Mise</th></tr></thead><tbody>${lignes}</tbody></table>`;
 
 function entete(x, i) {
-  return `<p class="op-meta"><span class="op-no">${numero(i)}</span>`
+  return `<p class="op-meta">`
     + `<span><b>${esc(sport(x.sport))}</b>${x.ligue ? ', ' + esc(x.ligue) : ''}</span>`
     + `<time${valide(x.debut) ? ` datetime="${esc(x.debut)}"` : ''}>${esc(quand(x.debut))}</time></p>`
     + `<h3>${esc(x.match)}</h3>`;
@@ -98,8 +97,8 @@ function milieux() {
     const [a, b] = m.jambes, hors = Math.min(r.dessous, r.dessus);
     const parts = [m.p_dessous, m.p_milieu, m.p_dessus];
     return `<article class="op">${entete(m, i)}${chiffre('Espérance', r.esperance, `${pct(r.esperance / r.total)} de la mise`)}
-<p class="op-zone">Les deux paris gagnent si ${esc(zone(m))}.${m.estime ? ' Chance estimée par un modèle : Pinnacle n’a pas l’une des deux lignes.' : ''}</p>
-${r.reduit ? `<p class="op-zone">Mises réduites à ${euros(r.total)} au total pour ne pas perdre plus de ${euros(perteMax)} hors du milieu.</p>` : ''}
+<p class="op-zone">Les deux paris gagnent si ${esc(zone(m))}.</p>
+${m.estime || r.reduit ? `<p class="op-note">${m.estime ? 'Chance estimée par un modèle : Pinnacle n’a qu’une des deux lignes. ' : ''}${r.reduit ? `Mises réduites à ${euros(r.total)} au total pour ne pas perdre plus de ${euros(perteMax)} hors du milieu.` : ''}</p>` : ''}
 ${paris(jambe(a, '', r.mises[0]) + jambe(b, '', r.mises[1]))}
 <div class="issues">${barre(parts, `Milieu : ${pct(m.p_milieu)} de chances, ${signe(r.dedans)}. `
       + `Sinon : ${pct(1 - m.p_milieu)}, au pire ${signe(hors)}.`)}
