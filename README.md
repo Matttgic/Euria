@@ -21,7 +21,8 @@ l'ouverture de l'onglet). Filtres (période, sport, type de pari, période du ma
 estimée ou non, largeur du milieu, espérance, chance, avance sur le match) et bilan par sport, type de pari, largeur,
 espérance, chance, origine de la chance, bookmakers, période, avance, durée d'affichage, référence et ligue : résultat,
 rendement, rendement attendu, milieux tombés contre attendus, écart à l'espérance en écarts-types. Un clic sur un groupe
-filtre dessus. `?stats=<adresse>` remplace la source (essais).
+filtre dessus. Les milieux d'un même match se règlent sur le même score : la page compte les matchs différents, donne
+un tableau par match et l'option « Un milieu par match » (le meilleur de chaque match) pour un écart fiable. `?stats=<adresse>` remplace la source (essais).
 
 Les surebets, les cotes boostées et les boosts couverts sont dans Cote Value (onglet Boosts) ; la page en donne le
 nombre du moment.
