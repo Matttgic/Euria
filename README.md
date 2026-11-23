@@ -14,6 +14,15 @@ françaises (toutes les 5 à 10 minutes, `cotes/euria.py` du dépôt cotes-value
 - **Convertir un freebet maintenant** : pour le bookmaker choisi, les paris qui transforment un freebet ou un « pari
   remboursé si perdant » en gain garanti avec les cotes du moment, couverts aux meilleures cotes des autres.
 
+## Stats
+
+Onglet **Stats** : tous les milieux réglés (`euria-stats.json`, publié par Cote Value à côté d'`euria.json`, lu à
+l'ouverture de l'onglet). Filtres (période, sport, type de pari, période du match, bookmaker, ligue, référence, chance
+estimée ou non, largeur du milieu, espérance, chance, avance sur le match) et bilan par sport, type de pari, largeur,
+espérance, chance, origine de la chance, bookmakers, période, avance, durée d'affichage, référence et ligue : résultat,
+rendement, rendement attendu, milieux tombés contre attendus, écart à l'espérance en écarts-types. Un clic sur un groupe
+filtre dessus. `?stats=<adresse>` remplace la source (essais).
+
 Les surebets, les cotes boostées et les boosts couverts sont dans Cote Value (onglet Boosts) ; la page en donne le
 nombre du moment.
 
@@ -35,7 +44,7 @@ nombre du moment.
 ## Fichiers
 
 - `site/` : la page publiée (`index.html`, `style.css`, `page.js` pour les calculs à la main, `direct.js` pour la partie
-  en direct, `affichage.js` pour la mise en forme commune), calculs purs dans `site/calculs.js`, police dans
+  en direct, `onglet-stats.js` pour l'onglet Stats, `affichage.js` pour la mise en forme commune), calculs purs dans `site/calculs.js` et `site/stats.js`, police dans
   `site/polices/`. `?donnees=<adresse>` remplace la source d'`euria.json` (essais).
 - `tests/` : `node --test tests/*.test.mjs` (Node 20 ou plus, aucune dépendance).
 - `.github/workflows/pages.yml` : tests puis publication sur GitHub Pages à chaque poussée sur `main`.
