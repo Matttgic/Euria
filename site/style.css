@@ -361,3 +361,27 @@ input[type="checkbox"], input[type="radio"] {
 /* Une page par onglet (onglets.js) */
 [data-page].cache { display: none !important; }
 .nav a[aria-current="page"] { border-bottom-color: var(--jaune); }
+
+/* Stats des milieux (onglet-stats.js) */
+.st-raz { justify-content: flex-end; }
+.bouton {
+  min-height: 44px; padding: 0 14px; border: 2px solid var(--encre); border-radius: 0; background: transparent;
+  color: var(--encre); font: inherit; font-weight: 700; cursor: pointer;
+}
+.bouton:hover { background: var(--jaune); color: #111; border-color: #111; }
+.st-chiffres { max-width: 520px; margin-top: 12px; }
+.st-bloc { margin-top: 30px; }
+.st-bloc h3 { margin: 0; font-size: 18px; }
+.st-bloc h3 small { display: block; font-size: 13px; font-weight: 500; color: var(--encre-2); }
+.st-defile { overflow-x: auto; }
+.st-table { margin-top: 8px; min-width: 660px; table-layout: fixed; }
+.st-table th { letter-spacing: 0; }
+.st-table th:first-child { width: 30%; }
+.st-table tr.peu td { color: var(--encre-2); }
+.st-lien {
+  padding: 0; border: 0; background: none; color: inherit; font: inherit; font-weight: 700; text-align: left;
+  text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 3px;
+  text-underline-offset: 3px; cursor: pointer;
+}
+.st-lien:hover { background: var(--jaune); color: #111; }
+.st-lien:focus-visible { outline: 2px solid var(--encre); outline-offset: 2px; }

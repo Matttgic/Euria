@@ -26,6 +26,7 @@
   <div class="cadre nav-in">
     <a href="#direct-milieux">Milieux <span class="nb" id="nb-milieux" hidden></span></a>
     <a href="#bilan">Bilan</a>
+    <a href="#stats">Stats</a>
     <a href="#direct-freebets">Freebets</a>
     <a href="#calculs">Calculs</a>
     <span class="nav-heure" id="nav-heure"></span>
@@ -63,6 +64,41 @@
   <p class="intro">Chaque milieu repéré est réglé après le match, comme si tu avais misé 100&nbsp;€ aux cotes du premier relevé. Si le résultat suit l’espérance sur plusieurs dizaines de milieux, la méthode marche&nbsp;: tu peux commencer à parier.</p>
   <div id="bi-resume"></div>
   <div id="bi-liste"></div>
+</section>
+
+<section id="stats" data-page="stats" class="sec" aria-labelledby="t-stats">
+  <div class="sec-tete">
+    <h2 id="t-stats">Stats des milieux</h2>
+    <p class="sec-compte" id="st-compte"></p>
+  </div>
+  <p class="intro">Tous les milieux réglés, 100&nbsp;€ par milieu aux cotes du premier relevé. Filtre, puis regarde quels sports, types de pari, largeurs ou chances rapportent vraiment. Touche un groupe pour filtrer dessus.</p>
+  <form class="champs reglages st-filtres" id="st-filtres" autocomplete="off">
+    <label class="ch"><span>Matchs</span><select name="jours"><option value="">depuis le début</option><option value="7">7 derniers jours</option><option value="30">30 derniers jours</option></select></label>
+    <label class="ch"><span>Sport</span><select name="sport"></select></label>
+    <label class="ch"><span>Type de pari</span><select name="marche"></select></label>
+    <label class="ch"><span>Période du match</span><select name="periode"></select></label>
+    <label class="ch"><span>Bookmaker</span><select name="bookmaker"></select></label>
+    <label class="ch"><span>Chance du milieu</span><select name="chance"><option value="">toutes</option><option value="pinnacle">deux lignes de référence</option><option value="estimee">estimée</option></select></label>
+    <label class="ch"><span>Ligue</span><select name="ligue"></select></label>
+    <label class="ch"><span>Référence</span><select name="reference"></select></label>
+    <label class="ch"><span>Largeur min</span><input name="largeurMin" inputmode="numeric" placeholder="résultats"></label>
+    <label class="ch"><span>Largeur max</span><input name="largeurMax" inputmode="numeric" placeholder="résultats"></label>
+    <label class="ch"><span>Espérance min</span><span class="u" data-u="€"><input name="esperanceMin" inputmode="decimal"></span></label>
+    <label class="ch"><span>Espérance max</span><span class="u" data-u="€"><input name="esperanceMax" inputmode="decimal"></span></label>
+    <label class="ch"><span>Chance min</span><span class="u" data-u="%"><input name="pMin" inputmode="decimal"></span></label>
+    <label class="ch"><span>Chance max</span><span class="u" data-u="%"><input name="pMax" inputmode="decimal"></span></label>
+    <label class="ch"><span>Repéré au moins</span><span class="u" data-u="h"><input name="avanceMin" inputmode="decimal" placeholder="avant"></span></label>
+    <label class="ch"><span>Repéré au plus</span><span class="u" data-u="h"><input name="avanceMax" inputmode="decimal" placeholder="avant"></span></label>
+    <p class="ch st-raz"><button type="reset" class="bouton">Tout effacer</button></p>
+  </form>
+  <div id="st-resume"></div>
+  <div id="st-groupes" class="st-groupes"></div>
+  <details class="comment"><summary>Comment lire ces chiffres</summary>
+    <p><b>Rendement</b>&nbsp;: résultat divisé par les mises (100&nbsp;€ par milieu). <b>Attendu</b>&nbsp;: le rendement que promettait l’espérance au moment du repérage.</p>
+    <p><b>Tombés</b>&nbsp;: milieux où les deux paris ont gagné, contre le nombre attendu d’après la chance annoncée. Beaucoup moins que l’attendu&nbsp;: la chance est surestimée pour ce groupe.</p>
+    <p><b>Écart</b>&nbsp;: résultat moins espérance, en écarts-types. Entre −2 et +2, la différence peut venir du hasard&nbsp;; au-delà, le groupe fait vraiment mieux (ou moins bien) que prévu. Avec moins de 30 milieux, ne conclus rien.</p>
+    <p><b>Largeur</b>&nbsp;: nombre de résultats entiers entre les deux lignes (Plus de 210,5 et Moins de 213,5&nbsp;: 211, 212, 213, soit 3).</p>
+  </details>
 </section>
 
 <section id="direct-freebets" data-page="freebets" class="sec" aria-labelledby="t-direct-freebets">
@@ -235,5 +271,6 @@
 <script type="module" src="onglets.js"></script>
 <script type="module" src="page.js"></script>
 <script type="module" src="direct.js"></script>
+<script type="module" src="onglet-stats.js"></script>
 </body>
 </html>
