@@ -33,6 +33,7 @@ function listes() {
 function criteres() {
   const f = {};
   for (const el of form.elements) {
+    if (el.type === 'checkbox') { if (el.checked) f[el.name] = true; continue; }
     if (!el.name || el.value === '') continue;
     f[el.name] = NOMBRES.includes(el.name) ? lireNombre(el.value) : el.value;
   }
@@ -43,16 +44,19 @@ function criteres() {
 const ecart = z => z == null ? '' : `${z > 0 ? '+' : z < 0 ? '−' : ''}${nb(Math.abs(z), 1)} σ`;
 const tombes = g => g.attendus == null ? String(g.tombes) : `${g.tombes} / ${nb(g.attendus, 1)}`;
 
-function resume(g) {
+function resume(g, unParMatch) {
   if (!g.n) return '<p class="vide">Aucun milieu réglé avec ces critères.</p>';
-  const verdict = g.n < CONCLURE
-    ? `<b>Trop peu de milieux</b>&nbsp;: ${g.n}/${CONCLURE}, ne conclus rien.`
+  const lies = !unParMatch && g.n > g.matchs
+    ? ` Plusieurs milieux par match se règlent sur le même score&nbsp;: coche «&nbsp;Un milieu par match&nbsp;» pour un écart fiable.` : '';
+  const verdict = g.matchs < CONCLURE
+    ? `<b>Trop peu de matchs</b>&nbsp;: ${g.matchs}/${CONCLURE} matchs différents, ne conclus rien.${lies}`
     : g.z != null && Math.abs(g.z) >= 2
-      ? `<b>${g.z > 0 ? 'Mieux' : 'Moins bien'} que l’espérance</b>&nbsp;: écart de ${ecart(g.z)}, peu probable par hasard.`
-      : g.z != null ? `<b>Conforme à l’espérance</b>&nbsp;: l’écart (${ecart(g.z)}) peut venir du hasard.`
+      ? `<b>${g.z > 0 ? 'Mieux' : 'Moins bien'} que l’espérance</b>&nbsp;: écart de ${ecart(g.z)}, peu probable par hasard.${lies}`
+      : g.z != null ? `<b>Conforme à l’espérance</b>&nbsp;: l’écart (${ecart(g.z)}) peut venir du hasard.${lies}`
         : `<b>Écart à l’espérance non mesurable</b>&nbsp;: gains des milieux inconnus.`;
   return `<p class="bilan">${verdict}</p><div class="st-chiffres">`
     + ligne('Milieux réglés', String(g.n))
+    + ligne('Matchs différents', String(g.matchs))
     + ligne('Résultat (100 € par milieu)', signe(g.resultat), classe(g.resultat))
     + ligne('Rendement', pct(g.rendement), classe(g.rendement))
     + ligne('Espérance annoncée', `${signe(g.esperance)} (${pct(g.rendement_attendu)})`, classe(g.esperance))
@@ -62,12 +66,13 @@ function resume(g) {
 
 function tableau(d, groupes) {
   if (!groupes.length) return '';
-  const tete = '<thead><tr><th>Groupe</th><th>Milieux</th><th>Résultat</th><th>Rendement</th><th>Attendu</th>'
+  const tete = '<thead><tr><th>Groupe</th><th>Milieux</th><th>Matchs</th><th>Résultat</th><th>Rendement</th><th>Attendu</th>'
     + '<th>Tombés</th><th>Écart</th></tr></thead>';
   const corps = groupes.map(g => {
     const c = critereGroupe(d, g.cle), nom = esc(g.nom);
     const cellule = c ? `<button type="button" class="st-lien" data-critere="${esc(JSON.stringify(c))}">${nom}</button>` : nom;
-    return `<tr${g.n < CONCLURE ? ' class="peu"' : ''}><td>${cellule}</td><td>${g.n}</td>`
+    const peu = d.id !== 'match' && g.matchs < CONCLURE;
+    return `<tr${peu ? ' class="peu"' : ''}><td>${cellule}</td><td>${g.n}</td><td>${g.matchs}</td>`
       + `<td class="${classe(g.resultat)}">${signe(g.resultat)}</td><td class="${classe(g.rendement)}">${pct(g.rendement)}</td>`
       + `<td>${pct(g.rendement_attendu)}</td><td>${tombes(g)}</td>`
       + `<td class="${g.z != null && Math.abs(g.z) >= 2 ? classe(g.z) : ''}">${ecart(g.z)}</td></tr>`;
@@ -78,12 +83,12 @@ function tableau(d, groupes) {
 
 function afficher() {
   if (!lignes) return;
-  const choisis = filtrer(lignes, criteres());
-  $('st-compte').textContent = `${choisis.length} / ${lignes.length} milieux`;
-  remplir($('st-resume'), resume(agreger(choisis)));
+  const f = criteres(), choisis = filtrer(lignes, f);
+  $('st-compte').textContent = `${choisis.length} / ${lignes.length} milieux, ${agreger(choisis).matchs} matchs`;
+  remplir($('st-resume'), resume(agreger(choisis), f.unParMatch));
   remplir($('st-groupes'), choisis.length
     ? DECOUPAGES.map(d => tableau(d, decouper(choisis, d))).join('')
-      + '<p class="note">En gris&nbsp;: moins de 30 milieux, chiffres peu fiables.</p>'
+      + '<p class="note">En gris&nbsp;: moins de 30 matchs différents, chiffres peu fiables.</p>'
     : '');
 }
 

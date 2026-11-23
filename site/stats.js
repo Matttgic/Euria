@@ -11,6 +11,22 @@ export function lignesStats(doc) {
     .filter(x => Number.isFinite(x.resultat_100) && Number.isFinite(x.esperance));
 }
 
+/** Clé d'un match : nom et heure de début (anciens fichiers sans nom : sport, ligue, début). */
+export const cleMatch = x => [x.match ?? `${x.sport ?? ''}|${x.ligue ?? ''}`, x.debut ?? ''].join('|');
+
+/**
+ * Un seul milieu par match, celui de meilleure espérance au repérage (celui qu'on aurait joué) : les milieux d'un même
+ * match se règlent sur le même score, ils ne sont pas indépendants.
+ */
+export function unParMatch(lignes) {
+  const garde = new Map();
+  for (const x of lignes) {
+    const k = cleMatch(x), y = garde.get(k);
+    if (!y || x.esperance > y.esperance) garde.set(k, x);
+  }
+  return lignes.filter(x => garde.get(cleMatch(x)) === x);
+}
+
 const dans = (x, min, max) => (!Number.isFinite(min) || (Number.isFinite(x) && x >= min))
   && (!Number.isFinite(max) || (Number.isFinite(x) && x <= max));
 
@@ -18,10 +34,11 @@ const dans = (x, min, max) => (!Number.isFinite(min) || (Number.isFinite(x) && x
  * Filtre : `jours` (match dans les N derniers jours avant `maintenant`), `sport`, `marche`, `periode`, `bookmaker`
  * (un des deux paris chez lui), `chance` ('pinnacle' : deux lignes de la référence, 'estimee' : modèle), bornes
  * `largeurMin/Max` (résultats dans le milieu), `esperanceMin/Max` (€ pour 100 €), `pMin/pMax` (chance du milieu, 0 à 1),
- * `avanceMin/Max` (heures entre le repérage et le match). Un critère vide ou absent ne filtre pas.
+ * `avanceMin/Max` (heures entre le repérage et le match), `unParMatch` (le meilleur milieu de chaque match, après les
+ * autres critères). Un critère vide ou absent ne filtre pas.
  */
 export function filtrer(lignes, f = {}, maintenant = Date.now()) {
-  return lignes.filter(x => {
+  const choisis = lignes.filter(x => {
     if (Number.isFinite(f.jours) && !(maintenant - Date.parse(x.debut) <= f.jours * JOUR_MS)) return false;
     for (const k of ['sport', 'marche', 'periode', 'ligue', 'reference']) if (f[k] && x[k] !== f[k]) return false;
     if (f.bookmaker && !(x.bookmakers || []).includes(f.bookmaker)) return false;
@@ -30,16 +47,20 @@ export function filtrer(lignes, f = {}, maintenant = Date.now()) {
     return dans(x.largeur, f.largeurMin, f.largeurMax) && dans(x.esperance, f.esperanceMin, f.esperanceMax)
       && dans(x.p_milieu, f.pMin, f.pMax) && dans(x.avance_h, f.avanceMin, f.avanceMax);
   });
+  return f.unParMatch ? unParMatch(choisis) : choisis;
 }
 
 /**
  * Bilan d'un groupe pour 100 € par milieu : résultat, espérance annoncée, rendement (résultat / mises), milieux tombés
  * contre attendus, et écart résultat − espérance en écarts-types (z) : chaque milieu vaut `milieu_100` avec la chance
- * p, `hors_100` sinon, variance p(1 − p)(milieu − hors)². |z| < 2 : écart compatible avec le hasard.
+ * p, `hors_100` sinon, variance p(1 − p)(milieu − hors)². |z| < 2 : écart compatible avec le hasard. Le z suppose des
+ * milieux indépendants : avec plusieurs milieux par match, il exagère (unParMatch). `matchs` : matchs différents.
  */
 export function agreger(lignes) {
   let resultat = 0, esperance = 0, tombes = 0, attendus = 0, variance = 0, avecP = 0;
+  const matchs = new Set();
   for (const x of lignes) {
+    matchs.add(cleMatch(x));
     resultat += x.resultat_100;
     esperance += x.esperance;
     if (x.tombe) tombes++;
@@ -51,7 +72,7 @@ export function agreger(lignes) {
     }
   }
   const n = lignes.length;
-  return {n, resultat, esperance, rendement: n ? resultat / (100 * n) : null,
+  return {n, matchs: matchs.size, resultat, esperance, rendement: n ? resultat / (100 * n) : null,
     rendement_attendu: n ? esperance / (100 * n) : null, tombes, attendus: avecP ? attendus : null,
     z: variance > 0 ? (resultat - esperance) / Math.sqrt(variance) : null};
 }
@@ -67,6 +88,8 @@ const SPORTS = {football: 'Football', basket: 'Basket', tennis: 'Tennis', hockey
 const libre = s => s ? String(s)[0].toUpperCase() + String(s).slice(1).toLowerCase().replace(/_/g, ' ') : '';
 export const nomSport = s => SPORTS[s] || libre(s);
 export const nomMarche = m => MARCHES[m] || libre(m);
+const quand = iso => isNaN(Date.parse(iso)) ? '' : new Date(iso).toLocaleString('fr-FR', {day: '2-digit', month: '2-digit',
+  hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris'});
 export const nomPeriode = p => p === 'MATCH' ? 'Match entier' : libre(p);
 
 /**
@@ -98,6 +121,8 @@ export const DECOUPAGES = [
     tranches: T([-Infinity, 10, 'moins de 10 min'], [10, 60, '10 à 60 min'], [60, 360, '1 à 6 h'], [360, Infinity, '6 h et plus'])},
   {id: 'reference', titre: 'Par référence', cle: x => x.reference, filtre: 'reference'},
   {id: 'ligue', titre: 'Par ligue', sous: '15 plus fournies', cle: x => x.ligue, filtre: 'ligue', max: 15},
+  {id: 'match', titre: 'Par match', sous: '30 plus récents', cle: cleMatch, max: 30, recent: x => x.debut || '',
+    libelle: x => [x.match || [nomSport(x.sport), x.ligue].filter(Boolean).join(', '), quand(x.debut)].filter(Boolean).join(' · ')},
 ];
 
 /**
@@ -123,8 +148,11 @@ export function decouper(lignes, d) {
     groupes.get(k).push(x);
   }
   const rang = k => d.tranches ? d.tranches.findIndex(t => t.nom === k) : 0;
-  let out = [...groupes].map(([k, g]) => ({cle: k, nom: d.nom ? d.nom(k) : String(k), ...agreger(g)}));
-  out.sort(d.tranches ? (a, b) => rang(a.cle) - rang(b.cle) : (a, b) => b.n - a.n || String(a.nom).localeCompare(b.nom));
+  let out = [...groupes].map(([k, g]) => ({cle: k, nom: d.libelle ? d.libelle(g[0]) : d.nom ? d.nom(k) : String(k), debut: d.recent ? d.recent(g[0]) : '',
+    ...agreger(g)}));
+  out.sort(d.tranches ? (a, b) => rang(a.cle) - rang(b.cle)
+    : d.recent ? (a, b) => b.debut.localeCompare(a.debut) || b.n - a.n
+      : (a, b) => b.n - a.n || String(a.nom).localeCompare(b.nom));
   if (d.max) out = out.slice(0, d.max);
   return out;
 }

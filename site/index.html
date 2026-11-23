@@ -89,6 +89,7 @@
     <label class="ch"><span>Chance max</span><span class="u" data-u="%"><input name="pMax" inputmode="decimal"></span></label>
     <label class="ch"><span>Repéré au moins</span><span class="u" data-u="h"><input name="avanceMin" inputmode="decimal" placeholder="avant"></span></label>
     <label class="ch"><span>Repéré au plus</span><span class="u" data-u="h"><input name="avanceMax" inputmode="decimal" placeholder="avant"></span></label>
+    <label class="ch case st-un"><input type="checkbox" name="unParMatch"><span>Un milieu par match (le meilleur)</span></label>
     <p class="ch st-raz"><button type="reset" class="bouton">Tout effacer</button></p>
   </form>
   <div id="st-resume"></div>
@@ -96,7 +97,7 @@
   <details class="comment"><summary>Comment lire ces chiffres</summary>
     <p><b>Rendement</b>&nbsp;: résultat divisé par les mises (100&nbsp;€ par milieu). <b>Attendu</b>&nbsp;: le rendement que promettait l’espérance au moment du repérage.</p>
     <p><b>Tombés</b>&nbsp;: milieux où les deux paris ont gagné, contre le nombre attendu d’après la chance annoncée. Beaucoup moins que l’attendu&nbsp;: la chance est surestimée pour ce groupe.</p>
-    <p><b>Écart</b>&nbsp;: résultat moins espérance, en écarts-types. Entre −2 et +2, la différence peut venir du hasard&nbsp;; au-delà, le groupe fait vraiment mieux (ou moins bien) que prévu. Avec moins de 30 milieux, ne conclus rien.</p>
+    <p><b>Écart</b>&nbsp;: résultat moins espérance, en écarts-types. Entre −2 et +2, la différence peut venir du hasard&nbsp;; au-delà, le groupe fait vraiment mieux (ou moins bien) que prévu. Les milieux d’un même match se règlent sur le même score&nbsp;: ils ne comptent pas comme des essais indépendants. Coche «&nbsp;Un milieu par match&nbsp;» (le meilleur de chaque match, celui que tu aurais joué) pour un écart fiable, et ne conclus rien avant 30 matchs différents.</p>
     <p><b>Largeur</b>&nbsp;: nombre de résultats entiers entre les deux lignes (Plus de 210,5 et Moins de 213,5&nbsp;: 211, 212, 213, soit 3).</p>
   </details>
 </section>
