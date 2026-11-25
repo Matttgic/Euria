@@ -34,8 +34,9 @@ const dans = (x, min, max) => (!Number.isFinite(min) || (Number.isFinite(x) && x
  * Filtre : `jours` (match dans les N derniers jours avant `maintenant`), `sport`, `marche`, `periode`, `bookmaker`
  * (un des deux paris chez lui), `chance` ('pinnacle' : deux lignes de la référence, 'estimee' : modèle), bornes
  * `largeurMin/Max` (résultats dans le milieu), `esperanceMin/Max` (€ pour 100 €), `pMin/pMax` (chance du milieu, 0 à 1),
- * `avanceMin/Max` (heures entre le repérage et le match), `unParMatch` (le meilleur milieu de chaque match, après les
- * autres critères). Un critère vide ou absent ne filtre pas.
+ * `avanceMin/Max` (heures entre le repérage et le match), `value` ('value' : en value au repérage, 'hors' : presque en
+ * value, de −2 à 0 € pour 100 €, suivis pour choisir les critères ; les lignes sans `en_value` sont en value),
+ * `unParMatch` (le meilleur milieu de chaque match, après les autres critères). Un critère vide ou absent ne filtre pas.
  */
 export function filtrer(lignes, f = {}, maintenant = Date.now()) {
   const choisis = lignes.filter(x => {
@@ -44,6 +45,8 @@ export function filtrer(lignes, f = {}, maintenant = Date.now()) {
     if (f.bookmaker && !(x.bookmakers || []).includes(f.bookmaker)) return false;
     if (f.chance === 'pinnacle' && x.estime) return false;
     if (f.chance === 'estimee' && !x.estime) return false;
+    if (f.value === 'value' && x.en_value === false) return false;
+    if (f.value === 'hors' && x.en_value !== false) return false;
     return dans(x.largeur, f.largeurMin, f.largeurMax) && dans(x.esperance, f.esperanceMin, f.esperanceMax)
       && dans(x.p_milieu, f.pMin, f.pMax) && dans(x.avance_h, f.avanceMin, f.avanceMax);
   });
@@ -109,6 +112,8 @@ export const DECOUPAGES = [
   {id: 'chance', titre: 'Par chance du milieu', valeur: x => x.p_milieu, champs: ['pMin', 'pMax'], echelle: 100,
     tranches: T([-Infinity, 0.05, 'moins de 5 %'], [0.05, 0.1, '5 à 10 %'], [0.1, 0.2, '10 à 20 %'], [0.2, 0.4, '20 à 40 %'],
       [0.4, Infinity, '40 % et plus'])},
+  {id: 'value', titre: 'En value ou presque', cle: x => x.en_value === false ? 'hors' : 'value', filtre: 'value',
+    nom: v => v === 'hors' ? 'Presque en value (−2 à 0 €)' : 'En value'},
   {id: 'estime', titre: 'Par origine de la chance', cle: x => x.estime ? 'estimee' : 'pinnacle', filtre: 'chance',
     nom: v => v === 'estimee' ? 'Estimée (une ligne de référence)' : 'Deux lignes de référence'},
   {id: 'bookmakers', titre: 'Par bookmakers', sous: 'les deux paris', cle: x => (x.bookmakers || []).join(' + ') || null,
