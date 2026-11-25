@@ -105,3 +105,18 @@ test('un milieu par match : le meilleur (espérance au repérage), les matchs co
   assert.match(m[0].nom, /^Lakers – Celtics · 22\/11/);
   assert.equal(m.at(-1).nom.startsWith('Football américain, NFL'), true);
 });
+
+test('milieux en value ou presque : filtre et découpage ; une ligne sans en_value est en value', () => {
+  const cols = [...COLS, 'en_value'];
+  const ligne = (o) => cols.map(c => o[c] ?? null);
+  const base = {debut: '2026-11-22T20:00:00Z', sport: 'football', marche: 'TOTAL', resultat_100: -2, tombe: false};
+  const L = lignesStats({colonnes: cols, lignes: [ligne({...base, match: 'A – B', esperance: 3, en_value: true}),
+    ligne({...base, match: 'C – D', esperance: -1.2, en_value: false}), ligne({...base, match: 'E – F', esperance: 2})]});
+  assert.equal(filtrer(L, {value: 'value'}, MAINTENANT).length, 2);
+  assert.deepEqual(filtrer(L, {value: 'hors'}, MAINTENANT).map(x => x.match), ['C – D']);
+  assert.equal(filtrer(L, {}, MAINTENANT).length, 3);
+  const d = DECOUPAGES.find(x => x.id === 'value');
+  const g = decouper(L, d);
+  assert.deepEqual(g.map(x => [x.cle, x.n]), [['value', 2], ['hors', 1]]);
+  assert.deepEqual(critereGroupe(d, 'hors'), {value: 'hors'});
+});

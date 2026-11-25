@@ -71,9 +71,10 @@
     <h2 id="t-stats">Stats des milieux</h2>
     <p class="sec-compte" id="st-compte"></p>
   </div>
-  <p class="intro">Tous les milieux réglés, 100&nbsp;€ par milieu aux cotes du premier relevé. Filtre, puis regarde quels sports, types de pari, largeurs ou chances rapportent vraiment. Touche un groupe pour filtrer dessus.</p>
+  <p class="intro">Tous les milieux réglés, 100&nbsp;€ par milieu aux cotes du premier relevé en value. Les milieux presque en value (−2 à 0&nbsp;€ pour 100&nbsp;€, tous les sports) sont gardés aussi, pour choisir plus tard les critères&nbsp;: «&nbsp;Milieux&nbsp;» pour les voir. Filtre, puis regarde quels sports, types de pari, largeurs ou chances rapportent vraiment. Touche un groupe pour filtrer dessus.</p>
   <form class="champs reglages st-filtres" id="st-filtres" autocomplete="off">
     <label class="ch"><span>Matchs</span><select name="jours"><option value="">depuis le début</option><option value="7">7 derniers jours</option><option value="30">30 derniers jours</option></select></label>
+    <label class="ch"><span>Milieux</span><select name="value"><option value="value" selected>en value</option><option value="hors">presque en value (−2 à 0&nbsp;€)</option><option value="">tous</option></select></label>
     <label class="ch"><span>Sport</span><select name="sport"></select></label>
     <label class="ch"><span>Type de pari</span><select name="marche"></select></label>
     <label class="ch"><span>Période du match</span><select name="periode"></select></label>
